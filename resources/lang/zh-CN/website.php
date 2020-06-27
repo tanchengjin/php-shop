@@ -1,5 +1,25 @@
 <?php
 return [
-    'login'=>'登录',
-    'register'=>'注册'
+    'home' => '首页',
+    'login' => '登录',
+    'register' => '注册',
+    'title' => 'index',
+    'add_to_cart' => '添加到购物车',
+    'quick_view' => '快速查看',
+    'add_to_wishlist' => '添加到我的收藏',
+    'add_to_compare' => '比较',
+    'shop_list'=>'商品列表',
+    'shop'=>'商品',
+    'blog'=>'博客',
+    'ratting'=>'评分',
+    'options'=>'选项',
+    'category'=>'分类',
+    'quantity'=>'数量',
+    'all_category'=>'所有分类',
+    'description'=>'描述',
+    'specification'=>'规格说明',
+    'reviews'=>'评价',
+    'relate_product'=>'相关产品',
+    'upsell_product'=>'促销商品',
+    'customer_support'=>'售后服务',
 ];

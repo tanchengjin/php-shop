@@ -18,9 +18,12 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('set null');
             $table->string('title');
-            #保存商品的最低价
+            #商品的最低价
             $table->decimal('price',10,2);
-            $table->string('description');
+            #商品简介
+            $table->string('intro',255);
+            #商品详情
+            $table->text('description');
             $table->unsignedBigInteger('sold_count')->default(0);
             $table->unsignedBigInteger('review_count')->default(0);
             $table->float('ratting')->default(5);

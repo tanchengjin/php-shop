@@ -11,17 +11,19 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $products=factory(\App\Models\Product::class,30)->create();
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            $products = factory(\App\Models\Product::class, 30)->create();
 
-        foreach ($products as $product){
-            $sku=factory(\App\Models\ProductSku::class,3)->create([
-                'product_id'=>$product->id
-            ]);
+            foreach ($products as $product) {
+                $sku = factory(\App\Models\ProductSku::class, 3)->create([
+                    'product_id' => $product->id
+                ]);
 
-            $product->update([
-                'price'=>collect($sku)->min('price')
-            ]);
+                $product->update([
+                    'price' => collect($sku)->min('price')
+                ]);
 
-        }
+            }
+        });
     }
 }

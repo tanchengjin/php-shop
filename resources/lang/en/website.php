@@ -1,6 +1,25 @@
 <?php
 return [
-    'login'=>'login',
-    'register'=>'register',
-    'title'=>'index'
+    'home' => 'home',
+    'login' => 'login',
+    'register' => 'register',
+    'title' => 'index',
+    'add_to_cart' => 'Add to Cart',
+    'quick_view' => 'quick view',
+    'add_to_wishlist' => 'Add to wishlist',
+    'add_to_compare' => 'Add to Compare',
+    'shop_list'=>'shop list',
+    'shop'=>'Shop',
+    'blog'=>'Blog',
+    'ratting'=>'customer review',
+    'options'=>'Available Options',
+    'category'=>'Category',
+    'quantity'=>'Quantity',
+    'all_category'=>'All Category',
+    'description'=>'Description',
+    'specification'=>'Specification',
+    'reviews'=>'Reviews',
+    'relate_product'=>'Related Products',
+    'upsell_product'=>'Upsell Products',
+    'customer_support'=>'Customer Suppor'
 ];
