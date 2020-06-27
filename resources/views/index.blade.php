@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home</title>
+    <title>{{__('website.title')}}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -353,9 +353,9 @@
                             <div class="header_account_area">
                                 <div class="header_account_list register">
                                     <ul>
-                                        <li><a href="login.html">Register</a></li>
+                                        <li><a href="login.html">{{__('website.register')}}</a></li>
                                         <li><span>/</span></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="login.html">{{__('website.login')}}</a></li>
                                     </ul>
                                 </div>
                                 <div class="header_account_list header_wishlist">
