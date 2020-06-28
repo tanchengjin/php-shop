@@ -25,4 +25,12 @@ class Product extends Model
         return $this->belongsTo(Category::class,'category_id','id');
     }
 
+    public function getFirstImageAttribute()
+    {
+        if($image=$this->images()->first()){
+            return $image;
+        }else{
+            return asset('assets/images/error.png');
+        }
+    }
 }

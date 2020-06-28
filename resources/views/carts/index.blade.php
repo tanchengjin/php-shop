@@ -11,25 +11,36 @@
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th class="product_remove">Delete</th>
-                                        <th class="product_thumb">Image</th>
-                                        <th class="product_name">Product</th>
-                                        <th class="product-price">Price</th>
-                                        <th class="product_quantity">Quantity</th>
-                                        <th class="product_total">Total</th>
+                                        <th style="width: 5px"><input type="checkbox" class="select_all"></th>
+                                        <th class="product_remove">{{__('cart.operation')}}</th>
+                                        <th class="product_thumb">{{__('cart.image')}}</th>
+                                        <th class="product_name">{{__('cart.product')}}</th>
+                                        <th class="product-price">{{__('cart.price')}}</th>
+                                        <th class="product_quantity">{{__('cart.quantity')}}</th>
+                                        <th class="product_total">{{__('cart.total')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($carts as $cart)
-                                    <tr>
-                                        <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        <td class="product_thumb"><a href="#"><img src="/assets/img/s-product/product.jpg" alt=""></a></td>
-                                        <td class="product_name"><a href="#">{{$cart->sku->product->title.' '.$cart->sku->title}}</a></td>
-                                        <td class="product-price">￥{{number_format($cart->sku->price,2)}}</td>
-                                        <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="{{$cart->quantity}}" type="number"></td>
-                                        <td class="product_total">{{number_format($cart->sku->price*$cart->quantity,2)}}</td>
+                                        <tr data-price="{{$cart->sku->price}}" data-quantity="{{$cart->quantity}}">
+                                            <td><input type="checkbox" class="checkbox"></td>
+                                            <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                            <td class="product_thumb"><a
+                                                    href="{{route('products.show',['id'=>$cart->sku->product->id])}}"><img
+                                                        src="{{$cart->sku->product->first_image}}" alt=""></a></td>
+                                            <td class="product_name"><a
+                                                    href="{{route('products.show',['id'=>$cart->sku->product->id])}}">{{$cart->sku->product->title.' '.$cart->sku->title}}</a>
+                                            </td>
+                                            <td class="product-price">￥{{number_format($cart->sku->price,2)}}</td>
+                                            <td class="product_quantity"><label>Quantity</label> <input min="1"
+                                                                                                        max="100"
+                                                                                                        value="{{$cart->quantity}}"
+                                                                                                        type="number">
+                                            </td>
+                                            <td class="product_total">{{number_format($cart->sku->price*$cart->quantity,2)}}</td>
 
-                                    </tr>
+                                        </tr>
                                     @endforeach
 
                                     </tbody>
@@ -74,6 +85,7 @@
                                     </div>
                                     <div class="checkout_btn">
                                         <a href="#">Proceed to Checkout</a>
+                                        <button type="submit">提交</button>
                                     </div>
                                 </div>
                             </div>
@@ -85,4 +97,58 @@
         </div>
     </div>
     <!--shopping cart area end -->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            //全选checkbox
+            $('.select_all').click(function () {
+
+                let status = $(this).prop('checked');
+                let checkbox = $('input[type=checkbox][class=checkbox]:not("disabled")');
+                let total = 0;
+                let item = [];
+                checkbox.each(function () {
+                    $(this).prop('checked', status);
+                    let price = $(this).closest('tr').data('price');
+                    let quantity = $(this).closest('tr').data('quantity');
+                    item.push({
+                        'price': price,
+                        'quantity': quantity
+                    });
+                });
+                //所有商品总价
+                total=setCartPrice(item);
+
+            });
+
+            $('input[type=checkbox]').on('change', function () {
+
+                if($(this).prop('checked')){
+                    //click
+                    console.log('ok')
+                }else{
+                    //cancel
+                }
+                var s = $('input[type=checkbox][class=checkbox]');
+                let box = $(this).closest('tr');
+                console.log(s);
+            });
+
+            /**
+             * 计算所有商品价格
+             * @param item
+             * @returns {number}
+             */
+            function setCartPrice(item) {
+                let total = 0;
+                $.each(item, function (key, value) {
+                    total += value.price * value.quantity;
+                });
+
+                return total;
+            }
+        });
+    </script>
 @endsection
