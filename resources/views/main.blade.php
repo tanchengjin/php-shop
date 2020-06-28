@@ -40,7 +40,8 @@
 
     <!--modernizr min js here-->
     <script src="{{asset('assets/js/vendor/modernizr-3.7.1.min.js')}}"></script>
-
+    <script src="{{asset('js/app.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 
 <body>
@@ -97,7 +98,7 @@
                                     <option value="2">Accessories</option>
                                     <option value="3">Accessories & More</option>
                                     <option value="4">Butters & Eggs</option>
-                                    <option value="5">Camera & Video </option>
+                                    <option value="5">Camera & Video</option>
                                     <option value="6">Mornitors</option>
                                     <option value="7">Tablets</option>
                                     <option value="8">Laptops</option>
@@ -126,10 +127,12 @@
                             </ul>
                         </div>
                         <div class="header_account_list header_wishlist">
-                            <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span class="item_count">3</span> </a>
+                            <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span
+                                    class="item_count">3</span> </a>
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
-                            <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span class="item_count">2</span></a>
+                            <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span
+                                    class="item_count">2</span></a>
                             <!--mini cart-->
                             <div class="mini_cart">
                                 <div class="cart_gallery">
@@ -147,7 +150,8 @@
                                     </div>
                                     <div class="cart_item">
                                         <div class="cart_img">
-                                            <a href="#"><img src="{{asset('assets/img/s-product/product2.jpg')}}" alt=""></a>
+                                            <a href="#"><img src="{{asset('assets/img/s-product/product2.jpg')}}"
+                                                             alt=""></a>
                                         </div>
                                         <div class="cart_info">
                                             <a href="#">Letraset Sheets</a>
@@ -331,7 +335,7 @@
                                             <option value="2">Accessories</option>
                                             <option value="3">Accessories & More</option>
                                             <option value="4">Butters & Eggs</option>
-                                            <option value="5">Camera & Video </option>
+                                            <option value="5">Camera & Video</option>
                                             <option value="6">Mornitors</option>
                                             <option value="7">Tablets</option>
                                             <option value="8">Laptops</option>
@@ -360,16 +364,19 @@
                                     </ul>
                                 </div>
                                 <div class="header_account_list header_wishlist">
-                                    <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span class="item_count">3</span> </a>
+                                    <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span
+                                            class="item_count">3</span> </a>
                                 </div>
                                 <div class="header_account_list  mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span class="item_count">2</span></a>
+                                    <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span
+                                            class="item_count">2</span></a>
                                     <!--mini cart-->
                                     <div class="mini_cart">
                                         <div class="cart_gallery">
                                             <div class="cart_item">
                                                 <div class="cart_img">
-                                                    <a href="#"><img src="{{asset('assets/img/s-product/product.jpg')}}" alt=""></a>
+                                                    <a href="#"><img src="{{asset('assets/img/s-product/product.jpg')}}"
+                                                                     alt=""></a>
                                                 </div>
                                                 <div class="cart_info">
                                                     <a href="#">Primis In Faucibus</a>
@@ -381,7 +388,8 @@
                                             </div>
                                             <div class="cart_item">
                                                 <div class="cart_img">
-                                                    <a href="#"><img src="{{asset('assets/img/s-product/product2.jpg')}}" alt=""></a>
+                                                    <a href="#"><img
+                                                            src="{{asset('assets/img/s-product/product2.jpg')}}" alt=""></a>
                                                 </div>
                                                 <div class="cart_info">
                                                     <a href="#">Letraset Sheets</a>
@@ -432,7 +440,8 @@
                             </div>
                             <div class="categories_menu_toggle">
                                 <ul>
-                                    <li class="menu_item_children"><a href="#">Vegetables<i class="fa fa-angle-right"></i></a>
+                                    <li class="menu_item_children"><a href="#">Vegetables<i
+                                                class="fa fa-angle-right"></i></a>
                                         <ul class="categories_mega_menu">
                                             <li class="menu_item_children"><a href="#">Dresses</a>
                                                 <ul class="categorie_sub_menu">
@@ -460,7 +469,7 @@
                                             </li>
                                             <li class="menu_item_children"><a href="#">Clothing</a>
                                                 <ul class="categorie_sub_menu">
-                                                    <li><a href="">Coats  Jackets </a></li>
+                                                    <li><a href="">Coats Jackets </a></li>
                                                     <li><a href="">Raincoats</a></li>
                                                     <li><a href="">Jackets</a></li>
                                                     <li><a href="">T-shirts</a></li>
@@ -468,7 +477,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu_item_children"><a href="#">Fruits  <i class="fa fa-angle-right"></i></a>
+                                    <li class="menu_item_children"><a href="#">Fruits <i class="fa fa-angle-right"></i></a>
                                         <ul class="categories_mega_menu column_3">
                                             <li class="menu_item_children"><a href="#">Chair</a>
                                                 <ul class="categorie_sub_menu">
@@ -516,7 +525,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu_item_children"><a href="#"> Fish & Seafood <i class="fa fa-angle-right"></i></a>
+                                    <li class="menu_item_children"><a href="#"> Fish & Seafood <i
+                                                class="fa fa-angle-right"></i></a>
                                         <ul class="categories_mega_menu column_2">
                                             <li class="menu_item_children"><a href="#">Check Trousers</a>
                                                 <ul class="categorie_sub_menu">
@@ -543,7 +553,7 @@
                                     <li><a href="#"> Bread</a></li>
                                     <li><a href="#"> Jam & Honey</a></li>
                                     <li><a href="#"> Frozen Food</a></li>
-                                    <li id="cat_toggle" class="has-sub"><a href="#">  More Items</a>
+                                    <li id="cat_toggle" class="has-sub"><a href="#"> More Items</a>
                                         <ul class="categorie_sub">
                                             <li><a href="#">Hide Categories</a></li>
                                         </ul>
@@ -558,9 +568,10 @@
                         <div class="main_menu menu_position">
                             <nav>
                                 <ul>
-                                    <li><a  href="index.html">{{__('website.home')}}</a>
+                                    <li><a href="index.html">{{__('website.home')}}</a>
                                     </li>
-                                    <li class="mega_items"><a class="active" href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                    <li class="mega_items"><a class="active"
+                                                              href="{{route('products.index')}}">{{__('website.shop')}}</a>
                                     </li>
                                     <li><a href="#">{{__('website.blog')}}</a>
                                     </li>
@@ -621,10 +632,11 @@
                         <div class="footer_logo">
                             <a href="index.html"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
                         </div>
-                        <p class="footer_desc">We are a team of designers and developers that create high quality eCommerce, WordPress, Shopify .</p>
+                        <p class="footer_desc">We are a team of designers and developers that create high quality
+                            eCommerce, WordPress, Shopify .</p>
                         <p><span>Address:</span> 4710-4890 Breckinridge USA</p>
                         <p><span>Email:</span> <a href="#">demo@hasthemes.com</a></p>
-                        <p><span>Call us:</span> <a href="tel:(08)23456789">(08) 23 456 789</a> </p>
+                        <p><span>Call us:</span> <a href="tel:(08)23456789">(08) 23 456 789</a></p>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-5">
@@ -649,7 +661,7 @@
                         <div class="footer_menu">
                             <ul>
                                 <li><a href="#">Brands</a></li>
-                                <li><a href="#">  Gift Certificates</a></li>
+                                <li><a href="#"> Gift Certificates</a></li>
                                 <li><a href="#">Affiliate</a></li>
                                 <li><a href="#">Specials</a></li>
                                 <li><a href="#">Returns</a></li>
@@ -663,8 +675,8 @@
                         <h3>Sign up newsletter</h3>
                         <p class="footer_desc">Get updates by subscribe our weekly newsletter</p>
                         <div class="subscribe_form">
-                            <form id="mc-form" class="mc-form footer-newsletter" >
-                                <input id="mc-email" type="email" autocomplete="off" placeholder="Enter you email" />
+                            <form id="mc-form" class="mc-form footer-newsletter">
+                                <input id="mc-email" type="email" autocomplete="off" placeholder="Enter you email"/>
                                 <button id="mc-submit">Subscribe</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
@@ -684,7 +696,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-7">
                     <div class="copyright_area">
-                        <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+                        <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank"
+                                                                                     href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5">
@@ -704,7 +718,7 @@
 <!--footer area end-->
 
 <!-- modal area start-->
-<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -716,40 +730,52 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <div class="modal_tab">
                                 <div class="tab-content product-details-large">
-                                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
+                                    <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{asset('assets/img/product/productbig1.jpg')}}" alt=""></a>
+                                            <a href="#"><img src="{{asset('assets/img/product/productbig1.jpg')}}"
+                                                             alt=""></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{asset('assets/img/product/productbig2.jpg')}}" alt=""></a>
+                                            <a href="#"><img src="{{asset('assets/img/product/productbig2.jpg')}}"
+                                                             alt=""></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{asset('assets/img/product/productbig3.jpg')}}" alt=""></a>
+                                            <a href="#"><img src="{{asset('assets/img/product/productbig3.jpg')}}"
+                                                             alt=""></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="tab4" role="tabpanel">
                                         <div class="modal_tab_img">
-                                            <a href="#"><img src="{{asset('assets/img/product/productbig4.jpg')}}" alt=""></a>
+                                            <a href="#"><img src="{{asset('assets/img/product/productbig4.jpg')}}"
+                                                             alt=""></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal_tab_button">
                                     <ul class="nav product_navactive owl-carousel" role="tablist">
-                                        <li >
-                                            <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="{{asset('assets/img/product/product1.jpg')}}" alt=""></a>
+                                        <li>
+                                            <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab"
+                                               aria-controls="tab1" aria-selected="false"><img
+                                                    src="{{asset('assets/img/product/product1.jpg')}}" alt=""></a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="{{asset('assets/img/product/product6.jpg')}}" alt=""></a>
+                                            <a class="nav-link" data-toggle="tab" href="#tab2" role="tab"
+                                               aria-controls="tab2" aria-selected="false"><img
+                                                    src="{{asset('assets/img/product/product6.jpg')}}" alt=""></a>
                                         </li>
                                         <li>
-                                            <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="{{asset('assets/img/product/product2.jpg')}}" alt=""></a>
+                                            <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab"
+                                               aria-controls="tab3" aria-selected="false"><img
+                                                    src="{{asset('assets/img/product/product2.jpg')}}" alt=""></a>
                                         </li>
                                         <li>
-                                            <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="{{asset('assets/img/product/product7.jpg')}}" alt=""></a>
+                                            <a class="nav-link" data-toggle="tab" href="#tab4" role="tab"
+                                               aria-controls="tab4" aria-selected="false"><img
+                                                    src="{{asset('assets/img/product/product7.jpg')}}" alt=""></a>
                                         </li>
 
                                     </ul>
@@ -763,10 +789,12 @@
                                 </div>
                                 <div class="modal_price mb-10">
                                     <span class="new_price">$64.99</span>
-                                    <span class="old_price" >$78.99</span>
+                                    <span class="old_price">$78.99</span>
                                 </div>
                                 <div class="modal_description mb-15">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
+                                        ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
+                                        nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>
                                 </div>
                                 <div class="variants_selects">
                                     <div class="variants_size">
@@ -850,7 +878,7 @@
 <script src="{{asset('assets/js/main.js')}}"></script>
 
 
-
+@yield('javascript')
 </body>
 
 </html>

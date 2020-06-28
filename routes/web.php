@@ -20,3 +20,7 @@ Route::get('/', function(){
 
 Route::get('products','ProductController@index')->name('products.index');
 Route::get('products/{id}','ProductController@show')->name('products.show');
+
+Route::group([],function(){
+    Route::post('carts/add','CartController@store')->name('carts.store');
+});

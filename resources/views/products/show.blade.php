@@ -54,7 +54,7 @@
                     <div class="product_d_right">
                         <form action="#">
 
-                            <h1><a href="#">{{$product->title}}</a></h1>
+                            <h1><a href="#" class="product_title">{{$product->title}}</a></h1>
                             <div class=" product_ratting">
                                 <ul>
                                     <li><a href="#"><i class="icon-star"></i></a></li>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="price_box">
                                 <span class="current_price">￥{{number_format($product->price,2)}}</span>
-                                <span class="old_price">£80.00</span>
+                                <span class="old_price" style="display: none"></span>
 
                             </div>
                             <div class="product_desc">
@@ -79,14 +79,22 @@
                                 <label>sku</label>
                                 <ul>
                                     @foreach($product->skus as $sku)
-                                    <li class=""><a href="#">{{$sku->title}}</a></li>
+                                        <li class=""><input type="radio" name="skus" value="{{$sku->id}}"
+                                                            data-title="{{$sku->title}}" data-stock="{{$sku->stock}}"
+                                                            data-price="{{$sku->price}}"
+                                                            data-old_price="{{number_format($sku->original_price,2)}}">{{$sku->title}}
+                                        </li>
                                     @endforeach
                                 </ul>
+
+                                <label for="">{{__('website.stock')}}</label>
+                                <span id="stock">请选择商品规格</span>
                             </div>
                             <div class="product_variant quantity">
                                 <label>{{__('website.quantity')}}</label>
-                                <input min="1" max="100" value="1" type="number">
-                                <button class="button" type="submit">{{__('website.add_to_cart')}}</button>
+                                <input min="1" max="100" value="1" type="number" name="quantity">
+                                <button class="button btn_add_to_cart"
+                                        type="button">{{__('website.add_to_cart')}}</button>
 
                             </div>
                             <div class=" product_d_action">
@@ -719,4 +727,43 @@
         </div>
     </section>
     <!--product area end-->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $('.btn_add_to_cart').click(function () {
+                let sku_id = $('input[type=radio]:checked').data('id');
+                if (!sku_id) {
+
+                }
+
+                let quantity = $('input[name=quantity]').val();
+                if (quantity <= 0 || isNaN(quantity)) {
+
+                }
+                axios.post('{{route('carts.store')}}', {
+                    sku_id: sku_id,
+                    quantity: quantity
+                }).then(function (res) {
+                    console.log(res);
+                }, function (err) {
+                    console.log(err);
+                });
+            });
+
+            $('input[type=radio]').click(function () {
+                let stock = $(this).data('stock');
+                let title = $(this).data('title');
+                let price = $(this).data('price');
+                let old_price = $(this).data('old_price');
+
+                $('.product_title').val(title);
+                $('#stock').text(stock);
+                $('.current_price').text('￥' + price);
+                $('.old_price').text('%' + old_price);
+                $('.old_price').css('display', 'inline-block');
+            });
+        })
+    </script>
 @endsection

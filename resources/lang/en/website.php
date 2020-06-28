@@ -21,5 +21,6 @@ return [
     'reviews'=>'Reviews',
     'relate_product'=>'Related Products',
     'upsell_product'=>'Upsell Products',
-    'customer_support'=>'Customer Suppor'
+    'customer_support'=>'Customer Suppor',
+    'stock'=>'Stock'
 ];
