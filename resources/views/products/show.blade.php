@@ -81,7 +81,7 @@
                                     @foreach($product->skus as $sku)
                                         <li class=""><input type="radio" name="skus" value="{{$sku->id}}"
                                                             data-title="{{$sku->title}}" data-stock="{{$sku->stock}}"
-                                                            data-price="{{$sku->price}}"
+                                                            data-price="{{number_format($sku->price,2)}}"
                                                             data-old_price="{{number_format($sku->original_price,2)}}">{{$sku->title}}
                                         </li>
                                     @endforeach
@@ -754,22 +754,42 @@
                     sku_id: sku_id,
                     quantity: quantity
                 }).then(function (res) {
-                    console.log(res);
+                    if (res.data.errno === 0) {
+                        swal.fire('success', '{{__('sweetalert.operation_success')}}', 'success');
+                    } else {
+                        if (res.data.message) {
+                            swal.fire('error', res.data.message, 'error');
+                        } else {
+                            swal.fire('error', '{{__('sweetalert.operation_error')}}', 'error');
+                        }
+                    }
                 }, function (err) {
-                    console.log(err);
+                    if (err.response.status === 401) {
+                        swal.fire({
+                            title: '{{__('sweetalert.please_login')}}',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: '{{__('sweetalert.go_login')}}',
+                            preConfirm(inputValue) {
+                                if (inputValue) {
+                                    return location.href = '{{route('login')}}';
+                                }
+                            }
+                        });
+                        return;
+                    }
+                    swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error');
                 });
             });
 
             $('input[type=radio]').click(function () {
                 let stock = $(this).data('stock');
-                let title = $(this).data('title');
                 let price = $(this).data('price');
                 let old_price = $(this).data('old_price');
 
-                $('.product_title').val(title);
                 $('#stock').text(stock);
                 $('.current_price').text('￥' + price);
-                $('.old_price').text('%' + old_price);
+                $('.old_price').text('￥' + old_price);
                 $('.old_price').css('display', 'inline-block');
             });
         })

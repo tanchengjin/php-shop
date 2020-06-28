@@ -21,6 +21,11 @@ Route::get('/', function () {
 Route::get('products', 'ProductController@index')->name('products.index');
 Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
-Route::group([], function () {
+Route::group(['middleware'=>'auth'], function () {
     Route::post('carts/add', 'CartController@store')->name('carts.store');
+    Route::get('carts/index','CartController@index')->name('carts.index');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

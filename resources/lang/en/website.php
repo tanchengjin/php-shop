@@ -22,5 +22,7 @@ return [
     'relate_product'=>'Related Products',
     'upsell_product'=>'Upsell Products',
     'customer_support'=>'Customer Suppor',
-    'stock'=>'Stock'
+    'stock'=>'Stock',
+    'checkout'=>'Checkout',
+    'view_cart'=>'View Cart',
 ];

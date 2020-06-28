@@ -18,9 +18,9 @@ class CartService
             } else {
                 #create shopping cart
                 $cart = new Cart([
-                    'product_sku_id' => $sku_id,
                     'quantity' => $quantity,
                 ]);
+                $cart->productSku()->associate($sku_id);
                 $cart->user()->associate($user);
                 $cart->save();
             }

@@ -22,5 +22,7 @@ return [
     'relate_product'=>'相关产品',
     'upsell_product'=>'促销商品',
     'customer_support'=>'售后服务',
-    'stock'=>'库存'
+    'stock'=>'库存',
+    'checkout'=>'登出',
+    'view_cart'=>'查看购物车',
 ];

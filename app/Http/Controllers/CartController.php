@@ -18,4 +18,12 @@ class CartController extends Controller
         }
         return $this->error();
     }
+
+    public function index(Request $request)
+    {
+        $carts = $request->user()->carts()->get();
+        return view('carts.index', [
+            'carts'=>$carts
+        ]);
+    }
 }
