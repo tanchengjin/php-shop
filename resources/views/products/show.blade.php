@@ -733,14 +733,22 @@
     <script>
         $(document).ready(function () {
             $('.btn_add_to_cart').click(function () {
-                let sku_id = $('input[type=radio]:checked').data('id');
+                let sku_id = $('input[type=radio]:checked').val();
                 if (!sku_id) {
-
+                    swal.fire('error', '{{__('sweetalert.product_sku')}}', 'error');
+                    return;
                 }
 
                 let quantity = $('input[name=quantity]').val();
                 if (quantity <= 0 || isNaN(quantity)) {
+                    swal.fire('error', '{{__('sweetalert.error_quantity')}}', 'error');
+                    return;
+                }
 
+                let stock = $('input[type=radio]:checked').data('stock');
+                if (quantity > stock) {
+                    swal.fire('error', '{{__('sweetalert.low_stock')}}', 'error');
+                    return;
                 }
                 axios.post('{{route('carts.store')}}', {
                     sku_id: sku_id,

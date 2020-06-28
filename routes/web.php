@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Route::get('/', 'IndexController@index');
-Route::get('/', function(){
+Route::get('/', function () {
     return redirect()->route('products.index');
 });
 
-Route::get('products','ProductController@index')->name('products.index');
-Route::get('products/{id}','ProductController@show')->name('products.show');
+Route::get('products', 'ProductController@index')->name('products.index');
+Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
-Route::group([],function(){
-    Route::post('carts/add','CartController@store')->name('carts.store');
+Route::group([], function () {
+    Route::post('carts/add', 'CartController@store')->name('carts.store');
 });
