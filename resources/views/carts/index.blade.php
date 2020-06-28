@@ -3,7 +3,8 @@
     <!--shopping cart area start -->
     <div class="shopping_cart_area mt-70">
         <div class="container">
-            <form action="#">
+            <form action="{{route('orders.store')}}" method="post">
+                {{csrf_field()}}
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
@@ -22,7 +23,8 @@
                                     </thead>
                                     <tbody>
                                     @foreach($carts as $cart)
-                                        <tr data-price="{{$cart->sku->price}}" data-quantity="{{$cart->quantity}}">
+                                        <tr data-id="{{$cart->sku->id}}" data-price="{{$cart->sku->price}}"
+                                            data-quantity="{{$cart->quantity}}">
                                             <td><input type="checkbox" class="checkbox"></td>
                                             <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a>
                                             </td>
@@ -36,7 +38,8 @@
                                             <td class="product_quantity"><label>Quantity</label> <input min="1"
                                                                                                         max="100"
                                                                                                         value="{{$cart->quantity}}"
-                                                                                                        type="number">
+                                                                                                        type="number"
+                                                                                                        name="quantity">
                                             </td>
                                             <td class="product_total">{{number_format($cart->sku->price*$cart->quantity,2)}}</td>
 
@@ -85,7 +88,7 @@
                                     </div>
                                     <div class="checkout_btn">
                                         <a href="#">Proceed to Checkout</a>
-                                        <button type="submit">提交</button>
+                                        <button id="create_order" type="button">提交</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,16 +122,16 @@
                     });
                 });
                 //所有商品总价
-                total=setCartPrice(item);
+                total = setCartPrice(item);
 
             });
 
             $('input[type=checkbox]').on('change', function () {
 
-                if($(this).prop('checked')){
+                if ($(this).prop('checked')) {
                     //click
                     console.log('ok')
-                }else{
+                } else {
                     //cancel
                 }
                 var s = $('input[type=checkbox][class=checkbox]');
@@ -149,6 +152,51 @@
 
                 return total;
             }
+
+            $('#create_order').click(function () {
+                console.log(123)
+
+                let res = {
+
+                    items: [],
+                    address_id: 1,
+                    remark:'123',
+                };
+
+                $('tr[data-id]').each(function () {
+                    //没有选中则跳出
+                    let checkbox = $(this).find('input[type=checkbox][class=checkbox]');
+                    if (checkbox.prop('disabled') || !checkbox.prop('checked')) {
+                        return;
+                    }
+                    let quantity = $(this).find('input[name=quantity]').val();
+                    console.log(quantity)
+                    //buy quantity return if illegal
+                    if (quantity <= 0 || isNaN(quantity)) {
+                        return;
+                    }
+
+                    res.items.push({
+                        'quantity': quantity,
+                        'sku_id': $(this).data('id')
+                    });
+                });
+                axios.post('{{route('orders.store')}}',res).then(function(){
+
+                    if (res.data.errno === 0) {
+                        swal.fire('success', '{{__('sweetalert.success')}}', 'success');
+                    } else {
+                        if (res.data.message) {
+                            swal.fire('error', res.data.message, 'error');
+                        } else {
+                            swal.fire('error', '{{__('sweetalert.error')}}', 'error');
+                        }
+                    }
+                },function(){
+
+                });
+
+            });
         });
     </script>
 @endsection

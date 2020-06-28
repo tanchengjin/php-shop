@@ -24,6 +24,8 @@ Route::get('products/{id}', 'ProductController@show')->name('products.show');
 Route::group(['middleware'=>'auth'], function () {
     Route::post('carts/add', 'CartController@store')->name('carts.store');
     Route::get('carts/index','CartController@index')->name('carts.index');
+
+    Route::post('orders','OrderController@store')->name('orders.store');
 });
 
 Auth::routes();
