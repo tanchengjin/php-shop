@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('center.orders.order');
+        $orders=$request->user()->orders()->orderBy('created_at','desc')->get();
+        return view('center.orders.order',[
+            'orders'=>$orders
+        ]);
     }
 }

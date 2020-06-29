@@ -29,4 +29,11 @@ return [
     'dashboard'=>'用户中心',
     'address'=>'地址',
     'logout'=>'登出',
+
+    'view'=>'查看',
+    'order_no'=>'订单号',
+    'order_date'=>'创建时间',
+    'order_status'=>'订单状态',
+    'order_total'=>'订单总价',
+    'action'=>'操作'
 ];

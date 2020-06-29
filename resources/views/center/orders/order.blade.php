@@ -1,33 +1,28 @@
 @extends('center.main')
 @section('tab')
-    <div class="tab-pane fade" id="orders">
-        <h3>Orders</h3>
+    <div id="orders">
+        <h3>{{__('website.my_order')}}</h3>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Order</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Total</th>
-                    <th>Actions</th>
+                    <th>{{__('website.order_no')}}</th>
+                    <th>{{__('website.order_date')}}</th>
+                    <th>{{__('website.order_status')}}</th>
+                    <th>{{__('website.order_total')}}</th>
+                    <th>{{__('website.action')}}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>May 10, 2018</td>
-                    <td><span class="success">Completed</span></td>
-                    <td>$25.00 for 1 item </td>
-                    <td><a href="cart.html" class="view">view</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>May 10, 2018</td>
-                    <td>Processing</td>
-                    <td>$17.00 for 1 item </td>
-                    <td><a href="cart.html" class="view">view</a></td>
-                </tr>
+                @foreach($orders as $order)
+                    <tr>
+                        <td>{{$order->no}}</td>
+                        <td>{{$order->created_at}}</td>
+                        <td><span class="success">Completed</span></td>
+                        <td>￥{{number_format($order->total_price,2)}}</td>
+                        <td><a href="cart.html" class="view">{{__('website.view')}}</a></td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

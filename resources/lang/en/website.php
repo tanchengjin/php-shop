@@ -29,5 +29,11 @@ return [
     'dashboard'=>'Dashboard',
     'address'=>'Addresses',
     'logout'=>'Logout',
+    'view'=>'View',
+    'order_no'=>'Order No',
+    'order_date'=>'Date',
+    'order_status'=>'Status',
+    'order_total'=>'Total',
+    'action'=>'action'
 
 ];
