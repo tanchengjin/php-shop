@@ -20,7 +20,7 @@ class CartService
                 $cart = new Cart([
                     'quantity' => $quantity,
                 ]);
-                $cart->productSku()->associate($sku_id);
+                $cart->sku()->associate($sku_id);
                 $cart->user()->associate($user);
                 $cart->save();
             }

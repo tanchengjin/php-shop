@@ -25,4 +25,8 @@ return [
     'stock'=>'库存',
     'checkout'=>'登出',
     'view_cart'=>'查看购物车',
+    'my_order'=>'我的订单',
+    'dashboard'=>'用户中心',
+    'address'=>'地址',
+    'logout'=>'登出',
 ];

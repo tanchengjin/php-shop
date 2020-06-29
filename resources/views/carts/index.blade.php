@@ -154,8 +154,6 @@
             }
 
             $('#create_order').click(function () {
-                console.log(123)
-
                 let res = {
 
                     items: [],
@@ -181,10 +179,10 @@
                         'sku_id': $(this).data('id')
                     });
                 });
-                axios.post('{{route('orders.store')}}',res).then(function(){
 
+                axios.post('{{route('orders.store')}}',res).then(function(res){
                     if (res.data.errno === 0) {
-                        swal.fire('success', '{{__('sweetalert.success')}}', 'success');
+                        location.href="{{route('center.order.index')}}";
                     } else {
                         if (res.data.message) {
                             swal.fire('error', res.data.message, 'error');
@@ -192,8 +190,8 @@
                             swal.fire('error', '{{__('sweetalert.error')}}', 'error');
                         }
                     }
-                },function(){
-
+                },function(err){
+                    swal.fire('error','{{__('sweetalert.error_internal_server')}}','error')
                 });
 
             });

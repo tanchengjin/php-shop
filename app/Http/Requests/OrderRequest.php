@@ -18,6 +18,7 @@ class OrderRequest extends BaseRequest
         return [
             'address_id' => ['required', 'integer'],
             'remark' => 'required',
+            'items' => ['required', 'array'],
             'items.*.sku_id' => ['required', 'integer', function ($attribute, $value, $fail) {
                 if (!$sku = ProductSku::find($value)) {
                     return $fail('商品不存在');
@@ -37,7 +38,7 @@ class OrderRequest extends BaseRequest
                     return $fail('商品库存不足');
                 }
             }],
-            'items.*.quantity' => ['required', 'integer'],
+            'items.*.quantity' => ['required', 'integer', 'min:1'],
         ];
     }
 }

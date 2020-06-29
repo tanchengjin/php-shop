@@ -25,4 +25,9 @@ return [
     'stock'=>'Stock',
     'checkout'=>'Checkout',
     'view_cart'=>'View Cart',
+    'my_order'=>'Orders',
+    'dashboard'=>'Dashboard',
+    'address'=>'Addresses',
+    'logout'=>'Logout',
+
 ];

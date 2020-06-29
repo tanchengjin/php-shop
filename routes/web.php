@@ -26,6 +26,11 @@ Route::group(['middleware'=>'auth'], function () {
     Route::get('carts/index','CartController@index')->name('carts.index');
 
     Route::post('orders','OrderController@store')->name('orders.store');
+
+    Route::get('center/index','Center\IndexController@index')->name('center.index');
+
+    Route::get('center/order/index','Center\OrderController@index')->name('center.order.index');
+    Route::get('center/address/index','Center\AddressController@index')->name('center.address.index');
 });
 
 Auth::routes();
