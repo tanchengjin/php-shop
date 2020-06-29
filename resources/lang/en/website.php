@@ -34,6 +34,12 @@ return [
     'order_date'=>'Date',
     'order_status'=>'Status',
     'order_total'=>'Total',
-    'action'=>'action'
+    'action'=>'action',
+    'page_not_found_content' => "Sorry but the page you are looking for does not exist, have been",
+    'page_not_found_content_too' => "removed, name changed or
+                            is temporarily unavailable.",
+    'page_not_found'=>'OPPS! PAGE NOT BE FOUND',
+    'back_to_home'=>'Back To Home Page',
+
 
 ];

@@ -8,6 +8,11 @@ trait API
 {
     private $statusCode = 200;
 
+    /**
+     * @deprecated 已废弃
+     * @param $statusCode
+     * @return $this
+     */
     public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;

@@ -121,9 +121,13 @@
                     <div class="header_account_area">
                         <div class="header_account_list register">
                             <ul>
-                                <li><a href="login.html">{{__('website.register')}}</a></li>
-                                <li><span>/</span></li>
-                                <li><a href="login.html">{{__('website.login')}}</a></li>
+                                @if(\Illuminate\Support\Facades\Auth::check())
+                                    <li><a href="{{route('center.index')}}">{{__('user.center')}}</a></li>
+                                @else
+                                    <li><a href="{{route('login')}}">{{__('website.register')}}</a></li>
+                                    <li><span>/</span></li>
+                                    <li><a href="{{route('login')}}">{{__('website.login')}}</a></li>
+                                @endif
                             </ul>
                         </div>
                         <div class="header_account_list header_wishlist">
@@ -176,10 +180,12 @@
                                 </div>
                                 <div class="mini_cart_footer">
                                     <div class="cart_button">
-                                        <a href="{{route('carts.index')}}"><i class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
+                                        <a href="{{route('carts.index')}}"><i
+                                                class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
                                     </div>
                                     <div class="cart_button">
-                                        <a href="checkout.html"><i class="fa fa-sign-in"></i> {{__('website.checkout')}}</a>
+                                        <a href="checkout.html"><i class="fa fa-sign-in"></i> {{__('website.checkout')}}
+                                        </a>
                                     </div>
 
                                 </div>
@@ -358,9 +364,13 @@
                             <div class="header_account_area">
                                 <div class="header_account_list register">
                                     <ul>
-                                        <li><a href="login.html">{{__('website.register')}}</a></li>
-                                        <li><span>/</span></li>
-                                        <li><a href="login.html">{{__('website.login')}}</a></li>
+                                        @if(\Illuminate\Support\Facades\Auth::check())
+                                            <li><a href="{{route('center.index')}}">{{__('user.center')}}</a></li>
+                                        @else
+                                            <li><a href="{{route('login')}}">{{__('website.register')}}</a></li>
+                                            <li><span>/</span></li>
+                                            <li><a href="{{route('login')}}">{{__('website.login')}}</a></li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <div class="header_account_list header_wishlist">
@@ -414,7 +424,8 @@
                                         </div>
                                         <div class="mini_cart_footer">
                                             <div class="cart_button">
-                                                <a href="{{route('carts.index')}}"><i class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
+                                                <a href="{{route('carts.index')}}"><i
+                                                        class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
                                             </div>
                                             <div class="cart_button">
                                                 <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>

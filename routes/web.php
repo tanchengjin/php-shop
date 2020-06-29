@@ -24,13 +24,17 @@ Route::get('products/{id}', 'ProductController@show')->name('products.show');
 Route::group(['middleware'=>'auth'], function () {
     Route::post('carts/add', 'CartController@store')->name('carts.store');
     Route::get('carts/index','CartController@index')->name('carts.index');
-
+    #下单逻辑
     Route::post('orders','OrderController@store')->name('orders.store');
 
     Route::get('center/index','Center\IndexController@index')->name('center.index');
 
-    Route::get('center/order/index','Center\OrderController@index')->name('center.order.index');
+    Route::get('center/orders','Center\OrderController@index')->name('center.order.index');
+
+    Route::get('center/orders/{id}','Center\OrderController@show')->name('center.order.show');
+
     Route::get('center/address/index','Center\AddressController@index')->name('center.address.index');
+
 });
 
 Auth::routes();

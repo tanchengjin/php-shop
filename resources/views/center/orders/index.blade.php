@@ -20,7 +20,8 @@
                         <td>{{$order->created_at}}</td>
                         <td><span class="success">Completed</span></td>
                         <td>￥{{number_format($order->total_price,2)}}</td>
-                        <td><a href="cart.html" class="view">{{__('website.view')}}</a></td>
+                        <td><a href="{{route('center.order.show',['id'=>$order->id])}}"
+                               class="view">{{__('website.view')}}</a></td>
                     </tr>
                 @endforeach
                 </tbody>
