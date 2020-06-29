@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Jobs\CloseOrder;
 use App\Models\Order;
 use App\Models\ProductSku;
 use App\User;
@@ -12,8 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class OrderService
 {
-    private $order;
-
     public function store(User $user, int $address_id, array $items, string $remark)
     {
         try {
@@ -42,7 +41,10 @@ class OrderService
                 $order->update([
                     'total_price' => $totalPrice
                 ]);
-                $this->order = $order;
+
+                dispatch(new CloseOrder($order));
+                $ids = collect($orderItem)->pluck('id')->all();
+                (new CartService())->remove($ids);
             });
             return true;
         } catch (\Exception $exception) {

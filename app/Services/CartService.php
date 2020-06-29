@@ -30,4 +30,17 @@ class CartService
         }
         return true;
     }
+
+    public function remove($ids)
+    {
+        try {
+            if (!is_array($ids)) {
+                $ids = [$ids];
+            }
+            return Cart::query()->whereIn('id', $ids)->delete();
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+        return false;
+    }
 }

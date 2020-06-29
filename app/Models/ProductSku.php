@@ -15,4 +15,14 @@ class ProductSku extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
+    public function addStock($quantity = 1)
+    {
+        return $this->where('id', $this->id)->increment($quantity);
+    }
+
+    public function subtractStock($quantity = 1)
+    {
+        return $this->where('id', $this->id)->where('stock', '>', 0)->decrement($quantity);
+    }
 }

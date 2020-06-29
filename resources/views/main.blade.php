@@ -579,7 +579,7 @@
                         <div class="main_menu menu_position">
                             <nav>
                                 <ul>
-                                    <li><a href="index.html">{{__('website.home')}}</a>
+                                    <li><a href="{{route('index')}}">{{__('website.home')}}</a>
                                     </li>
                                     <li class="mega_items"><a class="active"
                                                               href="{{route('products.index')}}">{{__('website.shop')}}</a>
