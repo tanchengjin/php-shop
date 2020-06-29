@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Wishlist;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,5 +48,9 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class,'user_id','id');
+    }
+
+    public function wishlist(){
+        return $this->hasMany(Wishlist::class,'user_id','id');
     }
 }

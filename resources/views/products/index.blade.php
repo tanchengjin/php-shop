@@ -11,7 +11,8 @@
                             <div class="widget_list widget_categories">
                                 <h3>Women</h3>
                                 <ul>
-                                    <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)">Shoes</a>
+                                    <li class="widget_sub_categories sub_categories1"><a
+                                            href="javascript:void(0)">Shoes</a>
                                         <ul class="widget_dropdown_categories dropdown_categories1">
                                             <li><a href="#">Document</a></li>
                                             <li><a href="#">Dropcap</a></li>
@@ -20,7 +21,8 @@
                                             <li><a href="#">Fancy Text</a></li>
                                         </ul>
                                     </li>
-                                    <li class="widget_sub_categories sub_categories2"><a href="javascript:void(0)">Bags</a>
+                                    <li class="widget_sub_categories sub_categories2"><a
+                                            href="javascript:void(0)">Bags</a>
                                         <ul class="widget_dropdown_categories dropdown_categories2">
                                             <li><a href="#">Flickr</a></li>
                                             <li><a href="#">Flip Box</a></li>
@@ -174,9 +176,11 @@
                                 <div class="single_product">
                                     <div class="product_thumb">
                                         @if(count($product->images) > 0)
-                                            <a class="primary_img" href="{{route('products.show',['id'=>$product->id])}}"><img
+                                            <a class="primary_img"
+                                               href="{{route('products.show',['id'=>$product->id])}}"><img
                                                     src="assets/img/product/productbig1.jpg" alt=""></a>
-                                            <a class="secondary_img" href="{{route('products.show',['id'=>$product->id])}}"><img
+                                            <a class="secondary_img"
+                                               href="{{route('products.show',['id'=>$product->id])}}"><img
                                                     src="assets/img/product/productbig2.jpg" alt=""></a>
                                             <div class="label_product">
                                                 <span class="label_sale">Sale</span>
@@ -184,10 +188,12 @@
                                             </div>
                                             <div class="action_links">
                                                 <ul>
-                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart"><span
+                                                    <li class="add_to_cart"><a href="cart.html"
+                                                                               title="Add to cart"><span
                                                                 class="lnr lnr-cart"></span></a></li>
                                                     <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box" title="quick view">
+                                                                                data-target="#modal_box"
+                                                                                title="quick view">
                                                             <span class="lnr lnr-magnifier"></span></a></li>
                                                     <li class="wishlist"><a href="wishlist.html"
                                                                             title="Add to Wishlist"><span
@@ -197,12 +203,15 @@
                                                 </ul>
                                             </div>
                                         @else
-                                            <a class="primary_img" href="{{route('products.show',['id'=>$product->id])}}"><img
+                                            <a class="primary_img"
+                                               href="{{route('products.show',['id'=>$product->id])}}"><img
                                                     src="{{asset('assets/img/error.png')}}" alt=""></a>
                                         @endif
                                     </div>
                                     <div class="product_content grid_content">
-                                        <h4 class="product_name"><a href="{{route('products.show',['id'=>$product->id])}}">Aliquam Consequat</a></h4>
+                                        <h4 class="product_name"><a
+                                                href="{{route('products.show',['id'=>$product->id])}}">Aliquam
+                                                Consequat</a></h4>
                                         <p><a href="#">Fruits</a></p>
                                         <div class="price_box">
                                             <span class="current_price">$26.00</span>
@@ -210,7 +219,9 @@
                                         </div>
                                     </div>
                                     <div class="product_content list_content">
-                                        <h4 class="product_name"><a href="{{route('products.show',['id'=>$product->id])}}">{{$product->title}}</a></h4>
+                                        <h4 class="product_name"><a
+                                                href="{{route('products.show',['id'=>$product->id])}}">{{$product->title}}</a>
+                                        </h4>
                                         <p><a href="#">Fruits</a></p>
                                         <div class="price_box">
                                             <span class="current_price">￥{{number_format($product->price,2)}}</span>
@@ -228,7 +239,8 @@
                                                                             title="{{__('website.quick_view')}}"> <span
                                                             class="lnr lnr-magnifier"></span></a></li>
                                                 <li class="wishlist"><a href="wishlist.html"
-                                                                        title="{{__('website.add_to_wishlist')}}"><span
+                                                                        title="{{__('website.add_to_wishlist')}}"
+                                                                        class="wishlist" data-id="{{$}}"><span
                                                             class="lnr lnr-heart"></span></a></li>
                                                 <li class="compare"><a href="#"
                                                                        title="{{__('website.add_to_compare')}}"><span
@@ -253,4 +265,14 @@
         </div>
     </div>
     <!--shop  area end-->
+@endsection
+
+@section('javascript')
+    <script>
+        $(document).ready(function () {
+            $('.wishlist').click(function () {
+                console.log($(this).data('id'));
+            });
+        });
+    </script>
 @endsection
