@@ -7,7 +7,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="alert alert-danger">
-                            请于 <strong>{{$order->created_at}}</strong> 之前支付该订单
+                            @if($order->closed)
+                                该订单已关闭
+                            @else
+                                请于 <strong>{{$order->created_at->addSecond(config('shop.order_ttl'))}}</strong> 之前支付该订单
+                            @endif
                         </div>
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
@@ -40,18 +44,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="cart_submit">
-                                <button type="submit">update cart</button>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <!--coupon code area start-->
                 <div class="coupon_area">
                     <div class="row">
-                        @if(!$order->closed)
 
-                            <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-6 col-md-6">
+                            @if(!$order->closed)
+
                                 <div class="coupon_code left">
                                     <h3>Coupon</h3>
                                     <div class="coupon_inner">
@@ -60,31 +62,38 @@
                                         <button type="submit">Apply coupon</button>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
+
+                        </div>
 
                         <div class="col-lg-6 col-md-6">
                             <div class="coupon_code right">
-                                <h3>Cart Totals</h3>
+                                <h3>{{__('order.order_total')}}</h3>
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
-                                        <p>Subtotal</p>
+                                        <p>{{__('order.order_subtotal')}}</p>
                                         <p class="cart_amount">{{number_format($order->total_price,2)}}</p>
                                     </div>
                                     <div class="cart_subtotal ">
-                                        <p>Shipping</p>
+                                        <p>{{__('order.shipping')}}</p>
                                         <p class="cart_amount"><span>Flat Rate:</span>
                                             ￥{{number_format($order->shopping)}}</p>
                                     </div>
                                     <a href="#">Calculate shipping</a>
 
                                     <div class="cart_subtotal">
-                                        <p>Total</p>
+                                        <p>{{__('order.total')}}</p>
                                         <p class="cart_amount">￥{{number_format($order->total_price,2)}}</p>
                                     </div>
-                                    <div class="checkout_btn">
-                                        <a href="#">Proceed to Checkout</a>
-                                    </div>
+                                    @if(!$order->closed)
+                                        <div class="checkout_btn">
+                                            <a href="#">{{__('order.pay')}}</a>
+                                        </div>
+                                    @else
+                                        <div class="checkout_btn">
+                                            <button class="disabled" type="button">该订单已关闭</button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

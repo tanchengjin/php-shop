@@ -18,11 +18,11 @@ class ProductSku extends Model
 
     public function addStock($quantity = 1)
     {
-        return $this->where('id', $this->id)->increment($quantity);
+        return $this->where('id', $this->id)->increment('stock',$quantity);
     }
 
     public function subtractStock($quantity = 1)
     {
-        return $this->where('id', $this->id)->where('stock', '>', 0)->decrement($quantity);
+        return $this->where('id', $this->id)->where('stock', '>', 0)->decrement('stock',$quantity);
     }
 }

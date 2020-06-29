@@ -36,6 +36,7 @@ class OrderService
                     $orderItem->product()->associate($sku->product);
                     $orderItem->sku()->associate($sku);
                     $orderItem->save();
+                    $sku->subtractStock($item['quantity']);
                     $totalPrice += ($sku->price * $item['quantity']);
                 }
                 $order->update([
@@ -43,7 +44,7 @@ class OrderService
                 ]);
 
                 dispatch(new CloseOrder($order));
-                $ids = collect($orderItem)->pluck('id')->all();
+                $ids = collect($order->items)->pluck('product_sku_id')->all();
                 (new CartService())->remove($ids);
             });
             return true;

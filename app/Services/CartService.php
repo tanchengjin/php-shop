@@ -37,7 +37,7 @@ class CartService
             if (!is_array($ids)) {
                 $ids = [$ids];
             }
-            return Cart::query()->whereIn('id', $ids)->delete();
+            return Cart::query()->whereIn('product_sku_id', $ids)->delete();
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
         }

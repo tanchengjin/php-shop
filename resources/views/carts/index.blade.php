@@ -70,25 +70,25 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="coupon_code right">
-                                <h3>Cart Totals</h3>
+                                <h3>{{__('cart.price')}}</h3>
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
-                                        <p>Subtotal</p>
+                                        <p>{{__('order.order_subtotal')}}</p>
                                         <p class="cart_amount">£215.00</p>
                                     </div>
                                     <div class="cart_subtotal ">
-                                        <p>Shipping</p>
+                                        <p>{{__('order.shipping')}}</p>
                                         <p class="cart_amount"><span>Flat Rate:</span> £255.00</p>
                                     </div>
                                     <a href="#">Calculate shipping</a>
 
                                     <div class="cart_subtotal">
-                                        <p>Total</p>
+                                        <p>{{__('order.total')}}</p>
                                         <p class="cart_amount">£215.00</p>
                                     </div>
                                     <div class="checkout_btn">
-                                        <a href="#">Proceed to Checkout</a>
-                                        <button id="create_order" type="button">提交</button>
+{{--                                        <a href="#">Proceed to Checkout</a>--}}
+                                        <a id="create_order" type="button" href="javascript:void(0);">提交</a>
                                     </div>
                                 </div>
                             </div>

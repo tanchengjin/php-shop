@@ -44,6 +44,9 @@ class CloseOrder implements ShouldQueue
                     $sku = ProductSku::find($item['product_sku_id']);
                     $sku->addStock($item['quantity']);
                 }
+                $this->order->update([
+                    'closed'=>1
+                ]);
             });
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
