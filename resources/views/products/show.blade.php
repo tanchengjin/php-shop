@@ -755,7 +755,18 @@
                     quantity: quantity
                 }).then(function (res) {
                     if (res.data.errno === 0) {
-                        swal.fire('success', '{{__('sweetalert.operation_success')}}', 'success');
+                        swal.fire({
+                            'title':'success',
+                            text:'{{__('sweetalert.go_shopping_cart_confirm')}}',
+                            icon:'success',
+                            showCancelButton:true,
+                            confirmButtonText:'{{__('sweetalert.go_shopping_cart')}}',
+                            preConfirm(inputValue) {
+                                if(inputValue){
+                                    location.href="{{route('carts.index')}}";
+                                }
+                            }
+                        });
                     } else {
                         if (res.data.message) {
                             swal.fire('error', res.data.message, 'error');

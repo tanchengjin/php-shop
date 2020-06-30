@@ -10,4 +10,6 @@ return [
     'success'=>'成功',
     'operation_success'=>'操作成功',
     'operation_error'=>'操作失败',
+    'go_shopping_cart' => '查看购物车',
+    'go_shopping_cart_confirm' => '是否查看购物车',
 ];

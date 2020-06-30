@@ -38,6 +38,9 @@ return [
     'page_not_found_content' => "您正在寻找的页面不存在",
     'page_not_found_content_too' => "已被删除，名称更改或
 暂时不可用。",
-    'page_not_found'=>'404 网页未找到',
-    'back_to_home'=>'返回首页',
+    'page_not_found' => '404 网页未找到',
+    'back_to_home' => '返回首页',
+    'pay_now' => '现在支付',
+    'go_now' => '现在去',
+
 ];

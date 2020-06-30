@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{$order->no}}</td>
                         <td>{{$order->created_at}}</td>
-                        <td><span class="success">Completed</span></td>
+                        <td><span class="success">{{$order->order_status}}</span></td>
                         <td>￥{{number_format($order->total_price,2)}}</td>
                         <td><a href="{{route('center.order.show',['id'=>$order->id])}}"
                                class="view">{{__('website.view')}}</a></td>

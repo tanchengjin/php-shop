@@ -40,6 +40,8 @@ return [
                             is temporarily unavailable.",
     'page_not_found'=>'OPPS! PAGE NOT BE FOUND',
     'back_to_home'=>'Back To Home Page',
+    'pay_now'=>'Payment Now',
+    'go_now'=>'Now',
 
 
 ];

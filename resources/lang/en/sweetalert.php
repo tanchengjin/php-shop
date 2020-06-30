@@ -10,4 +10,6 @@ return [
     'success'=>'Success',
     'operation_success'=>'Success',
     'operation_error'=>'Error',
+    'go_shopping_cart'=>'Go Shopping Cart Now!',
+    'go_shopping_cart_confirm' => 'Show Shopping Cart Now?',
 ];

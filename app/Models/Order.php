@@ -64,4 +64,15 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function getOrderStatusAttribute()
+    {
+        if ($this->paid_at) {
+            return '已支付';
+        } elseif ($this->closed) {
+            return '订单已关闭';
+        } else {
+            return '未付款';
+        }
+    }
 }

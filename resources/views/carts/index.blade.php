@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
     <!--shopping cart area start -->
-    <div class="shopping_cart_area mt-70">
+    <div class="shopping_cart_area mt-70" id="vue_cart">
         <div class="container">
             <form action="{{route('orders.store')}}" method="post">
                 {{csrf_field()}}
@@ -74,20 +74,20 @@
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
                                         <p>{{__('order.order_subtotal')}}</p>
-                                        <p class="cart_amount">£215.00</p>
+                                        <p class="cart_amount" id="subtotalBox">@{{ subtotal }}</p>
                                     </div>
                                     <div class="cart_subtotal ">
                                         <p>{{__('order.shipping')}}</p>
-                                        <p class="cart_amount"><span>Flat Rate:</span> £255.00</p>
+                                        <p class="cart_amount" id="shippingBox"><span>Flat Rate:</span> £255.00</p>
                                     </div>
                                     <a href="#">Calculate shipping</a>
 
                                     <div class="cart_subtotal">
                                         <p>{{__('order.total')}}</p>
-                                        <p class="cart_amount">£215.00</p>
+                                        <p class="cart_amount" id="totalBox">£215.00</p>
                                     </div>
                                     <div class="checkout_btn">
-{{--                                        <a href="#">Proceed to Checkout</a>--}}
+                                        {{--                                        <a href="#">Proceed to Checkout</a>--}}
                                         <a id="create_order" type="button" href="javascript:void(0);">提交</a>
                                     </div>
                                 </div>
@@ -121,44 +121,33 @@
                         'quantity': quantity
                     });
                 });
-                //所有商品总价
-                total = setCartPrice(item);
-
             });
 
             $('input[type=checkbox]').on('change', function () {
-
+                console.log();
+                //获取当前商品总价
+                let price = $(this).closest('tr').data('price');
                 if ($(this).prop('checked')) {
-                    //click
-                    console.log('ok')
+                    let price = getTotalPrice();
+                    setPriceBox(price);
                 } else {
                     //cancel
+                    let totalPrice = getTotalPrice();
+                    let $price = $(this).closest('tr');
+                    console.log(totalPrice,$price.data('price')*$price.data('quantity'));
+                    setPriceBox(parseFloat(totalPrice-($price.data('price') * $price.data('quantity'))));
                 }
                 var s = $('input[type=checkbox][class=checkbox]');
                 let box = $(this).closest('tr');
-                console.log(s);
             });
 
-            /**
-             * 计算所有商品价格
-             * @param item
-             * @returns {number}
-             */
-            function setCartPrice(item) {
-                let total = 0;
-                $.each(item, function (key, value) {
-                    total += value.price * value.quantity;
-                });
-
-                return total;
-            }
 
             $('#create_order').click(function () {
                 let res = {
 
                     items: [],
                     address_id: 1,
-                    remark:'123',
+                    remark: '123',
                 };
 
                 $('tr[data-id]').each(function () {
@@ -180,9 +169,9 @@
                     });
                 });
 
-                axios.post('{{route('orders.store')}}',res).then(function(res){
+                axios.post('{{route('orders.store')}}', res).then(function (res) {
                     if (res.data.errno === 0) {
-                        location.href="{{route('center.order.index')}}";
+                        location.href = "{{route('center.order.index')}}";
                     } else {
                         if (res.data.message) {
                             swal.fire('error', res.data.message, 'error');
@@ -190,11 +179,19 @@
                             swal.fire('error', '{{__('sweetalert.error')}}', 'error');
                         }
                     }
-                },function(err){
-                    swal.fire('error','{{__('sweetalert.error_internal_server')}}','error')
+                }, function (err) {
+                    swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
                 });
 
             });
+        });
+        var vue=new Vue({
+            el:'#vue_cart',
+            data:{
+                subtotal:0,
+                shipping:0
+            },
+            methods:{}
         });
     </script>
 @endsection
