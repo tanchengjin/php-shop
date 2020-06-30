@@ -7,6 +7,8 @@
     <title>Safira - product details</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}">
 
@@ -41,7 +43,6 @@
     <!--modernizr min js here-->
     <script src="{{asset('assets/js/vendor/modernizr-3.7.1.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 
 <body>

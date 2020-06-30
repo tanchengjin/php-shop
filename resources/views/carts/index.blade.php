@@ -25,7 +25,9 @@
                                     @foreach($carts as $cart)
                                         <tr data-id="{{$cart->sku->id}}" data-price="{{$cart->sku->price}}"
                                             data-quantity="{{$cart->quantity}}">
-                                            <td><input type="checkbox" class="checkbox"></td>
+                                            <td><input type="checkbox" class="checkbox"
+                                                       v-model="test" :value="{{$cart->sku->price*$cart->quantity}}">
+                                            </td>
                                             <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                             <td class="product_thumb"><a
@@ -74,17 +76,18 @@
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
                                         <p>{{__('order.order_subtotal')}}</p>
-                                        <p class="cart_amount" id="subtotalBox">@{{ subtotal }}</p>
+                                        <p class="cart_amount" id="subtotalBox">￥ @{{ subtotal }}</p>
                                     </div>
                                     <div class="cart_subtotal ">
                                         <p>{{__('order.shipping')}}</p>
-                                        <p class="cart_amount" id="shippingBox"><span>Flat Rate:</span> £255.00</p>
+                                        <p class="cart_amount" id="shippingBox"><span>Flat Rate:</span> ￥ @{{ shipping
+                                            }}</p>
                                     </div>
                                     <a href="#">Calculate shipping</a>
 
                                     <div class="cart_subtotal">
                                         <p>{{__('order.total')}}</p>
-                                        <p class="cart_amount" id="totalBox">£215.00</p>
+                                        <p class="cart_amount" id="totalBox">￥ @{{ totalPrice }}</p>
                                     </div>
                                     <div class="checkout_btn">
                                         {{--                                        <a href="#">Proceed to Checkout</a>--}}
@@ -105,9 +108,9 @@
 @section('javascript')
     <script>
         $(document).ready(function () {
+
             //全选checkbox
             $('.select_all').click(function () {
-
                 let status = $(this).prop('checked');
                 let checkbox = $('input[type=checkbox][class=checkbox]:not("disabled")');
                 let total = 0;
@@ -121,24 +124,14 @@
                         'quantity': quantity
                     });
                 });
+                let totalPrice = getTotalPrice();
+                setPriceBox(totalPrice);
+
             });
 
             $('input[type=checkbox]').on('change', function () {
-                console.log();
-                //获取当前商品总价
-                let price = $(this).closest('tr').data('price');
-                if ($(this).prop('checked')) {
-                    let price = getTotalPrice();
-                    setPriceBox(price);
-                } else {
-                    //cancel
-                    let totalPrice = getTotalPrice();
-                    let $price = $(this).closest('tr');
-                    console.log(totalPrice,$price.data('price')*$price.data('quantity'));
-                    setPriceBox(parseFloat(totalPrice-($price.data('price') * $price.data('quantity'))));
-                }
-                var s = $('input[type=checkbox][class=checkbox]');
-                let box = $(this).closest('tr');
+                let totalPrice=getTotalPrice();
+                setPriceBox(totalPrice);
             });
 
 
@@ -184,14 +177,24 @@
                 });
 
             });
-        });
-        var vue=new Vue({
-            el:'#vue_cart',
-            data:{
-                subtotal:0,
-                shipping:0
-            },
-            methods:{}
+
+            /**
+             * 计算所有选中的商品价格
+             * @returns {number}
+             */
+            function getTotalPrice() {
+                let totalPrice = 0;
+                $('tr[data-id]').find('input[type=checkbox]:checked').each(function () {
+                    totalPrice += parseFloat($(this).closest('tr').data('price') * $(this).closest('tr').data('quantity'));
+                })
+                return totalPrice;
+            }
+
+            function setPriceBox(subtotal = 0, shipping = 0, coupon = 0) {
+                $('#subtotalBox').html('￥' + subtotal.toFixed(2));
+                $('#shippingBox').html('￥' + shipping);
+                $('#totalBox').html('￥' + subtotal.toFixed(2))
+            }
         });
     </script>
 @endsection

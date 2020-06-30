@@ -52,18 +52,6 @@
                     <div class="row">
 
                         <div class="col-lg-6 col-md-6">
-                            @if(!$order->closed)
-
-                                <div class="coupon_code left">
-                                    <h3>Coupon</h3>
-                                    <div class="coupon_inner">
-                                        <p>Enter your coupon code if you have one.</p>
-                                        <input placeholder="Coupon code" type="text">
-                                        <button type="submit">Apply coupon</button>
-                                    </div>
-                                </div>
-                            @endif
-
                         </div>
 
                         <div class="col-lg-6 col-md-6">
@@ -85,13 +73,17 @@
                                         <p>{{__('order.total')}}</p>
                                         <p class="cart_amount">￥{{number_format($order->total_price,2)}}</p>
                                     </div>
-                                    @if(!$order->closed)
+                                    @if($order->paid_at)
                                         <div class="checkout_btn">
-                                            <a href="#">{{__('order.pay')}}</a>
+                                            <a href="javascript:void(0);">{{__('order.have_paid')}}</a>
+                                        </div>
+                                    @elseif($order->closed)
+                                        <div class="checkout_btn">
+                                            <button class="disabled" type="button">该订单已关闭</button>
                                         </div>
                                     @else
                                         <div class="checkout_btn">
-                                            <button class="disabled" type="button">该订单已关闭</button>
+                                            <a href="{{route('orders.confirm',$order->id)}}">{{__('order.pay')}}</a>
                                         </div>
                                     @endif
                                 </div>

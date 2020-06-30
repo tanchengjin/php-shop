@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('carts/index', 'CartController@index')->name('carts.index');
     #下单逻辑
     Route::post('orders', 'OrderController@store')->name('orders.store');
+    Route::get('orders/{id}/confirm','OrderController@confirm')->name('orders.confirm');
 
     Route::get('center/index', 'Center\IndexController@index')->name('center.index');
 
@@ -37,7 +38,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     #wishlist
     Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
-
     Route::post('wishlist','WishlistController@store')->name('wishlist.store');
     Route::delete('wishlist/{id}','WishlistController@destroy')->name('wishlist.destroy');
 });
