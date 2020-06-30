@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WishlistRequest;
+use App\Librarys\API;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
+    use API;
+
     public function index(Request $request)
     {
         $wishlists = $request->user()->wishlist()->with(['sku', 'sku.product'])->get();
@@ -18,8 +21,20 @@ class WishlistController extends Controller
 
     public function store(WishlistRequest $request)
     {
-        $wishlist = $request->user()->wishlist()->create([
-            'product_sku_id' => $request->input('id')
-        ]);
+        if ($request->user()->wishlist()->create(['product_id' => $request->input('id')])) {
+            return $this->success();
+        } else {
+            return $this->error();
+        }
+    }
+
+    public function destroy($id,Request $request)
+    {
+        if ($wishlist=$request->user()->wishlist()->where('product_id', $id)->first()) {
+            $wishlist->delete();
+            return $this->success();
+        } else {
+            return $this->error();
+        }
     }
 }

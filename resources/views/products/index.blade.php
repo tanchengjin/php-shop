@@ -195,7 +195,7 @@
                                                                                 data-target="#modal_box"
                                                                                 title="quick view">
                                                             <span class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
+                                                    <li class="wishlist"><a href="javascript:void(0);"
                                                                             title="Add to Wishlist"><span
                                                                 class="lnr lnr-heart"></span></a></li>
                                                     <li class="compare"><a href="#" title="Add to Compare"><span
@@ -238,9 +238,10 @@
                                                                             data-target="#modal_box"
                                                                             title="{{__('website.quick_view')}}"> <span
                                                             class="lnr lnr-magnifier"></span></a></li>
-                                                <li class="wishlist"><a href="wishlist.html"
+                                                <li class="wishlist"><a href="javascript:void(0);"
                                                                         title="{{__('website.add_to_wishlist')}}"
-                                                                        class="wishlist" data-id="{{$}}"><span
+                                                                        class="add_to_wishlist"
+                                                                        data-id="{{$product->id}}"><span
                                                             class="lnr lnr-heart"></span></a></li>
                                                 <li class="compare"><a href="#"
                                                                        title="{{__('website.add_to_compare')}}"><span
@@ -270,9 +271,70 @@
 @section('javascript')
     <script>
         $(document).ready(function () {
-            $('.wishlist').click(function () {
-                console.log($(this).data('id'));
+            $('body').on('click','.remove_wishlist',function(){
+
+                $box = $(this);
+
+                let id = $box.data('id');
+                axios.delete('/wishlist/'+id).then(function (res) {
+                    console.log(res)
+                    $box.removeAttr('style');
+                    $box.removeClass('remove_wishlist');
+                    $box.addClass('add_to_wishlist');
+                    swal.fire('success','{{__('sweetalert.operation_success')}}','success')
+                }, function (err) {
+                    if (err.response.status === 401) {
+                        swal.fire({
+                            title: 'error',
+                            text: '{{__('sweetalert.please_login')}}',
+                            icon: 'error',
+                            preConfirm(inputValue) {
+                                if (inputValue) {
+                                    location.href = "{{route('login')}}";
+                                }
+                            }
+                        });
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+                    }
+                });
             });
+
+
+            $('body').on('click','.add_to_wishlist',function () {
+                $box = $(this);
+
+                let id = $(this).data('id');
+                axios.post('{{route('wishlist.store')}}', {
+                    id: id
+                }).then(function (res) {
+                    $box.css({
+                        'background': '#40A944',
+                        'color': '#ffffff'
+                    });
+                    $box.removeClass('add_to_wishlist');
+                    $box.addClass('remove_wishlist');
+                    swal.fire('success','{{__('sweetalert.operation_success')}}','success')
+
+                }, function (err) {
+                    if (err.response.status === 401) {
+                        swal.fire({
+                            title: 'error',
+                            text: '{{__('sweetalert.please_login')}}',
+                            icon: 'error',
+                            preConfirm(inputValue) {
+                                if (inputValue) {
+                                    location.href = "{{route('login')}}";
+                                }
+                            }
+                        });
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+                    }
+                });
+            });
+
+
         });
     </script>
 @endsection
