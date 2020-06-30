@@ -22,6 +22,8 @@ class NotFoundException extends Exception
             return $this->error()->setStatusCode(404);
         }
 
-        return view('errors.404');
+        return view('errors.404', [
+            'message' => $this->message
+        ]);
     }
 }

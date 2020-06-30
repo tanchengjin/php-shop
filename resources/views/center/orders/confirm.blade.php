@@ -217,7 +217,8 @@
                                     <tbody>
                                     @foreach($order->items as $item)
                                         <tr>
-                                            <td>{{$item->product->title}} {{$item->sku->title}}<strong> × {{$item->quantity}}</strong></td>
+                                            <td>{{$item->product->title}} {{$item->sku->title}}<strong>
+                                                    × {{$item->quantity}}</strong></td>
                                             <td> ￥{{$item->price}}</td>
                                         </tr>
                                     @endforeach
@@ -266,7 +267,10 @@
                                     </div>
                                 </div>
                                 <div class="order_button">
-                                    <button type="submit">{{__('order.alipay')}}</button>
+                                    <button class="to_pay">
+                                        <a href="{{route('orders.payment.alipay',['order'=>$order->id])}}"
+                                           target="_blank">{{__('order.alipay')}}</a>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -276,4 +280,23 @@
         </div>
     </div>
     <!--Checkout page section end-->
+@endsection
+
+@section('javascript')
+    <script>
+        $('.to_pay').on('click', function () {
+            swal.fire({
+                title: '是否支付成功?',
+                icon: "question",
+                confirmButtonText: '已支付',
+                showCancelButton: true,
+                cancelButtonText: '未支付',
+                preConfirm(inputValue) {
+                    if (inputValue) {
+                        location.href = "{{route('center.order.index')}}"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

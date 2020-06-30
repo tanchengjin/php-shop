@@ -21,12 +21,15 @@ Route::get('/', function () {
 Route::get('products', 'ProductController@index')->name('products.index');
 Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
+Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
+
+
 Route::group(['middleware' => 'auth'], function () {
     Route::post('carts/add', 'CartController@store')->name('carts.store');
     Route::get('carts/index', 'CartController@index')->name('carts.index');
     #下单逻辑
     Route::post('orders', 'OrderController@store')->name('orders.store');
-    Route::get('orders/{id}/confirm','OrderController@confirm')->name('orders.confirm');
+    Route::get('orders/{id}/confirm', 'OrderController@confirm')->name('orders.confirm');
 
     Route::get('center/index', 'Center\IndexController@index')->name('center.index');
 
@@ -38,8 +41,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     #wishlist
     Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
-    Route::post('wishlist','WishlistController@store')->name('wishlist.store');
-    Route::delete('wishlist/{id}','WishlistController@destroy')->name('wishlist.destroy');
+    Route::post('wishlist', 'WishlistController@store')->name('wishlist.store');
+    Route::delete('wishlist/{id}', 'WishlistController@destroy')->name('wishlist.destroy');
+
+
+    Route::get('order/{order}/alipay', 'PaymentController@alipay')->name('orders.payment.alipay');
+    Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
 });
 
 Auth::routes();

@@ -9,7 +9,7 @@ class Order extends Model
 {
     protected $fillable = [
         'address', 'closed', 'reviewed', 'paid_at', 'payment_no', 'no', 'payment_method',
-        'refund_status', 'refund_no', 'total_price'
+        'refund_status', 'refund_no', 'total_price','paid_price'
     ];
     protected $casts = [
         'address' => 'array'
