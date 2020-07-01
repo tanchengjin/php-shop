@@ -42,5 +42,8 @@ return [
     'back_to_home' => '返回首页',
     'pay_now' => '现在支付',
     'go_now' => '现在去',
+    'my_address'=>'我的地址',
+    'address_contact_name'=>'联系人',
+    'address_contact_phone'=>'手机号',
 
 ];

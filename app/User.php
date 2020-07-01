@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Wishlist;
@@ -42,15 +43,21 @@ class User extends Authenticatable
 
     public function carts()
     {
-        return $this->hasMany(Cart::class,'user_id','id');
+        return $this->hasMany(Cart::class, 'user_id', 'id');
     }
 
     public function orders()
     {
-        return $this->hasMany(Order::class,'user_id','id');
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
-    public function wishlist(){
-        return $this->hasMany(Wishlist::class,'user_id','id');
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'user_id', 'id');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
     }
 }

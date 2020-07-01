@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('center.addresses.index');
+        $addresses=$request->user()->addresses;
+        return view('center.addresses.index',[
+            'addresses'=>$addresses
+        ]);
     }
 }

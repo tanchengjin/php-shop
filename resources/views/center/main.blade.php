@@ -14,7 +14,13 @@
                                 <li><a href="#downloads" data-toggle="tab" class="nav-link">Downloads</a></li>
                                 <li><a href="{{route('center.address.index')}}" class="nav-link {{url()->current() == route('center.address.index')?'active':''}}">{{__('website.address')}}</a></li>
                                 <li><a href="#account-details" data-toggle="tab" class="nav-link">Account details</a></li>
-                                <li><a href="login.html" class="nav-link">{{__('website.logout')}}</a></li>
+                                <li>
+                                    <a href="{{route('logout')}}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{__('website.logout')}}</a>
+                                    <form action="{{route('logout')}}" method="post" id="logout-form">
+                                        {{csrf_field()}}
+
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>

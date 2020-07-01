@@ -42,6 +42,9 @@ return [
     'back_to_home'=>'Back To Home Page',
     'pay_now'=>'Payment Now',
     'go_now'=>'Now',
+    'my_address'=>'My Address',
+    'address_contact_name'=>'Contact Name',
+    'address_contact_phone'=>'Contact Phone',
 
 
 ];
