@@ -21,6 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string('city');
             $table->string('district');
             $table->unsignedBigInteger('zip');
+            $table->string('address');
             $table->string('contact_name');
             $table->string('contact_phone');
         });

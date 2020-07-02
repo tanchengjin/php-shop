@@ -12,6 +12,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
-        $this->call(ProductSeeder::class);
+
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            $this->call([
+                UserSeeder::class,
+                ProductSeeder::class,
+                AddressSeeder::class
+            ]);
+        });
     }
 }

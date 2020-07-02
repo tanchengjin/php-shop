@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(\App\Models\Address::class, function (Faker $faker) {
-
     $addresses = [
         ['北京', '北京', '直辖市'],
         ['山东省', '济南市', '市中区'],
@@ -27,10 +26,12 @@ $factory->define(\App\Models\Address::class, function (Faker $faker) {
     ];
     $address = $faker->randomElement($addresses);
     return [
+        'user_id' => \App\User::query()->inRandomOrder()->first('id'),
         'province' => $address[0],
         'city' => $address[1],
         'district' => $address[2],
         'zip' => 1233212,
+        'address' => sprintf('%s街区%s号', $faker->randomNumber(2), $faker->randomNumber(3)),
         'contact_name' => $faker->name,
         'contact_phone' => $faker->phoneNumber,
     ];

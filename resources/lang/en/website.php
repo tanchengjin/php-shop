@@ -45,6 +45,7 @@ return [
     'my_address'=>'My Address',
     'address_contact_name'=>'Contact Name',
     'address_contact_phone'=>'Contact Phone',
+    'address_detail'=>'Address'
 
 
 ];

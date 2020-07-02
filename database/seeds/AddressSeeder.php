@@ -11,8 +11,6 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Address::class,30)->create([
-            'user_id'=>1
-        ]);
+        factory(\App\Models\Address::class,30)->create();
     }
 }

@@ -45,5 +45,6 @@ return [
     'my_address'=>'我的地址',
     'address_contact_name'=>'联系人',
     'address_contact_phone'=>'手机号',
+    'address_detail'=>'详细地址'
 
 ];
