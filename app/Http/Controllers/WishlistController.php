@@ -13,7 +13,7 @@ class WishlistController extends Controller
 
     public function index(Request $request)
     {
-        $wishlists = $request->user()->wishlist()->with(['sku', 'sku.product'])->get();
+        $wishlists = $request->user()->wishlist()->with(['product'])->get();
         return view('center.wishlist.index', [
             'wishlists' => $wishlists
         ]);

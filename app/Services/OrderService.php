@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Jobs\CloseOrder;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\ProductSku;
 use App\User;
@@ -13,13 +14,17 @@ use Illuminate\Support\Facades\Log;
 
 class OrderService
 {
-    public function store(User $user, int $address_id, array $items, string $remark)
+    public function store(User $user, Address $address, array $items, string $remark)
     {
         try {
-            DB::transaction(function () use ($user, $address_id, $items, $remark) {
+            DB::transaction(function () use ($user, $address, $items, $remark) {
                 $order = new Order([
                     'remark' => $remark,
-                    'address' => $address_id,
+                    'address' => [
+                        'address' => $address->full_address,
+                        'contact_name' => $address->contact_name,
+                        'contact_phone' => $address->contact_phone,
+                    ],
                     'total_price' => 0
                 ]);
 

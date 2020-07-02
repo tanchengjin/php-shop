@@ -24,13 +24,11 @@
                                         <tr>
                                             <td class="product_remove"><a href="#">X</a></td>
                                             <td class="product_thumb"><a href="#"><img
-                                                        src="{{$wishlist->sku->product->first_image}}" alt=""></a></td>
-                                            <td class="product_name"><a href="#">{{$wishlist->sku->product->title}} {{$wishlist->sku->title}}</a></td>
-                                            <td class="product-price">{{$wishlist->sku->price}}</td>
-                                            <td class="product_quantity">{{$wishlist->sku->stock}}</td>
+                                                        src="{{$wishlist->product->first_image}}" alt=""></a></td>
+                                            <td class="product_name"><a href="#">{{$wishlist->product->title}}</a></td>
+                                            <td class="product-price">{{number_format($wishlist->product->price,2)}}</td>
+                                            <td class="product_quantity">{{$wishlist->product->on_sale}}</td>
                                             <td class="product_total"><a href="#">Add To Cart</a></td>
-
-
                                         </tr>
                                     @endforeach
                                     </tbody>

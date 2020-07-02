@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wishlist extends Model
 {
-    public $timestamps=false;
+    public $timestamps = false;
 
-    protected $fillable=['product_id'];
-    public function sku()
+    protected $fillable = ['product_id'];
+
+    public function product()
     {
-        return $this->belongsTo(ProductSku::class,'product_sku_id','id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
 }

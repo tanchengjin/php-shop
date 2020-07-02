@@ -65,7 +65,8 @@
                             <div class="row form-group" style="margin-top: 50px;">
                                 <label for="remark" class="col-3 col-form-label text-right">订单备注</label>
                                 <div class="col-6">
-                                    <textarea class="form-control" name="remark" id="remark" style="resize:none"></textarea>
+                                    <textarea class="form-control" name="remark" id="remark"
+                                              style="resize:none"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -127,15 +128,15 @@
                 let status = $(this).prop('checked');
                 let checkbox = $('input[type=checkbox][class=checkbox]:not("disabled")');
                 let total = 0;
-                let item = [];
+                // let item = [];
                 checkbox.each(function () {
                     $(this).prop('checked', status);
-                    let price = $(this).closest('tr').data('price');
-                    let quantity = $(this).closest('tr').data('quantity');
-                    item.push({
-                        'price': price,
-                        'quantity': quantity
-                    });
+                    // let price = $(this).closest('tr').data('price');
+                    // let quantity = $(this).closest('tr').data('quantity');
+                    // item.push({
+                    //     'price': price,
+                    //     'quantity': quantity
+                    // });
                 });
                 let totalPrice = getTotalPrice();
                 setPriceBox(totalPrice);
@@ -152,7 +153,7 @@
                 let res = {
 
                     items: [],
-                    address_id: 1,
+                    address_id: $('select[name=address_id]').val(),
                     remark: '123',
                 };
 
@@ -163,7 +164,7 @@
                         return;
                     }
                     let quantity = $(this).find('input[name=quantity]').val();
-                    console.log(quantity)
+
                     //buy quantity return if illegal
                     if (quantity <= 0 || isNaN(quantity)) {
                         return;
@@ -186,7 +187,19 @@
                         }
                     }
                 }, function (err) {
-                    swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+                    if (err.response.status === 422) {
+                        let res='<div>';
+                        $.each(err.response.data.errors, function (index, item) {
+                            $.each(item, function (key, message) {
+                                res+='<div>'+message+'</div>';
+                            });
+                        });
+                        res+='</div>';
+                        swal.fire('error',res,'error')
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+
+                    }
                 });
 
             });

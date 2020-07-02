@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Http\Requests\OrderConfirmRequest;
 use App\Http\Requests\OrderRequest;
 use App\Librarys\API;
+use App\Models\Address;
 use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request, OrderService $orderService)
     {
-        if ($orderService->store($request->user(), $request->input('address_id'), $request->input('items'), $request->input('remark'))) {
+        if ($orderService->store($request->user(), Address::find($request->input('address_id')), $request->input('items'), $request->input('remark'))) {
             return $this->success();
         } else {
             return $this->error();

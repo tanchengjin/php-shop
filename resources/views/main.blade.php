@@ -132,7 +132,7 @@
                             </ul>
                         </div>
                         <div class="header_account_list header_wishlist">
-                            <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span
+                            <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
                                     class="item_count">3</span> </a>
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
@@ -329,7 +329,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2">
                         <div class="logo">
-                            <a href="index.html"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
+                            <a href="{{route('index')}}"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-10">
@@ -375,7 +375,7 @@
                                     </ul>
                                 </div>
                                 <div class="header_account_list header_wishlist">
-                                    <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span
+                                    <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
                                             class="item_count">3</span> </a>
                                 </div>
                                 <div class="header_account_list  mini_cart_wrapper">

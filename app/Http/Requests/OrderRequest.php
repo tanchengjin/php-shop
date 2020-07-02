@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\ProductSku;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends BaseRequest
 {
@@ -16,7 +17,7 @@ class OrderRequest extends BaseRequest
     public function rules()
     {
         return [
-            'address_id' => ['required', 'integer'],
+            'address_id' => ['required', 'integer', Rule::exists('addresses', 'id')->where('user_id', $this->user()->id)],
             'remark' => 'required',
             'items' => ['required', 'array'],
             'items.*.sku_id' => ['required', 'integer', function ($attribute, $value, $fail) {

@@ -66,37 +66,20 @@
 
                                 <div class="col-lg-12 mb-20">
                                     <label>{{__('website.address_contact_name')}}</label>
-                                    <input type="text" disabled>
+                                    <input type="text" disabled value="{{$order->address['contact_name']}}">
                                 </div>
                                 <div class="col-12 mb-20">
                                     <label>{{__('website.address_contact_phone')}}</label>
-                                    <input type="text" disabled>
+                                    <input type="text" disabled value="{{$order->address['contact_phone']}}">
                                 </div>
-                                <div class="col-4 mb-20">
-                                    <label for="country">{{__('website.province')}}</label>
+                                <div class="col-12 mb-20">
+                                    <label for="country">{{__('website.address')}}</label>
                                     <select class="select_option" name="cuntry" id="country" disabled>
-                                        <option value="2">{{$order->address['province']}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-4 mb-20">
-                                    <label for="country">{{__('website.city')}} </label>
-                                    <select class="select_option" name="cuntry" id="country" disabled>
-                                        <option value="2">{{$order->address['city']}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-4 mb-20">
-                                    <label for="country">{{__('website.district')}}</label>
-                                    <select class="select_option" name="cuntry" id="country" disabled>
-                                        <option value="2">{{$order->address['district']}}</option>
+                                        <option value="">{{$order->address['address']}}</option>
                                     </select>
                                 </div>
 
 
-                                <div class="col-lg-12 mb-20">
-                                    <label> {{__('website.address')}}</label>
-                                    <input type="text" disabled value="{{$order->address['address']}}">
-
-                                </div>
                                 <div class="col-12">
                                     <div class="">
                                         <label for="order_note">{{__('order.order_remark')}}</label>
