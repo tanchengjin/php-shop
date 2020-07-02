@@ -48,6 +48,9 @@ return [
     'address_detail'=>'详细地址',
     'add'=>'新增',
     'edit'=>'编辑',
-    'delete'=>'删除'
+    'delete'=>'删除',
+    'province'=>'省',
+    'city'=>'市',
+    'district'=>'区'
 
 ];

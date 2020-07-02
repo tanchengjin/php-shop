@@ -11,4 +11,5 @@ return [
     'your_order'=>'你的订单',
     'product'=>'产品',
     'alipay'=>'支付宝支付',
+    'order_remark'=>'订单备注',
 ];

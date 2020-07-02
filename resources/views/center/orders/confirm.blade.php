@@ -64,140 +64,43 @@
                             <h3>Billing Details</h3>
                             <div class="row">
 
-                                <div class="col-lg-6 mb-20">
-                                    <label>First Name <span>*</span></label>
-                                    <input type="text">
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <label>Last Name <span>*</span></label>
-                                    <input type="text">
+                                <div class="col-lg-12 mb-20">
+                                    <label>{{__('website.address_contact_name')}}</label>
+                                    <input type="text" disabled>
                                 </div>
                                 <div class="col-12 mb-20">
-                                    <label>Company Name</label>
-                                    <input type="text">
+                                    <label>{{__('website.address_contact_phone')}}</label>
+                                    <input type="text" disabled>
                                 </div>
-                                <div class="col-12 mb-20">
-                                    <label for="country">country <span>*</span></label>
-                                    <select class="select_option" name="cuntry" id="country">
-                                        <option value="2">bangladesh</option>
-                                        <option value="3">Algeria</option>
-                                        <option value="4">Afghanistan</option>
-                                        <option value="5">Ghana</option>
-                                        <option value="6">Albania</option>
-                                        <option value="7">Bahrain</option>
-                                        <option value="8">Colombia</option>
-                                        <option value="9">Dominican Republic</option>
-
+                                <div class="col-4 mb-20">
+                                    <label for="country">{{__('website.province')}}</label>
+                                    <select class="select_option" name="cuntry" id="country" disabled>
+                                        <option value="2">{{$order->address['province']}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 mb-20">
+                                    <label for="country">{{__('website.city')}} </label>
+                                    <select class="select_option" name="cuntry" id="country" disabled>
+                                        <option value="2">{{$order->address['city']}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-4 mb-20">
+                                    <label for="country">{{__('website.district')}}</label>
+                                    <select class="select_option" name="cuntry" id="country" disabled>
+                                        <option value="2">{{$order->address['district']}}</option>
                                     </select>
                                 </div>
 
-                                <div class="col-12 mb-20">
-                                    <label>Street address <span>*</span></label>
-                                    <input placeholder="House number and street name" type="text">
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label>Town / City <span>*</span></label>
-                                    <input type="text">
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label>State / County <span>*</span></label>
-                                    <input type="text">
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <label>Phone<span>*</span></label>
-                                    <input type="text">
 
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <label> Email Address <span>*</span></label>
-                                    <input type="text">
+                                <div class="col-lg-12 mb-20">
+                                    <label> {{__('website.address')}}</label>
+                                    <input type="text" disabled value="{{$order->address['address']}}">
 
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <input id="account" type="checkbox" data-target="createp_account"/>
-                                    <label for="account" data-toggle="collapse" data-target="#collapseOne"
-                                           aria-controls="collapseOne">Create an account?</label>
-
-                                    <div id="collapseOne" class="collapse one" data-parent="#accordion">
-                                        <div class="card-body1">
-                                            <label> Account password <span>*</span></label>
-                                            <input placeholder="password" type="password">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <input id="address" type="checkbox" data-target="createp_account"/>
-                                    <label class="righ_0" for="address" data-toggle="collapse"
-                                           data-target="#collapsetwo" aria-controls="collapseOne">Ship to a different
-                                        address?</label>
-
-                                    <div id="collapsetwo" class="collapse one" data-parent="#accordion">
-                                        <div class="row">
-                                            <div class="col-lg-6 mb-20">
-                                                <label>First Name <span>*</span></label>
-                                                <input type="text">
-                                            </div>
-                                            <div class="col-lg-6 mb-20">
-                                                <label>Last Name <span>*</span></label>
-                                                <input type="text">
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <label>Company Name</label>
-                                                <input type="text">
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="select_form_select">
-                                                    <label for="countru_name">country <span>*</span></label>
-                                                    <select class="select_option" name="cuntry" id="countru_name">
-                                                        <option value="2">bangladesh</option>
-                                                        <option value="3">Algeria</option>
-                                                        <option value="4">Afghanistan</option>
-                                                        <option value="5">Ghana</option>
-                                                        <option value="6">Albania</option>
-                                                        <option value="7">Bahrain</option>
-                                                        <option value="8">Colombia</option>
-                                                        <option value="9">Dominican Republic</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 mb-20">
-                                                <label>Street address <span>*</span></label>
-                                                <input placeholder="House number and street name" type="text">
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <label>Town / City <span>*</span></label>
-                                                <input type="text">
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <label>State / County <span>*</span></label>
-                                                <input type="text">
-                                            </div>
-                                            <div class="col-lg-6 mb-20">
-                                                <label>Phone<span>*</span></label>
-                                                <input type="text">
-
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label> Email Address <span>*</span></label>
-                                                <input type="text">
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="order-notes">
-                                        <label for="order_note">Order Notes</label>
-                                        <textarea id="order_note"
-                                                  placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                    <div class="">
+                                        <label for="order_note">{{__('order.order_remark')}}</label>
+                                        <textarea  style="resize:none" id="order_note" class="form-control" disabled>{{$order->remark}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +129,7 @@
                                     <tfoot>
                                     <tr>
                                         <th>{{__('order.order_subtotal')}}</th>
-                                        <td>￥ {{number_format($order->total_price)}}</td>
+                                        <td>￥ {{number_format($order->total_price,2)}}</td>
                                     </tr>
                                     <tr>
                                         <th>{{__('order.shipping')}}</th>
@@ -234,7 +137,7 @@
                                     </tr>
                                     <tr class="order_total">
                                         <th>{{__('order.order_total')}}</th>
-                                        <td><strong>￥{{number_format($order->total_price)}}</strong></td>
+                                        <td><strong>￥{{number_format($order->total_price,2)}}</strong></td>
                                     </tr>
                                     </tfoot>
                                 </table>

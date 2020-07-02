@@ -48,7 +48,10 @@ return [
     'address_detail'=>'Address',
     'add'=>'Add',
     'edit'=>'Edit',
-    'delete'=>'Delete'
+    'delete'=>'Delete',
+    'province'=>'Province',
+    'city'=>'City',
+    'district'=>'District'
 
 
 ];

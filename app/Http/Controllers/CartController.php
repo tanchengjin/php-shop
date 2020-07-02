@@ -21,9 +21,11 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
+
         $carts = $request->user()->carts()->get();
         return view('carts.index', [
-            'carts'=>$carts
+            'carts'=>$carts,
+            'addresses'=>$request->user()->addresses
         ]);
     }
 }

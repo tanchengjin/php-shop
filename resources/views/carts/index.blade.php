@@ -37,11 +37,11 @@
                                                     href="{{route('products.show',['id'=>$cart->sku->product->id])}}">{{$cart->sku->product->title.' '.$cart->sku->title}}</a>
                                             </td>
                                             <td class="product-price">￥{{number_format($cart->sku->price,2)}}</td>
-                                            <td class="product_quantity"><label>Quantity</label> <input min="1"
-                                                                                                        max="100"
-                                                                                                        value="{{$cart->quantity}}"
-                                                                                                        type="number"
-                                                                                                        name="quantity">
+                                            <td class="product_quantity"><input min="1"
+                                                                                max=""
+                                                                                value="{{$cart->quantity}}"
+                                                                                type="number"
+                                                                                name="quantity">
                                             </td>
                                             <td class="product_total">{{number_format($cart->sku->price*$cart->quantity,2)}}</td>
 
@@ -51,8 +51,22 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="cart_submit">
-                                <button type="submit">update cart</button>
+                            <div class="row form-group" style="margin-top: 50px;">
+                                <label for="address_id" class="col-3 col-form-label text-right">收货地址</label>
+                                <div class="col-6">
+                                    <select name="address_id" id="" class="form-control" style="width: 100%;">
+                                        @foreach($addresses as $address)
+                                            <option value="{{$address->id}}">{{$address->full_address}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" style="margin-top: 50px;">
+                                <label for="remark" class="col-3 col-form-label text-right">订单备注</label>
+                                <div class="col-6">
+                                    <textarea class="form-control" name="remark" id="remark" style="resize:none"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -76,18 +90,17 @@
                                 <div class="coupon_inner">
                                     <div class="cart_subtotal">
                                         <p>{{__('order.order_subtotal')}}</p>
-                                        <p class="cart_amount" id="subtotalBox">￥ @{{ subtotal }}</p>
+                                        <p class="cart_amount" id="subtotalBox">￥ 0</p>
                                     </div>
                                     <div class="cart_subtotal ">
                                         <p>{{__('order.shipping')}}</p>
-                                        <p class="cart_amount" id="shippingBox"><span>Flat Rate:</span> ￥ @{{ shipping
-                                            }}</p>
+                                        <p class="cart_amount" id="shippingBox"><span>Flat Rate:</span> ￥ 0</p>
                                     </div>
                                     <a href="#">Calculate shipping</a>
 
                                     <div class="cart_subtotal">
                                         <p>{{__('order.total')}}</p>
-                                        <p class="cart_amount" id="totalBox">￥ @{{ totalPrice }}</p>
+                                        <p class="cart_amount" id="totalBox">￥ 0</p>
                                     </div>
                                     <div class="checkout_btn">
                                         {{--                                        <a href="#">Proceed to Checkout</a>--}}
@@ -130,7 +143,7 @@
             });
 
             $('input[type=checkbox]').on('change', function () {
-                let totalPrice=getTotalPrice();
+                let totalPrice = getTotalPrice();
                 setPriceBox(totalPrice);
             });
 
