@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('center/orders/{id}', 'Center\OrderController@show')->name('center.order.show');
 
     Route::get('center/address/index', 'Center\AddressController@index')->name('center.address.index');
+    Route::get('center/address/{address}/edit', 'Center\AddressController@edit')->name('center.address.edit');
+    Route::get('center/address/create}', 'Center\AddressController@create')->name('center.address.create');
+    Route::put('center/address/{address}', 'Center\AddressController@update')->name('center.address.update');
+    Route::post('center/address', 'Center\AddressController@store')->name('center.address.store');
+    Route::delete('center/address/{address}', 'Center\AddressController@destroy')->name('center.address.delete');
 
     #wishlist
     Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');

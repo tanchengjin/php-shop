@@ -1,7 +1,7 @@
 @extends('main')
 @section('content')
     <!-- my account start  -->
-    <section class="main_content_area">
+    <section class="main_content_area" id="app">
         <div class="container">
             <div class="account_dashboard">
                 <div class="row">

@@ -45,6 +45,9 @@ return [
     'my_address'=>'我的地址',
     'address_contact_name'=>'联系人',
     'address_contact_phone'=>'手机号',
-    'address_detail'=>'详细地址'
+    'address_detail'=>'详细地址',
+    'add'=>'新增',
+    'edit'=>'编辑',
+    'delete'=>'删除'
 
 ];
