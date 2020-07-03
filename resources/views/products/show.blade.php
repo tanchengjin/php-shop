@@ -8,44 +8,22 @@
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#">
-                                <img id="zoom1" src="{{asset('assets/img/product/productbig4.jpg')}}"
-                                     data-zoom-image="assets/img/product/productbig4.jpg" alt="big-1">
+                                <img id="zoom1" src="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
+                                     data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}" alt="big-1">
                             </a>
                         </div>
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                                @foreach($product->images as $image)
                                 <li>
                                     <a href="#" class="elevatezoom-gallery active" data-update=""
-                                       data-image="assets/img/product/productbig4.jpg"
-                                       data-zoom-image="assets/img/product/productbig4.jpg">
-                                        <img src="{{asset('assets/img/product/productbig4.jpg')}}" alt="zo-th-1"/>
+                                       data-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
+                                       data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}">
+                                        <img src="{{\Illuminate\Support\Facades\Storage::url($image->url)}}" alt="zo-th-1"/>
                                     </a>
 
                                 </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update=""
-                                       data-image="assets/img/product/productbig1.jpg"
-                                       data-zoom-image="assets/img/product/productbig1.jpg">
-                                        <img src="{{asset('assets/img/product/productbig1.jpg')}}" alt="zo-th-1"/>
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update=""
-                                       data-image="assets/img/product/productbig2.jpg"
-                                       data-zoom-image="assets/img/product/productbig2.jpg">
-                                        <img src="{{asset('assets/img/product/productbig2.jpg')}}" alt="zo-th-1"/>
-                                    </a>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update=""
-                                       data-image="assets/img/product/productbig3.jpg"
-                                       data-zoom-image="assets/img/product/productbig3.jpg">
-                                        <img src="{{asset('assets/img/product/productbig3.jpg')}}" alt="zo-th-1"/>
-                                    </a>
-
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
