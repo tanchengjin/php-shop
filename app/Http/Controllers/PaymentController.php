@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Order;
 use Carbon\Carbon;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Http\Request;
 use Yansongda\Supports\Log;
 
@@ -12,6 +14,14 @@ class PaymentController extends Controller
     public function alipay(Order $order, Request $request)
     {
         $this->authorize('own', $order);
+
+        if ($order->closed || $order->paid_at) {
+            throw new NotFoundException('订单状态不正确!');
+        }
+        //队列没有正常启动，判断逻辑
+        if(Carbon::now()->gt($order->created_at->addSecond(config('shop.order_ttl')))){
+            throw new NotFoundException('该订单已过期');
+        }
         $order = [
             'out_trade_no' => $order->no,
             'total_amount' => $order->total_price,

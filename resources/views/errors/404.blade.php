@@ -7,7 +7,7 @@
                 <div class="col-12">
                     <div class="error_form">
                         <h1>404</h1>
-                        <h2>{{__('website.page_not_found')}}</h2>
+                        <h2>{{$message??__('website.page_not_found')}}</h2>
                         <p>{{__('website.page_not_found_content')}}<br>{{__('website.page_not_found_content_too')}}</p>
                         <form action="#">
                             <input placeholder="Search..." type="text">
