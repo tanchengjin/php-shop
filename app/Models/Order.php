@@ -9,10 +9,18 @@ class Order extends Model
 {
     protected $fillable = [
         'address', 'closed', 'reviewed', 'paid_at', 'payment_no', 'no', 'payment_method',
-        'refund_status', 'refund_no', 'total_price','paid_price'
+        'refund_status', 'refund_no', 'total_price', 'paid_price'
     ];
     protected $casts = [
         'address' => 'array'
+    ];
+
+    const PAYMENT_ALIPAY = 'alipay';
+    const PAYMENT_WECHAT = 'wechat';
+
+    public static $PaymentMap = [
+        self::PAYMENT_WECHAT => '微信',
+        self::PAYMENT_ALIPAY => '支付宝'
     ];
     const REFUND_STATUS_PENDING = 'pending';
     const SHIP_STATUS_PENDING = 'pending';

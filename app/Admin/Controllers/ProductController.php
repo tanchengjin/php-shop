@@ -77,14 +77,13 @@ class ProductController extends AdminController
         $form = new Form(new Product());
         $form->text('title', __('Title'));
 
-        $form->number('category_id', __('Category id'));
+        $form->select('category_id', __('Category id'))->default(null);
         $form->multipleFile('images')->pathColumn('url')->removable();
-        $form->decimal('price', __('Price'));
         $form->textarea('intro', __('Intro'));
         $form->UEditor('description', __('Description'));
-        $form->number('sold_count', __('Sold count'));
-        $form->number('review_count', __('Review count'));
-        $form->decimal('ratting', __('Ratting'))->default(5.00)->disable();
+        $form->number('sold_count', __('Sold count'))->disable();
+        $form->number('review_count', __('Review count'))->disable();
+        $form->decimal('ratting', __('Ratting'))->disable();
         $form->switch('on_sale', __('On sale'))->default(1);
         $form->hasMany('skus', 'sku', function (Form\NestedForm $form) {
             $form->text('title', 'title')->rules('required');

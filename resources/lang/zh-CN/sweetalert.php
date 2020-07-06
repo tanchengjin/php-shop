@@ -12,4 +12,6 @@ return [
     'operation_error'=>'操作失败',
     'go_shopping_cart' => '查看购物车',
     'go_shopping_cart_confirm' => '是否查看购物车',
+    'please_select_sku'=>'请选择商品规格',
+    'continue_preview'=>'继续浏览',
 ];

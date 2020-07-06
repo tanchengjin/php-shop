@@ -4,6 +4,7 @@ return [
     'login' => '登录',
     'register' => '注册',
     'title' => 'index',
+    'remove'=>'移出',
     'add_to_cart' => '添加到购物车',
     'quick_view' => '快速查看',
     'add_to_wishlist' => '添加到我的收藏',

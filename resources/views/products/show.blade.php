@@ -7,23 +7,36 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
-                            <a href="#">
-                                <img id="zoom1" src="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
-                                     data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}" alt="big-1">
-                            </a>
+                            @if(count($product->images) > 0)
+                                <a href="#">
+                                    <img id="zoom1"
+                                         src="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
+                                         data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
+                                         alt="big-1" style="width: 100%;height: 100%;">
+                                </a>
+                            @else
+                                <a href="#">
+                                    <img id="zoom1"
+                                         src="{{asset('assets/images/error.png')}}"
+                                         data-zoom-image="{{asset('assets/images/error.png')}}"
+                                         alt="big-1" style="width: 100%;height: 100%;">
+                                </a>
+                            @endif
                         </div>
                         <div class="single-zoom-thumb">
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                @foreach($product->images as $image)
-                                <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update=""
-                                       data-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
-                                       data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}">
-                                        <img src="{{\Illuminate\Support\Facades\Storage::url($image->url)}}" alt="zo-th-1"/>
-                                    </a>
-
-                                </li>
-                                @endforeach
+                                @if(count($product->images) > 1)
+                                    @foreach($product->images as $image)
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update=""
+                                               data-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
+                                               data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}">
+                                                <img src="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
+                                                     alt="zo-th-1"/>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -734,14 +747,14 @@
                 }).then(function (res) {
                     if (res.data.errno === 0) {
                         swal.fire({
-                            'title':'success',
-                            text:'{{__('sweetalert.go_shopping_cart_confirm')}}',
-                            icon:'success',
-                            showCancelButton:true,
-                            confirmButtonText:'{{__('sweetalert.go_shopping_cart')}}',
+                            'title': 'success',
+                            text: '{{__('sweetalert.go_shopping_cart_confirm')}}',
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonText: '{{__('sweetalert.go_shopping_cart')}}',
                             preConfirm(inputValue) {
-                                if(inputValue){
-                                    location.href="{{route('carts.index')}}";
+                                if (inputValue) {
+                                    location.href = "{{route('carts.index')}}";
                                 }
                             }
                         });

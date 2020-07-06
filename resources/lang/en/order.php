@@ -11,4 +11,5 @@ return [
     'your_order'=>'Your Order',
     'product'=>'Product',
     'alipay'=>'Alipay',
+    'apply_refund'=>'Apply Refund',
 ];

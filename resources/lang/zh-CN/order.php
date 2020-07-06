@@ -12,4 +12,5 @@ return [
     'product'=>'产品',
     'alipay'=>'支付宝支付',
     'order_remark'=>'订单备注',
+    'apply_refund'=>'申请退款',
 ];

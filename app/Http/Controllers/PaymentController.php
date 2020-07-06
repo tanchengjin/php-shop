@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\NotFoundException;
 use App\Models\Order;
+use App\Services\PaymentService;
 use Carbon\Carbon;
 use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class PaymentController extends Controller
             throw new NotFoundException('订单状态不正确!');
         }
         //队列没有正常启动，判断逻辑
-        if(Carbon::now()->gt($order->created_at->addSecond(config('shop.order_ttl')))){
+        if (Carbon::now()->gt($order->created_at->addSecond(config('shop.order_ttl')))) {
             throw new NotFoundException('该订单已过期');
         }
         $order = [
@@ -79,4 +80,31 @@ class PaymentController extends Controller
             'data' => $data
         ]);
     }
+
+    #退款逻辑
+    public function refund(Order $order, Request $request, PaymentService $paymentService)
+    {
+        $user = $request->user();
+        #判断支付类型，运行对应的退款方式
+        switch ($order->payment_method) {
+            case Order::PAYMENT_ALIPAY:
+                $paymentService->alipayRefund(100, $user);
+            case Order::PAYMENT_WECHAT:
+                //TODO
+            default:
+                break;
+        }
+    }
+
+    private function refundValidate(Order $order)
+    {
+        if (!$order->paid_at) {
+            throw new NotFoundException('该订单未支付');
+        }
+
+        if (!in_array($order->payment_method, array_keys(Order::$refundStatusMap))) {
+            throw new NotFoundException('订单状态异常');
+        }
+    }
+
 }

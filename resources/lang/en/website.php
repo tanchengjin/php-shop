@@ -51,7 +51,8 @@ return [
     'delete'=>'Delete',
     'province'=>'Province',
     'city'=>'City',
-    'district'=>'District'
+    'district'=>'District',
+    'remove'=>'Remove',
 
 
 ];

@@ -6,18 +6,25 @@
             <form action="#">
                 <div class="row">
                     <div class="col-12">
-                        <div class="alert alert-danger">
-                            @if($order->closed)
-                                该订单已关闭
-                            @else
-                                请于 <strong>{{$order->created_at->addSecond(config('shop.order_ttl'))}}</strong> 之前支付该订单
-                            @endif
-                        </div>
+                        @if(!$order->paid_at)
+                            <div class="alert alert-danger">
+                                @if($order->closed)
+                                    该订单已关闭
+                                @else
+                                    请于 <strong>{{$order->created_at->addSecond(config('shop.order_ttl'))}}</strong>
+                                    之前支付该订单
+                                @endif
+                            </div>
+                        @endif
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
-                                <div class="progress">
-                                    <div class="progress-bar bg-danger" style="width: 40%"></div>
-                                </div>
+                                @if(!$order->paid_at)
+
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                    </div>
+                                @endif
+
                                 <table>
                                     <thead>
                                     <tr>
@@ -34,7 +41,8 @@
                                             <td class="product_thumb"><a href="#"><img
                                                         src="{{$item->product->first_image}}" alt=""></a></td>
                                             <td class="product_name"><a
-                                                    href="#">{{$item->product->title}} {{$item->sku->title}}</a></td>
+                                                    href="#">{{$item->product->title}} {{$item->sku->title}}</a>
+                                            </td>
                                             <td class="product-price">￥{{number_format($item->price,2)}}</td>
                                             <td class="product_quantity">{{$item->quantity}}</td>
                                             <td class="product_total">
@@ -75,7 +83,8 @@
                                     </div>
                                     @if($order->paid_at)
                                         <div class="checkout_btn">
-                                            <a href="javascript:void(0);">{{__('order.have_paid')}}</a>
+                                            <button class="apply_refund">{{__('order.apply_refund')}}</button>
+
                                         </div>
                                     @elseif($order->closed)
                                         <div class="checkout_btn">
@@ -96,4 +105,32 @@
         </div>
     </div>
     <!--shopping cart area end -->
+@endsection
+
+@section('javascript')
+    <script>
+        $('.apply_refund').click(function () {
+            swal.fire({
+                title: '请输入退款理由',
+                input: 'text',
+                showCancelButton: true,
+                preConfirm: function (inputValue) {
+                    if (!inputValue) {
+                        swal.fire('请输入退款理由', '', 'error');
+                        return;
+                    }
+
+                    axios.post('{{route('payment.refund',$order->id)}}').then(function (res) {
+                        if (res.data.errno === 0) {
+                            location.reload();
+                        } else {
+                            return swal.fire('error', res.data.message, 'error');
+                        }
+                    }, function (err) {
+                        return swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error');
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
