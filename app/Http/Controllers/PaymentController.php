@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\NotFoundException;
+use App\Librarys\API;
 use App\Models\Order;
-use App\Services\PaymentService;
 use Carbon\Carbon;
 use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Http\Request;
@@ -12,6 +12,8 @@ use Yansongda\Supports\Log;
 
 class PaymentController extends Controller
 {
+    use API;
+
     public function alipay(Order $order, Request $request)
     {
         $this->authorize('own', $order);
@@ -82,28 +84,53 @@ class PaymentController extends Controller
     }
 
     #退款逻辑
-    public function refund(Order $order, Request $request, PaymentService $paymentService)
+    public function refund(Order $order, Request $request)
     {
+        $this->authorize('own', $order);
+
+        $this->refundValidate($order);
+
         $user = $request->user();
-        #判断支付类型，运行对应的退款方式
-        switch ($order->payment_method) {
-            case Order::PAYMENT_ALIPAY:
-                $paymentService->alipayRefund(100, $user);
-            case Order::PAYMENT_WECHAT:
-                //TODO
-            default:
-                break;
+
+        if (!$reason = $request->get('reason')) {
+            throw new NotFoundException('请输入退款理由');
         }
+        try {
+            #判断支付类型，运行对应的退款方式
+            switch ($order->payment_method) {
+                case Order::PAYMENT_ALIPAY:
+                    $extra = $order->extra ?? [];
+                    $extra['refund_reason'] = $reason;
+                    $order->update([
+                        'refund_status' => Order::REFUND_STATUS_APPLIED,
+                        'extra' => $extra
+                    ]);
+                    break;
+                case Order::PAYMENT_WECHAT:
+                    //TODO
+                default:
+                    break;
+            }
+        } catch (\Exception $exception) {
+            \Illuminate\Support\Facades\Log::error($exception->getMessage());
+            return $this->error();
+        }
+        return $this->success();
     }
+
 
     private function refundValidate(Order $order)
     {
         if (!$order->paid_at) {
-            throw new NotFoundException('该订单未支付');
+            throw new NotFoundException('该订单未支付!');
         }
 
-        if (!in_array($order->payment_method, array_keys(Order::$refundStatusMap))) {
-            throw new NotFoundException('订单状态异常');
+        if (!in_array($order->payment_method, array_keys(Order::$PaymentMap))) {
+            throw new NotFoundException('订单状态异常!');
+        }
+
+        if ($order->refund_status !== 'pending') {
+            throw new NotFoundException('已发起退款，不可重复退款!');
         }
     }
 

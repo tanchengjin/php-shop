@@ -35,6 +35,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('closed')->default(0);
             $table->boolean('reviewed')->default(0);
 
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
     }

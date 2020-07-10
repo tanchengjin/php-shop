@@ -11,6 +11,11 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                 'icon' => 'fa-bar-chart',
                 'parent_id' => 0,
                 'uri' => 'products',
+            ],[
+                'title'=>'订单管理',
+                'icon'=>'fa-bar-chart',
+                'parent_id'=>0,
+                'uri'=>'orders'
             ]
         ];
 

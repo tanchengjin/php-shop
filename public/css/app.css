@@ -10928,3 +10928,17 @@ a.text-dark:focus {
   }
 }
 
+.line {
+  display: flex;
+    padding: 5px 0;
+}
+
+.line .line-label {
+  width: 80px;
+    font-weight: bold;
+}
+
+.line .line-value {
+  flex-shrink: 100;
+}
+

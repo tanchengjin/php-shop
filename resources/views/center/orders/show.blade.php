@@ -58,8 +58,54 @@
                 <!--coupon code area start-->
                 <div class="coupon_area">
                     <div class="row">
-
                         <div class="col-lg-6 col-md-6">
+                            @if($order->paid_at)
+
+                                <div class="coupon_code left">
+                                    <h3>订单信息</h3>
+                                    <div class="coupon_inner">
+                                        <div class="line">
+                                            <div class="line-label">订单号</div>
+                                            <div class="line-value">{{$order->no}}</div>
+                                        </div>
+
+                                        <div class="line">
+                                            <div class="line-label">支付时间</div>
+                                            <div class="line-value">{{$order->created_at}}</div>
+                                        </div>
+
+                                        <div class="line">
+                                            <div class="line-label">订单状态</div>
+                                            <div class="line-value">{{$order->orderStatus}}</div>
+                                        </div>
+                                        @if(isset($order->extra['refund_disagree_reason']) && $order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
+                                            <div class="line">
+                                                <div class="line-label">拒绝理由</div>
+                                                <div
+                                                    class="line-value">{{$order->extra['refund_disagree_reason']}}</div>
+                                            </div>
+                                        @endif
+
+                                        <div class="line">
+                                            <div class="line-label">物流状态</div>
+                                            <div
+                                                class="line-value">{{\App\Models\Order::$shipStatusMap[$order->ship_status]}}</div>
+                                        </div>
+
+                                        <div class="line">
+                                            <div class="line-label">物流信息</div>
+                                            <div
+                                                class="line-value">{{$order->ship_data?join('-',$order->ship_data):'-'}}</div>
+                                        </div>
+
+                                        <div class="line">
+                                            <div class="line-label">收货地址</div>
+                                            <div class="line-value">{{implode(' ',$order->address)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
 
                         <div class="col-lg-6 col-md-6">
@@ -81,20 +127,24 @@
                                         <p>{{__('order.total')}}</p>
                                         <p class="cart_amount">￥{{number_format($order->total_price,2)}}</p>
                                     </div>
-                                    @if($order->paid_at)
-                                        <div class="checkout_btn">
-                                            <button class="apply_refund">{{__('order.apply_refund')}}</button>
+                                    <div class="checkout_btn">
 
-                                        </div>
-                                    @elseif($order->closed)
-                                        <div class="checkout_btn">
+                                        @if($order->paid_at)
+                                            {{--                                            申请退款--}}
+                                            @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING || $order->refund_status === \App\Models\Order::REFUND_STATUS_FAILED)
+                                                <button class="apply_refund"
+                                                        type="button">{{__('order.apply_refund')}}</button>
+                                            @endif
+                                        @elseif($order->closed)
                                             <button class="disabled" type="button">该订单已关闭</button>
-                                        </div>
-                                    @else
-                                        <div class="checkout_btn">
+                                        @else
                                             <a href="{{route('orders.confirm',$order->id)}}">{{__('order.pay')}}</a>
-                                        </div>
-                                    @endif
+                                        @endif
+                                        {{--                                        物流信息--}}
+                                        @if($order->ship_status === \App\Models\Order::SHIP_STATUS_DELIVERED)
+                                            <a href="javascript:void(0)" id="received">{{__('order.received')}}</a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +170,9 @@
                         return;
                     }
 
-                    axios.post('{{route('payment.refund',$order->id)}}').then(function (res) {
+                    axios.post('{{route('payment.refund',$order->id)}}', {
+                        'reason': inputValue
+                    }).then(function (res) {
                         if (res.data.errno === 0) {
                             location.reload();
                         } else {
@@ -130,6 +182,20 @@
                         return swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error');
                     });
                 }
+            });
+        });
+
+
+        $('#received').click(function () {
+            axios.post('{{route('orders.received',$order->id)}}', {
+                '_token':'{{csrf_token()}}'
+            }).then(function (res) {
+                if (res.data.errno === 0) {
+                    window.location.reload();
+                } else {
+                    swal.fire('error',res.data.message,'error');
+                }
+            }, function (error) {
             });
         });
     </script>

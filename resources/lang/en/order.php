@@ -12,4 +12,5 @@ return [
     'product'=>'Product',
     'alipay'=>'Alipay',
     'apply_refund'=>'Apply Refund',
+    'received'=>'RECEIVE',
 ];

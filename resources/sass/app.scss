@@ -6,3 +6,13 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.line{
+    display: flex;
+    .line-label{
+        width: 80px;
+    }
+    .line-value{
+        flex-shrink: 100;
+    }
+}

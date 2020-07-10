@@ -6,6 +6,7 @@ use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
 class ProductController extends AdminController
@@ -16,6 +17,7 @@ class ProductController extends AdminController
      * @var string
      */
     protected $title = 'Product';
+
 
     /**
      * Make a grid builder.
@@ -94,7 +96,7 @@ class ProductController extends AdminController
         });
 
         $form->saving(function ($form) {
-            $form->price = collect($form->skus)->where(Form::REMOVE_FLAG_NAME,0)->max('price');
+            $form->price = collect($form->skus)->where(Form::REMOVE_FLAG_NAME, 0)->max('price');
         });
         return $form;
     }

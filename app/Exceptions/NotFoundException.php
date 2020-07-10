@@ -19,7 +19,7 @@ class NotFoundException extends Exception
     public function render(Request $request)
     {
         if ($request->expectsJson()) {
-            return $this->error()->setStatusCode(404);
+            return $this->error([], 1, $this->message);
         }
 
         return view('errors.404', [

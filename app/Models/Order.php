@@ -4,15 +4,18 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Order extends Model
 {
     protected $fillable = [
         'address', 'closed', 'reviewed', 'paid_at', 'payment_no', 'no', 'payment_method',
-        'refund_status', 'refund_no', 'total_price', 'paid_price'
+        'refund_status', 'refund_no', 'total_price', 'paid_price', 'extra', 'ship_status', 'ship_data'
     ];
     protected $casts = [
-        'address' => 'array'
+        'address' => 'json',
+        'extra' => 'json',
+        'ship_data' => 'json'
     ];
 
     const PAYMENT_ALIPAY = 'alipay';
@@ -23,6 +26,11 @@ class Order extends Model
         self::PAYMENT_ALIPAY => '支付宝'
     ];
     const REFUND_STATUS_PENDING = 'pending';
+    const REFUND_STATUS_APPLIED = 'applied';
+    const REFUND_STATUS_PROCESSING = 'processing';
+    const REFUND_STATUS_FAILED = 'failed';
+    const REFUND_STATUS_SUCCESS = 'success';
+
     const SHIP_STATUS_PENDING = 'pending';
     const SHIP_STATUS_DELIVERED = 'delivered';
     const SHIP_STATUS_RECEIVED = 'received';
@@ -34,7 +42,15 @@ class Order extends Model
     ];
 
     public static $refundStatusMap = [
-        self::REFUND_STATUS_PENDING => '未退款'
+        self::REFUND_STATUS_PENDING => '未退款',
+        self::REFUND_STATUS_PROCESSING => '退款处理中',
+        self::REFUND_STATUS_APPLIED => '已发起退款请求',
+        self::REFUND_STATUS_FAILED => '退款失败',
+        self::REFUND_STATUS_SUCCESS => '退款成功'
+    ];
+
+    protected $dates = [
+        'paid_at'
     ];
 
     protected static function boot()
@@ -75,12 +91,37 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
+
         if ($this->paid_at) {
+            if ($this->refund_status === Order::REFUND_STATUS_PENDING) {
+                if (isset($this->extra['refund_disagree_reason'])) {
+                    return '商家拒绝退款';
+                }
+            }
+            if ($this->refund_status !== Order::REFUND_STATUS_PENDING) {
+                return self::$refundStatusMap[$this->refund_status];
+            }
+
+            if ($this->ship_status === Order::SHIP_STATUS_PENDING) {
+                return '待发货';
+            } else {
+                return Order::$shipStatusMap[$this->ship_status];
+            }
+
             return '已支付';
         } elseif ($this->closed) {
             return '订单已关闭';
         } else {
             return '未付款';
         }
+    }
+
+
+    public static function getAvailableRefundNo()
+    {
+        do {
+            $no = Uuid::uuid4()->getHex();
+        } while (self::query()->where('refund_no', $no)->exists());
+        return $no;
     }
 }

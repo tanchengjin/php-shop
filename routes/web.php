@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
 
     Route::post('payment/refund/{order}', 'PaymentController@refund')->name('payment.refund');
+
+    Route::post('orders/received/{order}', 'OrderController@received')->name('orders.received');
 });
 
 Auth::routes();

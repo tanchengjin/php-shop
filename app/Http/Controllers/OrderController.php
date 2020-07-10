@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\NotFoundException;
-use App\Http\Requests\OrderConfirmRequest;
 use App\Http\Requests\OrderRequest;
 use App\Librarys\API;
 use App\Models\Address;
@@ -34,8 +33,28 @@ class OrderController extends Controller
             throw new NotFoundException('该订单已关闭');
         }
 
+        if ($order->paid_at) {
+            throw new NotFoundException('订单已支付');
+        }
+
+
         return view('center.orders.confirm', [
             'order' => $order
         ]);
+    }
+
+    public function received(Order $order)
+    {
+        if (!$order->paid_at) {
+            throw new NotFoundException('该订单未支付');
+        }
+
+        if ($order->ship_status !== Order::SHIP_STATUS_DELIVERED) {
+            throw new NotFoundException('该订单未发货');
+        }
+        $order->update([
+            'ship_status' => Order::SHIP_STATUS_RECEIVED
+        ]);
+        return $this->success();
     }
 }
