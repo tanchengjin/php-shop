@@ -52,6 +52,10 @@ return [
     'delete'=>'删除',
     'province'=>'省',
     'city'=>'市',
-    'district'=>'区'
+    'district'=>'区',
+    'subscribe_title'=>'Sign Up Newsletter',
+    'subscribe_content'=>'Get updates by subscribe our weekly newsletter',
+    'enter_you_email'=>'输入你的邮箱',
+    'subscribe'=>'订阅'
 
 ];

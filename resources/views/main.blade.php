@@ -450,129 +450,14 @@
                             <div class="categories_title">
                                 <h2 class="categori_toggle">{{__('website.all_category')}}</h2>
                             </div>
-                            <div class="categories_menu_toggle">
-                                <ul>
-                                    <li class="menu_item_children"><a href="#">Vegetables<i
-                                                class="fa fa-angle-right"></i></a>
-                                        <ul class="categories_mega_menu">
-                                            <li class="menu_item_children"><a href="#">Dresses</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Sweater</a></li>
-                                                    <li><a href="">Evening</a></li>
-                                                    <li><a href="">Day</a></li>
-                                                    <li><a href="">Sports</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Handbags</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Shoulder</a></li>
-                                                    <li><a href="">Satchels</a></li>
-                                                    <li><a href="">kids</a></li>
-                                                    <li><a href="">coats</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">shoes</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Ankle Boots</a></li>
-                                                    <li><a href="">Clog sandals </a></li>
-                                                    <li><a href="">run</a></li>
-                                                    <li><a href="">Books</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Clothing</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Coats Jackets </a></li>
-                                                    <li><a href="">Raincoats</a></li>
-                                                    <li><a href="">Jackets</a></li>
-                                                    <li><a href="">T-shirts</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu_item_children"><a href="#">Fruits <i class="fa fa-angle-right"></i></a>
-                                        <ul class="categories_mega_menu column_3">
-                                            <li class="menu_item_children"><a href="#">Chair</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Dining room</a></li>
-                                                    <li><a href="">bedroom</a></li>
-                                                    <li><a href=""> Home & Office</a></li>
-                                                    <li><a href="">living room</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Lighting</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Ceiling Lighting</a></li>
-                                                    <li><a href="">Wall Lighting</a></li>
-                                                    <li><a href="">Outdoor Lighting</a></li>
-                                                    <li><a href="">Smart Lighting</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Sofa</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Fabric Sofas</a></li>
-                                                    <li><a href="">Leather Sofas</a></li>
-                                                    <li><a href="">Corner Sofas</a></li>
-                                                    <li><a href="">Sofa Beds</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu_item_children"><a href="#"> Salads<i class="fa fa-angle-right"></i></a>
-                                        <ul class="categories_mega_menu column_2">
-                                            <li class="menu_item_children"><a href="#">Brake Tools</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Driveshafts</a></li>
-                                                    <li><a href="">Spools</a></li>
-                                                    <li><a href="">Diesel </a></li>
-                                                    <li><a href="">Gasoline</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Emergency Brake</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Dolls for Girls</a></li>
-                                                    <li><a href="">Girls' Learning Toys</a></li>
-                                                    <li><a href="">Arts and Crafts for Girls</a></li>
-                                                    <li><a href="">Video Games for Girls</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu_item_children"><a href="#"> Fish & Seafood <i
-                                                class="fa fa-angle-right"></i></a>
-                                        <ul class="categories_mega_menu column_2">
-                                            <li class="menu_item_children"><a href="#">Check Trousers</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Building</a></li>
-                                                    <li><a href="">Electronics</a></li>
-                                                    <li><a href="">action figures </a></li>
-                                                    <li><a href="">specialty & boutique toy</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu_item_children"><a href="#">Calculators</a>
-                                                <ul class="categorie_sub_menu">
-                                                    <li><a href="">Dolls for Girls</a></li>
-                                                    <li><a href="">Girls' Learning Toys</a></li>
-                                                    <li><a href="">Arts and Crafts for Girls</a></li>
-                                                    <li><a href="">Video Games for Girls</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#"> Fresh Meat</a></li>
-                                    <li><a href="#"> Butter & Eggs</a></li>
-                                    <li><a href="#">Milk</a></li>
-                                    <li><a href="#">Oil & Vinegars</a></li>
-                                    <li><a href="#"> Bread</a></li>
-                                    <li><a href="#"> Jam & Honey</a></li>
-                                    <li><a href="#"> Frozen Food</a></li>
-                                    <li id="cat_toggle" class="has-sub"><a href="#"> More Items</a>
-                                        <ul class="categorie_sub">
-                                            <li><a href="#">Hide Categories</a></li>
-                                        </ul>
-
-                                    </li>
-                                </ul>
-                            </div>
+                            {{--                            分类列表--}}
+                            @if(isset($categoryTree))
+                                <div class="categories_menu_toggle">
+                                    <ul>
+                                        @each('layouts.nav',$categoryTree,'category')
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -684,12 +569,12 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-8">
                     <div class="widgets_container widget_newsletter">
-                        <h3>Sign up newsletter</h3>
-                        <p class="footer_desc">Get updates by subscribe our weekly newsletter</p>
+                        <h3>{{__('website.subscribe_title')}}</h3>
+                        <p class="footer_desc">{{__('website.subscribe_content')}}</p>
                         <div class="subscribe_form">
                             <form id="mc-form" class="mc-form footer-newsletter">
-                                <input id="mc-email" type="email" autocomplete="off" placeholder="Enter you email"/>
-                                <button id="mc-submit">Subscribe</button>
+                                <input id="mc-email" type="email" autocomplete="off" placeholder="{{__('website.enter_you_email')}}"/>
+                                <button id="mc-submit">{{__('website.subscribe')}}</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
                             <div class="mailchimp-alerts text-centre">

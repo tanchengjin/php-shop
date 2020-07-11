@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\Admin\HandleRefundRequest;
 use App\Http\Requests\Admin\ShipRequest;
+use App\Jobs\AutoShip;
 use App\Librarys\API;
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends AdminController
 {
-    use ValidatesRequests,API;
+    use ValidatesRequests, API;
 
     /**
      * Title for current resource.
@@ -174,6 +175,9 @@ class OrderController extends AdminController
             'ship_data' => $ship_data,
             'ship_status' => Order::SHIP_STATUS_DELIVERED
         ]);
+
+        dispatch(new AutoShip($order));
+
         return redirect()->back();
 
     }

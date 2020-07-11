@@ -22,4 +22,6 @@ Route::group([
     $router->post('order/ship/{order}', 'OrderController@ship')->name('admin.order.ship');
 
     $router->resource('categories', 'CategoryController');
+
+    $router->get('api/categories','CategoryController@categoryApi');
 });

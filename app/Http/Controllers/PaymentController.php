@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Paid;
 use App\Exceptions\NotFoundException;
 use App\Librarys\API;
 use App\Models\Order;
@@ -47,7 +48,7 @@ class PaymentController extends Controller
                 return 'error';
 
             }
-            if (!$order = Order::query()->where('no', $data->out_trade_no)->first()) {
+            if (!$order = Order::where('no', $data->out_trade_no)->first()) {
                 Log::error('order no not found', $data->all());
                 return 'error';
             }
@@ -62,6 +63,8 @@ class PaymentController extends Controller
                 'payment_method' => 'alipay',
                 'paid_at' => Carbon::now(),
             ]);
+
+            $this->eventPaid($order);
 
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -132,6 +135,11 @@ class PaymentController extends Controller
         if ($order->refund_status !== 'pending') {
             throw new NotFoundException('已发起退款，不可重复退款!');
         }
+    }
+
+    public function eventPaid(Order $order)
+    {
+        event(new Paid($order));
     }
 
 }

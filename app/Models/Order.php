@@ -124,4 +124,14 @@ class Order extends Model
         } while (self::query()->where('refund_no', $no)->exists());
         return $no;
     }
+
+    public function getTtlAttribute()
+    {
+        $start_time = strtotime($this->created_at);
+        $end_time = strtotime($this->created_at->addSecond(config('shop.order_ttl')));
+        $total_time = $end_time - $start_time;
+        $el = time() - $start_time;
+
+        return round(($el / $total_time) * 100);
+    }
 }

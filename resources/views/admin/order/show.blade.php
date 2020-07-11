@@ -53,7 +53,7 @@
                 <td colspan="3">￥{{number_format($order->total_price,2)}}</td>
             </tr>
             @if($order->paid_at)
-                @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING)
+                @if($order->refund_status === \App\Models\Order::REFUND_STATUS_PENDING && $order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
                     <tr>
                         <td>物流操作</td>
                         <td colspan="3">

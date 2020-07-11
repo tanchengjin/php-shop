@@ -16,12 +16,14 @@
                                 @endif
                             </div>
                         @endif
+
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
                                 @if(!$order->paid_at)
-
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                             id="progress"
+                                             style="width: {{$order->ttl}}%"></div>
                                     </div>
                                 @endif
 
@@ -159,43 +161,62 @@
 
 @section('javascript')
     <script>
-        $('.apply_refund').click(function () {
-            swal.fire({
-                title: '请输入退款理由',
-                input: 'text',
-                showCancelButton: true,
-                preConfirm: function (inputValue) {
-                    if (!inputValue) {
-                        swal.fire('请输入退款理由', '', 'error');
-                        return;
-                    }
+        $(document).ready(function () {
+            var time = '{{config('shop.order_ttl')}}';
+            var start_time = {{strtotime($order->created_at)}};
+            ins = setInterval(function () {
+                let current_time = Math.round(new Date().getTime() / 1000).toString();
+                let el = current_time - start_time;
+                let percent = Math.round((el / time) * 100);
 
-                    axios.post('{{route('payment.refund',$order->id)}}', {
-                        'reason': inputValue
-                    }).then(function (res) {
-                        if (res.data.errno === 0) {
-                            location.reload();
-                        } else {
-                            return swal.fire('error', res.data.message, 'error');
+                if (percent >= 100) {
+                    console.log('return')
+                    clearInterval(ins);
+                }
+                $('#progress').css('width', percent + '%');
+
+
+            }, 500);
+
+
+            $('.apply_refund').click(function () {
+                swal.fire({
+                    title: '请输入退款理由',
+                    input: 'text',
+                    showCancelButton: true,
+                    preConfirm: function (inputValue) {
+                        if (!inputValue) {
+                            swal.fire('请输入退款理由', '', 'error');
+                            return;
                         }
-                    }, function (err) {
-                        return swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error');
-                    });
-                }
+
+                        axios.post('{{route('payment.refund',$order->id)}}', {
+                            'reason': inputValue
+                        }).then(function (res) {
+                            if (res.data.errno === 0) {
+                                location.reload();
+                            } else {
+                                return swal.fire('error', res.data.message, 'error');
+                            }
+                        }, function (err) {
+                            return swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error');
+                        });
+                    }
+                });
             });
-        });
 
 
-        $('#received').click(function () {
-            axios.post('{{route('orders.received',$order->id)}}', {
-                '_token':'{{csrf_token()}}'
-            }).then(function (res) {
-                if (res.data.errno === 0) {
-                    window.location.reload();
-                } else {
-                    swal.fire('error',res.data.message,'error');
-                }
-            }, function (error) {
+            $('#received').click(function () {
+                axios.post('{{route('orders.received',$order->id)}}', {
+                    '_token': '{{csrf_token()}}'
+                }).then(function (res) {
+                    if (res.data.errno === 0) {
+                        window.location.reload();
+                    } else {
+                        swal.fire('error', res.data.message, 'error');
+                    }
+                }, function (error) {
+                });
             });
         });
     </script>

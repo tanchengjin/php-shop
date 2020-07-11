@@ -53,6 +53,8 @@ return [
     'city'=>'City',
     'district'=>'District',
     'remove'=>'Remove',
+    'subscribe_title'=>'Sign Up Newsletter',
+    'subscribe_content'=>'Get updates by subscribe our weekly newsletter',
 
 
 ];

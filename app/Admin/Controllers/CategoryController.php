@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Http\Request;
 
 class CategoryController extends AdminController
 {
@@ -64,12 +65,27 @@ class CategoryController extends AdminController
     protected function form()
     {
         $form = new Form(new Category());
-        $form->select('parent_id', __('Parent id'));
+        $form->select('parent_id', __('Parent id'))->ajax('/admin/api/categories');
         $form->text('title', __('Title'));
         $form->radio('is_directory', __('Is directory'))->options([
-            1=>'是',
-            0=>'否',
+            1 => '是',
+            0 => '否',
         ]);
         return $form;
+    }
+
+    public function CategoryApi(Request $request)
+    {
+        $search = $request->input('q');
+
+        $result = Category::query()
+            ->where('title', 'like', '%' . $search . '%')->paginate();
+
+        $result->setCollection($result->getCollection()->map(function (Category $category) {
+            return ['id' => $category['id'], 'text' => $category['title']];
+        }));
+
+        return $result;
+
     }
 }
