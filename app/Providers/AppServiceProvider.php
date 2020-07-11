@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Encore\Admin\Config\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Yansongda\Pay\Gateways\Alipay;
@@ -36,5 +37,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        $table=config('admin.extensions.table','admin_config');
+        if (Schema::hasTable($table)){
+            Config::load();
+        }
+
     }
 }
