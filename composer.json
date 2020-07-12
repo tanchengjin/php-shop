@@ -9,16 +9,19 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "caouecs/laravel-lang": "~6.1",
         "codingyu/ueditor": "^3.0",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "ichynul/configx": "^1.4",
         "laravel-admin-ext/config": "^1.1",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "yansongda/pay": "^2.9"
+        "yansongda/pay": "^2.9",
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

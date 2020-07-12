@@ -23,5 +23,6 @@ Route::group([
 
     $router->resource('categories', 'CategoryController');
 
-    $router->get('api/categories','CategoryController@categoryApi');
+    $router->get('api/categories', 'CategoryController@categoryApi');
+
 });

@@ -68,8 +68,8 @@
                         <ul>
                             <li class="language"><a href="#"> Language <i class="icon-right ion-ios-arrow-down"></i></a>
                                 <ul class="dropdown_language">
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">Spanish</a></li>
+                                    <li><a href="{{route('lang','en')}}">English</a></li>
+                                    <li><a href="{{route('lang','zh')}}">简体中文</a></li>
                                     <li><a href="#">Russian</a></li>
                                 </ul>
                             </li>
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="call-support">
-                        <p><a href="tel:(08)23456789">(xx) xx xxx xxx</a> {{__('customer_support')}}</p>
+                        <p><a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('customer_support')}}</p>
                     </div>
                     <div id="menu" class="text-left ">
                         <ul class="offcanvas_main_menu">
@@ -295,8 +295,8 @@
                             <ul>
                                 <li class="language"><a href="#"> Language <i class="icon-right ion-ios-arrow-down"></i></a>
                                     <ul class="dropdown_language">
-                                        <li><a href="#">French</a></li>
-                                        <li><a href="#">Spanish</a></li>
+                                        <li><a href="{{route('lang','en')}}">English</a></li>
+                                        <li><a href="{{route('lang','zh')}}">简体中文</a></li>
                                         <li><a href="#">Russian</a></li>
                                     </ul>
                                 </li>
@@ -490,7 +490,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="call-support">
-                            <p><a href="tel:(08)23456789">(08) 23 456 789</a> {{__('website.customer_support')}}</p>
+                            <p><a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('website.customer_support')}}</p>
                         </div>
                     </div>
                 </div>
@@ -531,9 +531,9 @@
                         </div>
                         <p class="footer_desc">We are a team of designers and developers that create high quality
                             eCommerce, WordPress, Shopify .</p>
-                        <p><span>Address:</span> 4710-4890 Breckinridge USA</p>
-                        <p><span>Email:</span> <a href="#">demo@hasthemes.com</a></p>
-                        <p><span>Call us:</span> <a href="tel:(08)23456789">(08) 23 456 789</a></p>
+                        <p><span>Address:</span> {{config('base.address')}}</p>
+                        <p><span>Email:</span> <a href="#">{{config('base.email')}}</a></p>
+                        <p><span>Call us:</span> <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a></p>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-5">
@@ -573,7 +573,8 @@
                         <p class="footer_desc">{{__('website.subscribe_content')}}</p>
                         <div class="subscribe_form">
                             <form id="mc-form" class="mc-form footer-newsletter">
-                                <input id="mc-email" type="email" autocomplete="off" placeholder="{{__('website.enter_you_email')}}"/>
+                                <input id="mc-email" type="email" autocomplete="off"
+                                       placeholder="{{__('website.enter_you_email')}}"/>
                                 <button id="mc-submit">{{__('website.subscribe')}}</button>
                             </form>
                             <!-- mailchimp-alerts Start -->
@@ -593,9 +594,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-7">
                     <div class="copyright_area">
-                        <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank"
-                                                                                     href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-                        </p>
+                        <p>{{config('base.copyright')}}</p>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5">

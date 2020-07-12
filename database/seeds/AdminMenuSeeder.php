@@ -17,13 +17,17 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                 'parent_id' => 0,
                 'uri' => 'orders'
             ], [
-                'title' => '设置',
+                'title' => '系统设置',
                 'icon' => 'fa-bar-chart',
                 'children' => [
                     [
-                        'title' => '配置',
+                        'title' => '基础设置',
                         'icon' => 'fa-toggle-on',
                         'uri' => 'config'
+                    ],[
+                        'title'=>'高级设置',
+                        'icon'=>'fa-toggle-on',
+                        'uri'=>'configx/edit'
                     ]
                 ],
             ]

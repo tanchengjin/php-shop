@@ -406,6 +406,12 @@ return [
                 'initialFrameHeight' => 400, // 例如初始化高度
             ],
             // 'field_type' => '自定义名字'
-        ]
+        ],
+        'configx'=>[
+            'enable'=>true,
+            'tabs'=>[
+                'base'=>'基础设置',
+            ],
+        ],
     ],
 ];
