@@ -25,4 +25,6 @@ Route::group([
 
     $router->get('api/categories', 'CategoryController@categoryApi');
 
+    $router->get('contactUs','ContactUsController@index');
+
 });

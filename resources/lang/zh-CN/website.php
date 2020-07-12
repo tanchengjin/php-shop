@@ -53,9 +53,10 @@ return [
     'province'=>'省',
     'city'=>'市',
     'district'=>'区',
-    'subscribe_title'=>'Sign Up Newsletter',
-    'subscribe_content'=>'Get updates by subscribe our weekly newsletter',
+    'subscribe_title'=>'订阅本站消息',
+    'subscribe_content'=>'通过订阅我们的每周通讯获得更新',
     'enter_you_email'=>'输入你的邮箱',
-    'subscribe'=>'订阅'
+    'subscribe'=>'订阅',
+    'contact_us'=>'联系我们',
 
 ];

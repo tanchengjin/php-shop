@@ -259,7 +259,7 @@
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="services.html">services</a></li>
                                     <li><a href="faq.html">Frequently Questions</a></li>
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><a href="{{route('contactUs.index')}}">contact</a></li>
                                     <li><a href="login.html">login</a></li>
                                     <li><a href="404.html">Error 404</a></li>
                                 </ul>
@@ -271,7 +271,7 @@
                                 <a href="about.html">about Us</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="contact.html"> Contact Us</a>
+                                <a href="{{route('contactUs.index')}}"> Contact Us</a>
                             </li>
                         </ul>
                     </div>
@@ -477,12 +477,12 @@
                                             <li><a href="about.html">About Us</a></li>
                                             <li><a href="services.html">services</a></li>
                                             <li><a href="faq.html">Frequently Questions</a></li>
-                                            <li><a href="contact.html">contact</a></li>
+                                            <li><a href="{{route('contactUs.index')}}">contact</a></li>
                                             <li><a href="login.html">login</a></li>
                                             <li><a href="404.html">Error 404</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#"> Contact Us</a></li>
+                                    <li><a href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -507,8 +507,8 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li>product details</li>
+                        <li><a href="{{route('index')}}">home</a></li>
+                        <li>@yield('breadcrumb_title')</li>
                     </ul>
                 </div>
             </div>
@@ -546,7 +546,7 @@
                                 <li><a href="#">Delivery Information</a></li>
                                 <li><a href="#"> Privacy Policy</a></li>
                                 <li><a href="#"> Terms & Conditions</a></li>
-                                <li><a href="contact.html"> Contact Us</a></li>
+                                <li><a href="{{route('contactUs.index')}}"> Contact Us</a></li>
                                 <li><a href="#"> Site Map</a></li>
                             </ul>
                         </div>

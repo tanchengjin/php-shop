@@ -11,12 +11,14 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                 'icon' => 'fa-bar-chart',
                 'parent_id' => 0,
                 'uri' => 'products',
-            ], [
+            ],
+            [
                 'title' => '订单管理',
                 'icon' => 'fa-bar-chart',
                 'parent_id' => 0,
                 'uri' => 'orders'
-            ], [
+            ],
+            [
                 'title' => '系统设置',
                 'icon' => 'fa-bar-chart',
                 'children' => [
@@ -24,12 +26,17 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                         'title' => '基础设置',
                         'icon' => 'fa-toggle-on',
                         'uri' => 'config'
-                    ],[
-                        'title'=>'高级设置',
-                        'icon'=>'fa-toggle-on',
-                        'uri'=>'configx/edit'
+                    ], [
+                        'title' => '高级设置',
+                        'icon' => 'fa-toggle-on',
+                        'uri' => 'configx/edit'
                     ]
                 ],
+            ],
+            [
+                'title' => '留言管理',
+                'icon' => 'fa-toggle-on',
+                'uri' => 'contactUs'
             ]
         ];
 

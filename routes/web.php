@@ -25,6 +25,8 @@ Route::middleware(['middleware'=>'setLanguage'])->group(function(){
 
     Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 
+    Route::get('/contactUs','ContactUSController@index')->name('contactUs.index');
+    Route::post('/contactUs','ContactUSController@store')->name('contactUs.store');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::post('carts/add', 'CartController@store')->name('carts.store');

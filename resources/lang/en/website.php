@@ -56,7 +56,8 @@ return [
     'subscribe_title'=>'Sign Up Newsletter',
     'subscribe_content'=>'Get updates by subscribe our weekly newsletter',
     'enter_you_email'=>'Enter Your Email',
-    'subscribe'=>'Subscribe'
+    'subscribe'=>'Subscribe',
+    'contact_us'=>'Contact Us',
 
 
 ];
