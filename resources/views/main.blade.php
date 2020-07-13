@@ -195,7 +195,9 @@
                         </div>
                     </div>
                     <div class="call-support">
-                        <p><a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('customer_support')}}</p>
+                        <p>
+                            <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('customer_support')}}
+                        </p>
                     </div>
                     <div id="menu" class="text-left ">
                         <ul class="offcanvas_main_menu">
@@ -467,10 +469,20 @@
                                 <ul>
                                     <li><a href="{{route('index')}}">{{__('website.home')}}</a>
                                     </li>
-                                    <li class="mega_items"><a class="active"
-                                                              href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                    <li class="mega_items">
+                                        @if(url()->current() === route('products.index'))
+                                            <a class="active"
+                                               href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                        @else
+                                            <a href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                        @endif
                                     </li>
-                                    <li><a href="#">{{__('website.blog')}}</a>
+                                    <li>
+                                        @if(url()->current() === route('blog.index'))
+                                            <a class="active" href="{{route('blog.index')}}">{{__('website.blog')}}</a>
+                                        @else
+                                            <a href="{{route('blog.index')}}">{{__('website.blog')}}</a>
+                                        @endif
                                     </li>
                                     <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
@@ -482,7 +494,14 @@
                                             <li><a href="404.html">Error 404</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a></li>
+                                    <li>
+                                        @if(url()->current() === route('contactUs.index'))
+                                            <a class="active"
+                                               href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
+                                        @else
+                                            <a href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
+                                        @endif
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -490,7 +509,9 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="call-support">
-                            <p><a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('website.customer_support')}}</p>
+                            <p>
+                                <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('website.customer_support')}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -500,22 +521,24 @@
 </header>
 <!--header area end-->
 
-<!--breadcrumbs area start-->
-<div class="breadcrumbs_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb_content">
-                    <ul>
-                        <li><a href="{{route('index')}}">home</a></li>
-                        <li>@yield('breadcrumb_title')</li>
-                    </ul>
+@section('breadcrumbs')
+    <!--breadcrumbs area start-->
+    <div class="breadcrumbs_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb_content">
+                        <ul>
+                            <li><a href="{{route('index')}}">home</a></li>
+                            <li>@yield('breadcrumb_title')</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--breadcrumbs area end-->
+    <!--breadcrumbs area end-->
+@show
 
 @yield('content')
 
@@ -533,7 +556,8 @@
                             eCommerce, WordPress, Shopify .</p>
                         <p><span>Address:</span> {{config('base.address')}}</p>
                         <p><span>Email:</span> <a href="#">{{config('base.email')}}</a></p>
-                        <p><span>Call us:</span> <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a></p>
+                        <p><span>Call us:</span> <a
+                                href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a></p>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-5">

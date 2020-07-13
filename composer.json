@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "ext-json": "*",
         "caouecs/laravel-lang": "~6.1",
         "codingyu/ueditor": "^3.0",
         "encore/laravel-admin": "^1.8",
@@ -20,8 +21,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "yansongda/pay": "^2.9",
-        "ext-json": "*"
+        "vinkla/hashids": "^8.1",
+        "yansongda/pay": "^2.9"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -47,6 +48,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Librarys/Helper.php"
         ]
     },
     "autoload-dev": {

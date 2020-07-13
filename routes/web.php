@@ -13,21 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['middleware'=>'setLanguage'])->group(function(){
+Route::middleware(['middleware' => 'setLanguage'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('products.index');
     })->name('index');
 
-    Route::get('/lang/{lang}','LanguageController@setLang')->name('lang');
+    Route::get('/lang/{lang}', 'LanguageController@setLang')->name('lang');
 
     Route::get('products', 'ProductController@index')->name('products.index');
     Route::get('products/{id}', 'ProductController@show')->name('products.show');
 
     Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 
-    Route::get('/contactUs','ContactUSController@index')->name('contactUs.index');
-    Route::post('/contactUs','ContactUSController@store')->name('contactUs.store');
+    Route::get('/contactUs', 'ContactUSController@index')->name('contactUs.index');
+    Route::post('/contactUs', 'ContactUSController@store')->name('contactUs.store');
 
+    #login route start
     Route::group(['middleware' => 'auth'], function () {
         Route::post('carts/add', 'CartController@store')->name('carts.store');
         Route::get('carts/index', 'CartController@index')->name('carts.index');
@@ -60,7 +61,16 @@ Route::middleware(['middleware'=>'setLanguage'])->group(function(){
         Route::post('payment/refund/{order}', 'PaymentController@refund')->name('payment.refund');
 
         Route::post('orders/received/{order}', 'OrderController@received')->name('orders.received');
+
     });
+    #login router end
+
+    #blog start
+    Route::get('blog', 'BlogController@index')->name('blog.index');
+    Route::get('blog/article/{id}','BlogController@show')->name('blog.show');
+
+
+    #blog end
 });
 
 Auth::routes();
