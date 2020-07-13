@@ -22,7 +22,7 @@ class CreateBlogArticleCommentsTable extends Migration
             $table->string('content', 255);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->on('blog_article_comments')->references('id')->onDelete('cascade');
-            $table->string('path');
+            $table->string('path',255);
             $table->unsignedInteger('level');
             $table->softDeletes();
             $table->timestamps();

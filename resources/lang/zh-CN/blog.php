@@ -4,5 +4,6 @@ return [
     'recent_post'=>'最近文章',
     'category'=>'分类',
     'tag_products'=>'标签',
-    'search'=>'搜索'
+    'search'=>'搜索',
+    'share_this_post'=>'分享本篇文章'
 ];

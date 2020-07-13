@@ -4,5 +4,6 @@ return [
     'recent_post'=>'Recent Posts',
     'category'=>'Categories',
     'tag_products'=>'Tag Products',
-    'search'=>'Search'
+    'search'=>'Search',
+    'share_this_post'=>'Share This Post'
 ];
