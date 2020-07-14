@@ -60,4 +60,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Address::class, 'user_id', 'id');
     }
+
+    public function getFullAvatarAttribute()
+    {
+        return $this->defaultAvatar();
+    }
+
+    #用户默认头像
+    private function defaultAvatar()
+    {
+        return asset('assets/images/avatar.jpg');
+    }
 }

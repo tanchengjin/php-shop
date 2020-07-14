@@ -62,13 +62,16 @@ Route::middleware(['middleware' => 'setLanguage'])->group(function () {
 
         Route::post('orders/received/{order}', 'OrderController@received')->name('orders.received');
 
+        #comment
+        Route::post('blog/article/comment','BlogController@comment')->name('blog.comment');
+
+
     });
     #login router end
 
     #blog start
     Route::get('blog', 'BlogController@index')->name('blog.index');
     Route::get('blog/article/{id}','BlogController@show')->name('blog.show');
-
 
     #blog end
 });

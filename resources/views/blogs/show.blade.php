@@ -82,11 +82,10 @@
                         </div>
                         <div class="comments_box">
                             <h3>{{$article->articleCommentLength()}} {{__('comment.comments')}} </h3>
-                            {{--                            {{dd($article->comments)}}--}}
                             @foreach($article->articleComments() as $comment)
                                 <div class="comment_list">
                                     <div class="comment_thumb">
-                                        <img src="/assets/img/blog/comment3.png.jpg" alt="">
+                                        <img src="{{$comment['avatar']}}" alt="">
                                     </div>
                                     <div class="comment_content">
                                         <div class="comment_meta">
@@ -95,26 +94,57 @@
                                         </div>
                                         <p>{{$comment['content']}}</p>
                                         <div class="comment_reply">
-                                            <a href="javascript:void(0)" class="answer" data-username="{{$comment['username']}}" data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                                            @if(isset($comment['isReply']) && $comment['isReply'])
+                                                <a href="javascript:void(0)" class="answer"
+                                                   data-username="{{$comment['username']}}"
+                                                   data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                                            @else
+                                                @if(!\Illuminate\Support\Facades\Auth::check())
+                                                    <a href="{{route('login')}}">{{__('comment.reply')}}</a>
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+                                @if(isset($comment['children']))
                                     @each('common.comment',$comment['children'],'comment')
+                                @endif
                             @endforeach
                         </div>
-                        <div class="comments_form">
-                            <form action="#">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label for="review_comment">{{__('comment.comment')}} </label>
-                                        <input type="hidden" name="id">
-                                        <input type="hidden" name="article" value="{{hashids_id($article->id)}}">
-                                        <textarea name="comment" id="review_comment"></textarea>
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <div class="comments_form">
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="review_comment">{{__('comment.comment')}} </label>
+                                            <input type="hidden" name="id">
+                                            <input type="hidden" name="article" value="{{hashids_id($article->id)}}">
+                                            <textarea name="comment" id="review_comment" required minlength="2"
+                                                      maxlength="255" disabled placeholder="请先登录"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <button class="button" type="submit">{{__('comment.post_comment')}}</button>
-                            </form>
-                        </div>
+                                    <button class="button" type="button"><a
+                                            href="{{route('login')}}">{{__('sweetalert.please_login')}}</a></button>
+                                </form>
+                            </div>
+                        @else
+                            <div class="comments_form">
+                                <form action="{{route('blog.comment')}}" method="post" id="send_comment">
+
+                                    {{csrf_field()}}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="review_comment">{{__('comment.comment')}} </label>
+                                            <input type="hidden" name="id">
+                                            <input type="hidden" name="article" value="{{hashids_id($article->id)}}">
+                                            <textarea name="comment" id="review_comment" required minlength="2"
+                                                      maxlength="255"></textarea>
+                                        </div>
+                                    </div>
+                                    <button class="button" type="submit">{{__('comment.post_comment')}}</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                     <!--blog grid area start-->
                 </div>
@@ -124,8 +154,8 @@
                             <div class="widget_title">
                                 <h3>{{__('blog.search')}}</h3>
                             </div>
-                            <form action="#">
-                                <input placeholder="Search..." type="text">
+                            <form action="{{route('blog.index')}}">
+                                <input placeholder="Search..." type="text" name="q">
                                 <button type="submit">{{__('blog.search')}}</button>
                             </form>
                         </div>
@@ -133,33 +163,17 @@
                             <div class="widget_title">
                                 <h3>{{__('blog.recent_comment')}}</h3>
                             </div>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
+                            @foreach($recentComment as $comment)
+                                <div class="post_wrapper">
+                                    <div class="post_thumb">
+                                        <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}"><img src="{{$comment->user->full_avatar}}" alt=""></a>
+                                    </div>
+                                    <div class="post_info">
+                                        <span> <a href="#">{{$comment->user->name}}</a> says:</span>
+                                        <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}">{{$comment->content}}</a>
+                                    </div>
                                 </div>
-                                <div class="post_info">
-                                    <span> <a href="#">demo</a> says:</span>
-                                    <a href="blog-details.html">Quisque semper nunc</a>
-                                </div>
-                            </div>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                                </div>
-                                <div class="post_info">
-                                    <span><a href="#">admin</a> says:</span>
-                                    <a href="blog-details.html">Quisque orci porta...</a>
-                                </div>
-                            </div>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                                </div>
-                                <div class="post_info">
-                                    <span><a href="#">demo</a> says:</span>
-                                    <a href="blog-details.html">Quisque semper nunc</a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="widget_list widget_post">
                             <div class="widget_title">
@@ -212,9 +226,81 @@
 
 @section('javascript')
     <script>
-        $('.answer').click(function () {
-            $('#review_comment').text('{{__('comment.reply')}}'+'@'+$(this).data('username')+':');
-            $('input[type=hidden][name=id]').val($(this).data('id'));
+        $(document).ready(function () {
+            $('body').on('click', '.answer', function () {
+                $('#review_comment').val('{{__('comment.reply')}}' + '@' + $(this).data('username') + ':');
+                $('input[type=hidden][name=id]').val($(this).data('id'));
+
+            })
+
+            $('#send_comment').on('submit', function (e) {
+                e.preventDefault();
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                let username = '{{\Illuminate\Support\Facades\Auth::user()->name}}';
+                @else
+                swal.fire('{{__('sweetalert.please_login')}}', '', 'error')
+                    @endif
+
+                let content = $('#review_comment').val();
+                let byReply = $('#byReply').val();
+                let currentTime = '{{toDateString(date('Y-m-d H:i:s'))}}';
+                let answer = $('.answer').data('username');
+
+                let data = $(this).serialize();
+                axios.post('{{route('blog.comment')}}', data).then(function (res) {
+                    if (res.data.errno === 0) {
+                        let c_id = $('input[type=hidden][name=id]').val();
+                        if (c_id) {
+                            let $html = '<div class="comment_list list_two">\n' +
+                                '            <div class="comment_thumb">\n' +
+                                '                <img src="/assets/img/blog/comment3.png.jpg" alt="">\n' +
+                                '            </div>\n' +
+                                '            <div class="comment_content">\n' +
+                                '                <div class="comment_meta">\n' +
+                                '                    <h5><a href="#">' + username + '</a>@<a href="#">' + answer + '</a></h5>\n' +
+                                '                    <span>' + currentTime + '</span>\n' +
+                                '                </div>\n' +
+                                '                <p>' + content + '</p>\n' +
+                                '            </div>\n' +
+                                '        </div>';
+
+                            let id = $('input[type=hidden][name=id]').val();
+                            let $box = $('a[data-id=' + id + ']').closest('.comment_list');
+                            console.log($box);
+                            $box.after($html);
+
+                        } else {
+
+                            let $html = '<div class="comment_list">\n' +
+                                '                                    <div class="comment_thumb">\n' +
+                                '                                        <img src="/assets/img/blog/comment3.png.jpg" alt="">\n' +
+                                '                                    </div>\n' +
+                                '                                    <div class="comment_content">\n' +
+                                '                                        <div class="comment_meta">\n' +
+                                '                                            <h5><a href="#">' + username + '</a></h5>\n' +
+                                '                                            <span>' + currentTime + '</span>\n' +
+                                '                                        </div>\n' +
+                                '                                        <p>' + content + '</p>\n' +
+                                '                                    </div>\n' +
+                                '                                </div>';
+                            $('.comments_box').append($html);
+
+                        }
+                        $('#review_comment').val('');
+                        return swal.fire('{{__('sweetalert.operation_success')}}','','success');
+
+                    } else {
+                        swal.fire('{{__('sweetalert.operation_error')}}', '', 'error');
+                        return;
+                    }
+                }, function (error) {
+                    if (error.response.status === 401) {
+                        swal.fire('{{__('sweetalert.please_login')}}', '', 'error');
+                    } else {
+                        swal.fire('{{__('sweetalert.operation_error')}}', '', 'error');
+                    }
+                })
+            })
         })
     </script>
 @endsection

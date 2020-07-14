@@ -2,7 +2,7 @@
     @if(isset($comment['children']))
         <div class="comment_list list_two">
             <div class="comment_thumb">
-                <img src="/assets/img/blog/comment3.png.jpg" alt="">
+                <img src="{{$comment['avatar']}}" alt="avatar">
             </div>
             <div class="comment_content">
                 <div class="comment_meta">
@@ -11,7 +11,14 @@
                 </div>
                 <p>{{$comment['content']}}</p>
                 <div class="comment_reply">
-                    <a href="javascript:void(0)" class="answer" data-username="{{$comment['username']}}" data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                    @if($comment['isReply'])
+                        <a href="javascript:void(0)" class="answer" data-username="{{$comment['username']}}"
+                           data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                    @else
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <a href="{{route('login')}}">{{__('comment.reply')}}</a>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
@@ -19,7 +26,7 @@
     @else
         <div class="comment_list list_two">
             <div class="comment_thumb">
-                <img src="/assets/img/blog/comment3.png.jpg" alt="">
+                <img src="{{$comment['avatar']}}" alt="avatar">
             </div>
             <div class="comment_content">
                 <div class="comment_meta">
@@ -28,7 +35,14 @@
                 </div>
                 <p>{{$comment['content']}}</p>
                 <div class="comment_reply">
-                    <a href="javascript:void(0)" class="answer" data-username="{{$comment['username']}}" data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                    @if($comment['isReply'])
+                        <a href="javascript:void(0)" class="answer" data-username="{{$comment['username']}}"
+                           data-id="{{$comment['id']}}">{{__('comment.reply')}}</a>
+                    @else
+                        @if(!\Illuminate\Support\Facades\Auth::check())
+                            <a href="{{route('login')}}">{{__('comment.reply')}}</a>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>

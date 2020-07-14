@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Blog extends Model
 {
@@ -31,6 +32,16 @@ class Blog extends Model
                 $data['reply'] = $comment->parent->user->name ?? '';
             }
 
+            #当前用户是否可以评论
+            $data['isReply'] = false;
+            if (Auth::check()) {
+                #用户不能回复自己的评论
+                $data['isReply'] = $comment->user_id === Auth::id() ? false : true;
+            }
+
+            #用户头像
+            $data['avatar'] = Auth::user()->full_avatar;
+
             if ($comment->children()->exists()) {
                 $data['children'] = $this->articleComments($comment->id, $comments);
             }
@@ -44,14 +55,14 @@ class Blog extends Model
     {
         static $length = 0;
 
-        ++$length;
-
         if (is_null($comments)) {
             $comments = $this->articleComments();
         }
 
 
         foreach ($comments as $index => $comment) {
+            ++$length;
+
 
             if (isset($comment['children'])) {
                 $children = $comment['children'];

@@ -21,33 +21,17 @@
                             <div class="widget_title">
                                 <h3>{{__('blog.recent_comment')}}</h3>
                             </div>
+                            @foreach($recentComment as $comment)
                             <div class="post_wrapper">
                                 <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
+                                    <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}"><img src="{{$comment->user->full_avatar}}" alt=""></a>
                                 </div>
                                 <div class="post_info">
-                                    <span> <a href="#">demo</a> says:</span>
-                                    <a href="blog-details.html">Quisque semper nunc</a>
+                                    <span> <a href="#">{{$comment->user->name}}</a> says:</span>
+                                    <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}">{{$comment->content}}</a>
                                 </div>
                             </div>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                                </div>
-                                <div class="post_info">
-                                    <span><a href="#">admin</a> says:</span>
-                                    <a href="blog-details.html">Quisque orci porta...</a>
-                                </div>
-                            </div>
-                            <div class="post_wrapper">
-                                <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/comment2.png.jpg" alt=""></a>
-                                </div>
-                                <div class="post_info">
-                                    <span><a href="#">demo</a> says:</span>
-                                    <a href="blog-details.html">Quisque semper nunc</a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="widget_list widget_post">
                             <div class="widget_title">
@@ -122,21 +106,22 @@
                             @endforeach
                         </div>
                     </div>
+                    <!--blog pagination area start-->
+                    <div class="blog_pagination">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    {{$blogs->links()}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--blog pagination area end-->
                 </div>
             </div>
         </div>
     </div>
     <!--blog area end-->
 
-    <!--blog pagination area start-->
-    <div class="blog_pagination">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    {{$blogs->links()}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--blog pagination area end-->
+
 @endsection
