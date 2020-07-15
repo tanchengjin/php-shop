@@ -11,9 +11,21 @@ class Product extends Model
         'title', 'description', 'review_count', 'sold_count', 'ratting', 'on_sale', 'price'
     ];
 
-    protected $appends=[
+    protected $appends = [
         'isWishlist'
     ];
+
+
+    public const TAB_SALE = 'sale';
+    public const TAB_NEW = 'new';
+    public const TAB_HOT = 'hot';
+    public static $tabsMap = [
+        self::TAB_SALE => '促销',
+        self::TAB_NEW => '新商品',
+        self::TAB_HOT => '热门商品'
+
+    ];
+
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
@@ -29,6 +41,7 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+
     public function getFirstImageAttribute()
     {
         if ($image = $this->images()->first()) {
@@ -37,12 +50,18 @@ class Product extends Model
             return asset('assets/images/error.png');
         }
     }
+
     //判断当前商品是否被当前用户收藏
     public function getIsWishlistAttribute()
     {
-        if (Auth::check()){
-            return Auth::user()->wishlist()->where('product_id',$this->id)->exists();
+        if (Auth::check()) {
+            return Auth::user()->wishlist()->where('product_id', $this->id)->exists();
         }
         return false;
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class,'product_id','id');
     }
 }

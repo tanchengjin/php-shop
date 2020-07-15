@@ -67,7 +67,12 @@ return [
     'review'=>'Review Amount',
     'show_result' => 'Showing :first-:last of :total Result',
     'please_select_order'=>'Please Select Order By',
-    'remove_wishlist'=>'Remove Wishlist'
+    'remove_wishlist'=>'Remove Wishlist',
+    'website_links'=>'Links',
+    'website_information'=>'Information',
+    'call_phone'=>'Call Us',
+    'products'=>'All Products',
+    'search_products'=>'Search All Products'
 
 
 ];

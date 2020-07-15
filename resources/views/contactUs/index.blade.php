@@ -20,7 +20,7 @@
                             est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum
                             formas human. qui sequitur mutationem consuetudium lectorum. Mirum est notare quam</p>
                         <ul>
-                            <li><i class="fa fa-fax"></i> Address : {{config('base.address')}}</li>
+                            <li><i class="fa fa-fax"></i> {{__('website.address')}} : {{config('base.address')}}</li>
                             <li><i class="fa fa-phone"></i> <a
                                     href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a></li>
                             <li><i class="fa fa-envelope-o"></i><a
@@ -45,7 +45,6 @@
                     @endif
                     <div class="contact_message form">
                         <h3>{{trans('contactUs.tell_us_your_project')}}</h3>
-                        {{--                        <form id="contact-form" method="POST" action="assets/mail.php">--}}
                         <form id="contact-form" method="POST" action="{{route('contactUs.store')}}">
                             {{csrf_field()}}
                             <p>

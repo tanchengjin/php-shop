@@ -15,9 +15,15 @@ class DatabaseSeeder extends Seeder
 
         \Illuminate\Support\Facades\DB::transaction(function () {
             $this->call([
-                UserSeeder::class,
-                ProductSeeder::class,
-                AddressSeeder::class
+                //后台菜单生成
+                AdminMenuSeeder::class,
+                //后台默认配置项
+                ConfigxSeeder::class,
+                //商品分类
+                CategorySeeder::class,
+
+                TestSeeder::class
+
             ]);
         });
     }

@@ -83,9 +83,6 @@ class ProductController extends AdminController
         $form->multipleFile('images')->pathColumn('url')->removable();
         $form->textarea('intro', __('Intro'));
         $form->UEditor('description', __('Description'));
-        $form->number('sold_count', __('Sold count'))->disable();
-        $form->number('review_count', __('Review count'))->disable();
-        $form->decimal('ratting', __('Ratting'))->disable();
         $form->switch('on_sale', __('On sale'))->default(1);
         $form->hasMany('skus', 'sku', function (Form\NestedForm $form) {
             $form->text('title', 'title')->rules('required');
@@ -95,6 +92,10 @@ class ProductController extends AdminController
             $form->number('stock', '库存')->rules('required|not_in:0|integer')->default(0);
         });
 
+        $form->hasMany('properties', '商品属性', function (Form\NestedForm $form) {
+            $form->text('key')->required();
+            $form->text('value')->required();
+        });
         $form->saving(function ($form) {
             $form->price = collect($form->skus)->where(Form::REMOVE_FLAG_NAME, 0)->max('price');
         });

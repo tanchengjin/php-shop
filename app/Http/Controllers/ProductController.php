@@ -12,8 +12,8 @@ class ProductController extends Controller
     {
         $builder = Product::query()->where('on_sale', 1)->with(['skus', 'images']);
 
-        //排序
-        if ($order = $request->input('order')) {
+        #排序
+        if ($order = $request->input('order', '')) {
             #排序规则
             $rules = ['review', 'rating', 'price', 'sold'];
 
@@ -35,34 +35,45 @@ class ProductController extends Controller
             }
         }
 
-        if (($min_price = $request->get('price_range_min')) >= 0) {
-
-            if (($max_price = $request->get('price_range_max')) > $min_price) {
-                $builder->whereBetween('price', [$min_price, $max_price]);
-            }
+        #搜索
+        if ($search = $request->input('q', '')) {
+            $like = '%' . $search . '%';
+            $builder->where(function ($query) use ($like) {
+                $query->where('title', 'like', $like)->orWhere('intro', 'like', $like);
+            });
         }
 
         $products = $builder->paginate(20);
-
         return view('products.index', [
             'products' => $products,
-            'range_price_min' => $min_price ?? false,
-            'range_price_max' => $max_price ?? false,
             'categoryTree' => (new Category())->getCategoryTree(),
-            'param'=>[
-                'order'=>$order??'',
+            'param' => [
+                'order' => $order,
+                'search' => $search
             ],
         ]);
     }
 
     public function show($id)
     {
+
         if (!$product = Product::query()->where('on_sale', 1)->find($id)) {
             abort(404);
         }
+
+        #相关商品
+        $product_relate = Product::query()->where('on_sale', 1)->where(function ($query) use ($product) {
+            $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
+        })->orderBy('created_at', 'desc')->limit(9)->get();
+
+        #促销商品
+        $product_sale = Product::query()->where('on_sale', 1)->where('tags', 'like', '%sale%')->limit(9)->get();
+
         $product->with(['skus', 'images']);
         return view('products.show', [
             'product' => $product,
+            'product_relate' => $product_relate,
+            'product_sale' => $product_sale,
         ]);
     }
 }

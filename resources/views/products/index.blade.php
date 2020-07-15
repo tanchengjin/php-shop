@@ -1,4 +1,6 @@
 @extends('main')
+@section('breadcrumb_title',__('cart.product'))
+@section('page.title',__('website.products'))
 @section('content')
     <!--shop  area start-->
     <div class="shop_area shop_fullwidth mt-70 mb-70">
@@ -46,9 +48,11 @@
                             </form>
                         </div>
                         <div class="page_amount">
-                            @if($products->currentPage() === 1)
+                            @if(count($products) < 1)
+                                <p>{{__('website.show_result',['first'=>0,'last'=>0,'total'=>0])}}</p>
 
-                                <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage(),'total'=>$products->total()])}}</p>
+                            @elseif($products->currentPage() === 1)
+                                <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage() >= $products->total()?$products->total():$products->perPage(),'total'=>$products->total()])}}</p>
                             @else
                                 <p>{{__('website.show_result',[
     'first'=>($products->currentPage()-1)+$products->perPage(),
@@ -61,7 +65,7 @@
                     <!--shop toolbar end-->
                     <div class="row shop_wrapper">
                         @foreach($products as $product)
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 ">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-6 ">
                                 <div class="single_product">
                                     <div class="product_thumb">
                                         @if(count($product->images) > 0)
@@ -103,54 +107,28 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    {{--                                小图--}}
+                                    <div class="product_bottom">
+                                        <div class="sold_count">销量：<span>{{$product->sold_count}}</span></div>
+                                        <div class="reviewed_count">评价：<span>{{$product->review_count}}</span></div>
+                                    </div>
                                     <div class="product_content grid_content">
                                         <h4 class="product_name"><a
                                                 href="{{route('products.show',$product->id)}}">{{$product->title}}</a>
                                         </h4>
-                                        <p><a href="#">Fruits</a></p>
                                         <div class="price_box">
                                             <span class="current_price">￥{{$product->price}}</span>
                                             {{--                                        <span class="old_price">$362.00</span>--}}
                                         </div>
                                     </div>
-                                    <!-- 大图-->
-                                    {{--                                    <div class="product_content list_content">--}}
-                                    {{--                                        <h4 class="product_name"><a--}}
-                                    {{--                                                href="{{route('products.show',$product->id)}}">{{$product->title}}</a>--}}
-                                    {{--                                        </h4>--}}
-                                    {{--                                        <p><a href="#">Fruits</a></p>--}}
-                                    {{--                                        <div class="price_box">--}}
-                                    {{--                                            <span class="current_price">￥{{$product->price}}</span>--}}
-                                    {{--                                            <span class="old_price">$362.00</span>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div class="product_desc">--}}
-                                    {{--                                            <p>{{$product->intro}}</p>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div class="action_links list_action_right">--}}
-                                    {{--                                            <ul>--}}
-                                    {{--                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to--}}
-                                    {{--                                                        Cart</a></li>--}}
-                                    {{--                                                <li class="quick_button"><a href="#" data-toggle="modal"--}}
-                                    {{--                                                                            data-target="#modal_box_{{$product->id}}"--}}
-                                    {{--                                                                            title="quick view">--}}
-                                    {{--                                                        <span class="lnr lnr-magnifier"></span></a></li>--}}
-                                    {{--                                                <li class="wishlist"><a href="wishlist.html"--}}
-                                    {{--                                                                        title="Add to Wishlist"><span--}}
-                                    {{--                                                            class="lnr lnr-heart"></span></a></li>--}}
-                                    {{--                                                <li class="compare"><a href="#" title="Add to Compare"><span--}}
-                                    {{--                                                            class="lnr lnr-sync"></span></a></li>--}}
-                                    {{--                                            </ul>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
                                 </div>
                             </div>
                         @endforeach
                     </div>
-
+                    @if($products->total() > $products->perPage())
                     <div class="shop_toolbar t_bottom">
                         {{$products->appends($param)->links()}}
                     </div>
+                    @endif
                     <!--shop toolbar end-->
                     <!--shop wrapper end-->
                 </div>
@@ -277,6 +255,10 @@
     <script>
         $(document).ready(function () {
             var param = @json($param);
+
+            if (param.search) {
+                $('.search_input').val(param.search);
+            }
             if (param.order) {
                 var $orderLi = $('li[data-value=' + param.order + ']');
                 $orderLi.addClass('option selected');

@@ -59,10 +59,10 @@ class ConfigxSeeder extends Seeder
     private $configsValue = [
         'base.title' => 'Shop',
         'base.intro' => 'description',
-        'base.copyright' => 'copyright',
-        'base.email' => 'email',
-        'base.telephone' => 'telephone',
-        'base.address' => 'address',
+        'base.copyright' => 'Copyright © 2020.Company Name All Rights Reserved.',
+        'base.email' => 'demo@xxxxxxxxxx.com',
+        'base.telephone' => '(xx) xxxxxx',
+        'base.address' => 'Address Address',
         'base.logo' => '',
     ];
 

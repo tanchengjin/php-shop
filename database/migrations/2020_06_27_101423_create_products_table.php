@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('tags')->nullable();
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('set null');
             $table->string('title');
             #商品的最低价

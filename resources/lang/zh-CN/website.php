@@ -67,6 +67,11 @@ return [
     'rating' => '评分',
     'review' => '评价数量',
     'please_select_order' => '请选择排序规则',
-    'remove_wishlist' => '移出我的收藏'
+    'remove_wishlist' => '移出我的收藏',
+    'website_links'=>'友情链接',
+    'website_information'=>'站点信息',
+    'call_phone'=>'联系电话',
+    'products'=>'所有商品',
+    'search_products'=>'搜索所有商品'
 
 ];

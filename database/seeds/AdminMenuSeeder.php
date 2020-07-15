@@ -30,6 +30,10 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                         'title' => '高级设置',
                         'icon' => 'fa-toggle-on',
                         'uri' => 'configx/edit'
+                    ], [
+                        'title' => '支持支付方式图片',
+                        'icon' => 'fa-toggle-on',
+                        'uri' => 'paymentImage'
                     ]
                 ],
             ],
@@ -54,10 +58,9 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                     'uri' => $menu['uri'] ?? '',
                     'parent_id' => $parent_id
                 ]);
-
-            }
-            if (isset($menu['children']) && is_array($menu['children'])) {
-                $this->generateMenu($menu['children'], $id);
+                if (isset($menu['children']) && is_array($menu['children'])) {
+                    $this->generateMenu($menu['children'], $id);
+                }
             }
         }
     }

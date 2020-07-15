@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Safira - product details</title>
+    <title>{{config('base.title')}} - @yield('page.title','page')</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
@@ -97,24 +97,10 @@
                                 <select class="select_option" name="select" id="categori1">
                                     <option selected value="1">Select a categories</option>
                                     <option value="2">Accessories</option>
-                                    <option value="3">Accessories & More</option>
-                                    <option value="4">Butters & Eggs</option>
-                                    <option value="5">Camera & Video</option>
-                                    <option value="6">Mornitors</option>
-                                    <option value="7">Tablets</option>
-                                    <option value="8">Laptops</option>
-                                    <option value="9">Handbags</option>
-                                    <option value="10">Headphone & Speaker</option>
-                                    <option value="11">Herbs & botanicals</option>
-                                    <option value="12">Vegetables</option>
-                                    <option value="13">Shop</option>
-                                    <option value="14">Laptops & Desktops</option>
-                                    <option value="15">Watchs</option>
-                                    <option value="16">Electronic</option>
                                 </select>
                             </div>
                             <div class="search_box">
-                                <input placeholder="Search product..." type="text">
+                                <input placeholder="Search product..." type="text" class="search_input" name="q">
                                 <button type="submit"><span class="lnr lnr-magnifier"></span></button>
                             </div>
                         </form>
@@ -283,29 +269,15 @@
                     <div class="col-lg-10">
                         <div class="header_right_info">
                             <div class="search_container">
-                                <form action="#">
+                                <form action="{{route('products.index')}}">
                                     <div class="hover_category">
                                         <select class="select_option" name="select" id="categori2">
-                                            <option selected value="1">Select a categories</option>
-                                            <option value="2">Accessories</option>
-                                            <option value="3">Accessories & More</option>
-                                            <option value="4">Butters & Eggs</option>
-                                            <option value="5">Camera & Video</option>
-                                            <option value="6">Mornitors</option>
-                                            <option value="7">Tablets</option>
-                                            <option value="8">Laptops</option>
-                                            <option value="9">Handbags</option>
-                                            <option value="10">Headphone & Speaker</option>
-                                            <option value="11">Herbs & botanicals</option>
-                                            <option value="12">Vegetables</option>
-                                            <option value="13">Shop</option>
-                                            <option value="14">Laptops & Desktops</option>
-                                            <option value="15">Watchs</option>
-                                            <option value="16">Electronic</option>
+                                            <option selected value="">{{__('website.products')}}</option>
                                         </select>
                                     </div>
                                     <div class="search_box">
-                                        <input placeholder="Search product..." type="text">
+                                        <input placeholder="{{__('website.search_products')}}" type="text" name="q"
+                                               class="search_input">
                                         <button type="submit"><span class="lnr lnr-magnifier"></span></button>
                                     </div>
                                 </form>
@@ -421,7 +393,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="{{route('index')}}">home</a></li>
+                            <li><a href="{{route('index')}}">{{__('website.home')}}</a></li>
                             <li>@yield('breadcrumb_title')</li>
                         </ul>
                     </div>
@@ -446,34 +418,31 @@
                         </div>
                         <p class="footer_desc">We are a team of designers and developers that create high quality
                             eCommerce, WordPress, Shopify .</p>
-                        <p><span>Address:</span> {{config('base.address')}}</p>
-                        <p><span>Email:</span> <a href="#">{{config('base.email')}}</a></p>
-                        <p><span>Call us:</span> <a
+                        <p><span>{{__('website.address')}}:</span> {{config('base.address')}}</p>
+                        <p><span>{{__('contactUs.email')}}:</span> <a href="#">{{config('base.email')}}</a></p>
+                        <p><span>{{__('website.call_phone')}}:</span> <a
                                 href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a></p>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-5">
                     <div class="widgets_container widget_menu">
-                        <h3>Information</h3>
+                        <h3>{{__('website.website_information')}}</h3>
                         <div class="footer_menu">
 
                             <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#"> Privacy Policy</a></li>
-                                <li><a href="#"> Terms & Conditions</a></li>
-                                <li><a href="{{route('contactUs.index')}}"> Contact Us</a></li>
-                                <li><a href="#"> Site Map</a></li>
+                                <li><a href="{{route('contactUs.index')}}">{{__('website.contact_us')}}</a></li>
+                                <li><a href="{{route('blog.index')}}">{{__('website.blog')}}</a></li>
+                                <li><a href="{{route('products.index')}}">{{__('website.products')}}</a></li>
+                                <li><a href="{{route('index')}}">{{__('website.home')}}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="widgets_container widget_menu">
-                        <h3>Extras</h3>
+                        <h3>{{__('website.website_links')}}</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">Brands</a></li>
                                 <li><a href="#"> Gift Certificates</a></li>
                                 <li><a href="#">Affiliate</a></li>
                                 <li><a href="#">Specials</a></li>
@@ -516,10 +485,9 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="footer_payment">
                         <ul>
-                            <li><a href="#"><img src="{{asset('assets/img/icon/paypal1.jpg')}}" alt=""></a></li>
-                            <li><a href="#"><img src="{{asset('assets/img/icon/paypal2.jpg')}}" alt=""></a></li>
-                            <li><a href="#"><img src="{{asset('assets/img/icon/paypal3.jpg')}}" alt=""></a></li>
-                            <li><a href="#"><img src="{{asset('assets/img/icon/paypal4.jpg')}}" alt=""></a></li>
+                            @foreach($payment_image as $pay_img)
+                            <li><a href="#"><img src="{{$pay_img->image}}" alt=""></a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

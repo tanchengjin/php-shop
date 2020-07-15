@@ -1,6 +1,7 @@
 @extends('main')
 @section('breadcrumbs')
 @endsection
+@section('page.title',__('website.blog'))
 @section('content')
     <!--blog area start-->
     <div class="blog_page_section blog_reverse mt-70">

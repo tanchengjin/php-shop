@@ -1,4 +1,7 @@
 @extends('main')
+@section('page.title','Blog |'.$article->title)
+@section('breadcrumbs')
+@endsection
 @section('content')
     <!--blog body area start-->
     <div class="blog_details">
@@ -166,7 +169,8 @@
                             @foreach($recentComment as $comment)
                                 <div class="post_wrapper">
                                     <div class="post_thumb">
-                                        <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}"><img src="{{$comment->user->full_avatar}}" alt=""></a>
+                                        <a href="{{route('blog.show',['id'=>hashids_id($comment->article_id)])}}"><img
+                                                src="{{$comment->user->full_avatar}}" alt=""></a>
                                     </div>
                                     <div class="post_info">
                                         <span> <a href="#">{{$comment->user->name}}</a> says:</span>
@@ -287,7 +291,7 @@
 
                         }
                         $('#review_comment').val('');
-                        return swal.fire('{{__('sweetalert.operation_success')}}','','success');
+                        return swal.fire('{{__('sweetalert.operation_success')}}', '', 'success');
 
                     } else {
                         swal.fire('{{__('sweetalert.operation_error')}}', '', 'error');

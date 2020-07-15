@@ -27,4 +27,6 @@ Route::group([
 
     $router->get('contactUs','ContactUsController@index');
 
+    $router->resource('paymentImage','PaymentImageController');
+
 });
