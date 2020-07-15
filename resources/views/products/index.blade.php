@@ -9,7 +9,6 @@
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
                         <div class="shop_toolbar_btn">
-
                             <button data-role="grid_3" type="button" class=" btn-grid-3" data-toggle="tooltip"
                                     title="3"></button>
 
@@ -20,20 +19,43 @@
                                     title="List"></button>
                         </div>
                         <div class=" niceselect_option">
-                            <form class="select_option" action="#">
+                            <form class="select_option" action="#" id="select_order">
+                                <input type="hidden" name="order">
                                 <select name="orderby" id="short">
+                                    <option value="0">{{__('website.please_select_order')}}</option>
+                                    <option
+                                        value="price_asc">{{__('website.sort_by_asc',['key'=>__('cart.price')])}}</option>
+                                    <option
+                                        value="price_desc">{{__('website.sort_by_desc',['key'=>__('cart.price')])}}</option>
 
-                                    <option selected value="1">Sort by average rating</option>
-                                    <option value="2">Sort by popularity</option>
-                                    <option value="3">Sort by newness</option>
-                                    <option value="4">Sort by price: low to high</option>
-                                    <option value="5">Sort by price: high to low</option>
-                                    <option value="6">Product Name: Z</option>
+                                    <option
+                                        value="review_asc">{{__('website.sort_by_asc',['key'=>__('website.review')])}}</option>
+                                    <option
+                                        value="review_desc">{{__('website.sort_by_desc',['key'=>__('website.review')])}}</option>
+
+                                    <option
+                                        value="rating_asc">{{__('website.sort_by_asc',['key'=>__('website.rating')])}}</option>
+                                    <option
+                                        value="rating_desc">{{__('website.sort_by_desc',['key'=>__('website.rating')])}}</option>
+
+                                    <option
+                                        value="sold_asc">{{__('website.sort_by_asc',['key'=>__('website.sold_count')])}}</option>
+                                    <option
+                                        value="sold_desc">{{__('website.sort_by_desc',['key'=>__('website.sold_count')])}}</option>
                                 </select>
                             </form>
                         </div>
                         <div class="page_amount">
-                            <p>Showing 1–20 of {{$products->total()}} results</p>
+                            @if($products->currentPage() === 1)
+
+                                <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage(),'total'=>$products->total()])}}</p>
+                            @else
+                                <p>{{__('website.show_result',[
+    'first'=>($products->currentPage()-1)+$products->perPage(),
+    'last'=>($products->perPage()*$products->currentPage()) >= $products->total() ?$products->total():($products->perPage()*$products->currentPage()),
+    'total'=>$products->total()
+    ])}}</p>
+                            @endif
                         </div>
                     </div>
                     <!--shop toolbar end-->
@@ -75,9 +97,9 @@
                                                                             data-id="{{$product->id}}"><span
                                                                 class="lnr lnr-heart"></span></a></li>
                                                 @endif
-                                                <li class="compare"><a href="#"
-                                                                       title="{{__('website.add_to_compare')}}"><span
-                                                            class="lnr lnr-sync"></span></a></li>
+                                                {{--                                                <li class="compare"><a href="#"--}}
+                                                {{--                                                                       title="{{__('website.add_to_compare')}}"><span--}}
+                                                {{--                                                            class="lnr lnr-sync"></span></a></li>--}}
                                             </ul>
                                         </div>
                                     </div>
@@ -127,7 +149,7 @@
                     </div>
 
                     <div class="shop_toolbar t_bottom">
-                        {{$products->links()}}
+                        {{$products->appends($param)->links()}}
                     </div>
                     <!--shop toolbar end-->
                     <!--shop wrapper end-->
@@ -221,14 +243,14 @@
                                                 <form action="#">
                                                     <input min="1" max="100" step="2" value="1" type="number"
                                                            class="add_to_cart_amount">
-                                                    <button type="button" class="add_to_cart">add
-                                                        to cart
+                                                    <button type="button"
+                                                            class="add_to_cart">{{__('website.add_to_cart')}}
                                                     </button>
                                                 </form>
                                             </div>
                                         </div>
                                         <div class="modal_social">
-                                            <h2>Share this product</h2>
+                                            <h2>{{__('blog.share_this_product')}}</h2>
                                             <ul>
                                                 <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
                                                 <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -254,32 +276,17 @@
 @section('javascript')
     <script>
         $(document).ready(function () {
+            var param = @json($param);
+            if (param.order) {
+                var $orderLi = $('li[data-value=' + param.order + ']');
+                $orderLi.addClass('option selected');
+                $('span[class=current]').text($orderLi.html())
+            }
+
             //获取当前url参数
             function getQuery() {
                 return window.location.search.substring(1);
             }
-
-            /*---slider-range here---*/
-            let currency_symbol = "￥";
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 500,
-                values: [{{$range_price_min??0}}, {{$range_price_max??500}}],
-                slide: function (event, ui) {
-                    $("#price_range_min").val(ui.values[0]);
-                    $("#price_range_max").val(ui.values[1]);
-                    $("#amount").val(currency_symbol + ui.values[0] + " - " + currency_symbol + ui.values[1]);
-                }
-            });
-            $("#price_range_min").val($("#slider-range").slider('values', 0));
-            $("#price_range_max").val($("#slider-range").slider('values', 1));
-
-            let min_price = $("#slider-range").slider("values", 0);
-            let max_price = $("#slider-range").slider("values", 1);
-
-            $("#amount").val(currency_symbol + min_price +
-                " - " + currency_symbol + max_price);
 
             $('body').on('click', '.remove_wishlist', function () {
 
@@ -287,7 +294,6 @@
 
                 let id = $box.data('id');
                 axios.delete('/wishlist/' + id).then(function (res) {
-                    console.log(res)
                     $box.removeAttr('style');
                     $box.removeClass('remove_wishlist');
                     $box.addClass('add_to_wishlist');
@@ -344,58 +350,60 @@
                 });
             });
 
-            $('.select_option').on('change', function () {
-                console.log('123213')
-                $(this).submit();
-            });
 
             //加入购物车
-            $('body').on('click','.add_to_cart',function () {
+            $('body').on('click', '.add_to_cart', function () {
                 let id = $('input[type=radio][name=sku]:checked').val();
 
 
                 let quantity = $(this).prev('.add_to_cart_amount').val();
 
-                if(!id){
-                    return swal.fire('error','{{__('sweetalert.please_select_sku')}}','error');
+                if (!id) {
+                    return swal.fire('error', '{{__('sweetalert.please_select_sku')}}', 'error');
                 }
 
-                if(!quantity){
-                    return swal.fire('error','{{__('sweetalert.error_quantity')}}','error');
+                if (!quantity) {
+                    return swal.fire('error', '{{__('sweetalert.error_quantity')}}', 'error');
                 }
 
-                axios.post('{{route('carts.store')}}',{
-                    'sku_id':id,
-                    'quantity':quantity
+                axios.post('{{route('carts.store')}}', {
+                    'sku_id': id,
+                    'quantity': quantity
                 }).then(function (res) {
-                    if(res.data.errno === 0){
+                    if (res.data.errno === 0) {
                         swal.fire({
-                            title:'{{__('sweetalert.operation_success')}}',
-                            icon:'success',
-                            showCancelButton:true,
-                            confirmButtonText:'{{__('sweetalert.go_shopping_cart')}}',
-                            cancelButtonText:'{{__('sweetalert.continue_preview')}}',
-                            preConfirm:function (val) {
-                                if(val){
-                                    location.href='{{route('carts.index')}}';
+                            title: '{{__('sweetalert.operation_success')}}',
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonText: '{{__('sweetalert.go_shopping_cart')}}',
+                            cancelButtonText: '{{__('sweetalert.continue_preview')}}',
+                            preConfirm: function (val) {
+                                if (val) {
+                                    location.href = '{{route('carts.index')}}';
                                 }
                             }
                         })
-                    }else{
-                        swal.fire('error','{{__('sweetalert.operation_error')}}','error');
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.operation_error')}}', 'error');
                     }
-                },function (err) {
-                    if(err.response.status === 422){
-                        let content='<div>';
-                        _.each(err.response.data.errors,function (errors) {
-                            _.each(errors,function (error) {
-                                content+=error+'<br>';
+                }, function (err) {
+                    if (err.response.status === 422) {
+                        let content = '<div>';
+                        _.each(err.response.data.errors, function (errors) {
+                            _.each(errors, function (error) {
+                                content += error + '<br>';
                             })
                         })
-                        content+='</div>';
-                        swal.fire('error',content,'error');
+                        content += '</div>';
+                        swal.fire('error', content, 'error');
                     }
                 });
+            });
+
+            $('body').on('click', '.list>li', function () {
+                let value = $(this).data('value');
+                $('input[name=order]').val(value);
+                $('form[id=select_order]').submit();
             });
 
         });

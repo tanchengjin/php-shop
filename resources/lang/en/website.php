@@ -58,6 +58,16 @@ return [
     'enter_you_email'=>'Enter Your Email',
     'subscribe'=>'Subscribe',
     'contact_us'=>'Contact Us',
+    'show'=>'Show',
+    'sort_by_asc' => 'Sort By :key Asc',
+    'sort_by_desc' => 'Sort By :key Desc',
+    'price'=>'Price',
+    'sold_count'=>'Sold Amount',
+    'rating'=>'Rating Level',
+    'review'=>'Review Amount',
+    'show_result' => 'Showing :first-:last of :total Result',
+    'please_select_order'=>'Please Select Order By',
+    'remove_wishlist'=>'Remove Wishlist'
 
 
 ];

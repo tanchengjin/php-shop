@@ -6,6 +6,7 @@ use App\Http\Requests\WishlistRequest;
 use App\Librarys\API;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
@@ -28,13 +29,13 @@ class WishlistController extends Controller
         }
     }
 
-    public function destroy($id,Request $request)
+    public function destroy($id, Request $request)
     {
-        if ($wishlist=$request->user()->wishlist()->where('product_id', $id)->first()) {
+        if ($wishlist = $request->user()->wishlist()->where(['product_id' => $id])->first()) {
             $wishlist->delete();
             return $this->success();
         } else {
-            return $this->error();
+            return $this->fail('操作失败请重试');
         }
     }
 }

@@ -14,7 +14,25 @@ class ProductController extends Controller
 
         //排序
         if ($order = $request->input('order')) {
+            #排序规则
+            $rules = ['review', 'rating', 'price', 'sold'];
 
+            $rule = implode('|', $rules);
+            preg_match('/^(' . $rule . ')_(asc|desc)$/', $order, $m);
+
+            if (!empty($m)) {
+                list($full, $order_key, $order_value) = $m;
+
+                if ($order_key === 'review') {
+                    $order_key = 'review_count';
+                }
+
+                if ($order_key === 'sold') {
+                    $order_key = 'sold_count';
+                }
+
+                $builder->orderBy($order_key, $order_value);
+            }
         }
 
         if (($min_price = $request->get('price_range_min')) >= 0) {
@@ -30,7 +48,10 @@ class ProductController extends Controller
             'products' => $products,
             'range_price_min' => $min_price ?? false,
             'range_price_max' => $max_price ?? false,
-            'categoryTree'=>(new Category())->getCategoryTree(),
+            'categoryTree' => (new Category())->getCategoryTree(),
+            'param'=>[
+                'order'=>$order??'',
+            ],
         ]);
     }
 

@@ -5,5 +5,6 @@ return [
     'category'=>'分类',
     'tag_products'=>'标签',
     'search'=>'搜索',
-    'share_this_post'=>'分享本篇文章'
+    'share_this_post'=>'分享本篇文章',
+    'share_this_product'=>'分享当前商品'
 ];

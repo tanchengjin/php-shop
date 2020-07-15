@@ -9,9 +9,9 @@ trait API
     private $statusCode = 200;
 
     /**
-     * @deprecated 已废弃
      * @param $statusCode
      * @return $this
+     * @deprecated 已废弃
      */
     public function setStatusCode($statusCode)
     {
@@ -25,6 +25,11 @@ trait API
     }
 
     public function error(array $data = [], int $errno = 1, string $message = '')
+    {
+        return $this->handle($data, $errno, $message);
+    }
+
+    public function fail(string $message, int $errno = 1, array $data = [])
     {
         return $this->handle($data, $errno, $message);
     }

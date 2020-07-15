@@ -90,8 +90,13 @@
                             </div>
                             <div class=" product_d_action">
                                 <ul>
-                                    <li><a href="#" title="Add to wishlist">+ {{__('website.add_to_wishlist')}}</a></li>
-                                    <li><a href="#" title="Add to wishlist">+ {{__('website.add_to_compare')}}</a></li>
+                                    @if($product->isWishlist)
+                                        <li><a href="#" title="Remove to wishlist" data-id="{{$product->id}}"
+                                               class="remove_wishlist">- {{__('website.remove_wishlist')}}</a></li>
+                                    @else
+                                        <li><a href="#" title="Add to wishlist" data-id="{{$product->id}}"
+                                               class="add_to_wishlist">+ {{__('website.add_to_wishlist')}}</a></li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="product_meta">
@@ -793,6 +798,67 @@
                 $('.current_price').text('￥' + price);
                 $('.old_price').text('￥' + old_price);
                 $('.old_price').css('display', 'inline-block');
+            });
+
+
+            $('body').on('click', '.remove_wishlist', function () {
+
+                $box = $(this);
+
+                let id = $box.data('id');
+                axios.delete('/wishlist/' + id).then(function (res) {
+                    if (res.data.errno === 0) {
+                        swal.fire('success', '{{__('sweetalert.operation_success')}}', 'success');
+                        location.reload();
+                    } else {
+                        swal.fire('error', res.data.message, 'error');
+                    }
+                }, function (err) {
+                    if (err.response.status === 401) {
+                        swal.fire({
+                            title: 'error',
+                            text: '{{__('sweetalert.please_login')}}',
+                            icon: 'error',
+                            preConfirm(inputValue) {
+                                if (inputValue) {
+                                    location.href = "{{route('login')}}";
+                                }
+                            }
+                        });
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+                    }
+                });
+            });
+
+
+            $('body').on('click', '.add_to_wishlist', function () {
+                $box = $(this);
+
+                let id = $(this).data('id');
+                axios.post('{{route('wishlist.store')}}', {
+                    id: id
+                }).then(function (res) {
+                    swal.fire('success', '{{__('sweetalert.operation_success')}}', 'success')
+                    location.reload();
+
+
+                }, function (err) {
+                    if (err.response.status === 401) {
+                        swal.fire({
+                            title: 'error',
+                            text: '{{__('sweetalert.please_login')}}',
+                            icon: 'error',
+                            preConfirm(inputValue) {
+                                if (inputValue) {
+                                    location.href = "{{route('login')}}";
+                                }
+                            }
+                        });
+                    } else {
+                        swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
+                    }
+                });
             });
         })
     </script>

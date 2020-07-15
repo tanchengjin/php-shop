@@ -136,62 +136,8 @@
                                     class="item_count">3</span> </a>
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
-                            <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span
+                            <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
                                     class="item_count">2</span></a>
-                            <!--mini cart-->
-                            <div class="mini_cart">
-                                <div class="cart_gallery">
-                                    <div class="cart_item">
-                                        <div class="cart_img">
-                                            <a href="#"><img src="{{asset('assets/img/s-product/product.jpg')}}" alt=""></a>
-                                        </div>
-                                        <div class="cart_info">
-                                            <a href="#">Primis In Faucibus</a>
-                                            <p>1 x <span> $65.00 </span></p>
-                                        </div>
-                                        <div class="cart_remove">
-                                            <a href="#"><i class="icon-x"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="cart_item">
-                                        <div class="cart_img">
-                                            <a href="#"><img src="{{asset('assets/img/s-product/product2.jpg')}}"
-                                                             alt=""></a>
-                                        </div>
-                                        <div class="cart_info">
-                                            <a href="#">Letraset Sheets</a>
-                                            <p>1 x <span> $60.00 </span></p>
-                                        </div>
-                                        <div class="cart_remove">
-                                            <a href="#"><i class="icon-x"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mini_cart_table">
-                                    <div class="cart_table_border">
-                                        <div class="cart_total">
-                                            <span>Sub total:</span>
-                                            <span class="price">$125.00</span>
-                                        </div>
-                                        <div class="cart_total mt-10">
-                                            <span>total:</span>
-                                            <span class="price">$125.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mini_cart_footer">
-                                    <div class="cart_button">
-                                        <a href="{{route('carts.index')}}"><i
-                                                class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
-                                    </div>
-                                    <div class="cart_button">
-                                        <a href="checkout.html"><i class="fa fa-sign-in"></i> {{__('website.checkout')}}
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!--mini cart end-->
                         </div>
                     </div>
                     <div class="call-support">
@@ -381,62 +327,8 @@
                                             class="item_count">3</span> </a>
                                 </div>
                                 <div class="header_account_list  mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span
+                                    <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
                                             class="item_count">2</span></a>
-                                    <!--mini cart-->
-                                    <div class="mini_cart">
-                                        <div class="cart_gallery">
-                                            <div class="cart_item">
-                                                <div class="cart_img">
-                                                    <a href="#"><img src="{{asset('assets/img/s-product/product.jpg')}}"
-                                                                     alt=""></a>
-                                                </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Primis In Faucibus</a>
-                                                    <p>1 x <span> $65.00 </span></p>
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="icon-x"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="cart_item">
-                                                <div class="cart_img">
-                                                    <a href="#"><img
-                                                            src="{{asset('assets/img/s-product/product2.jpg')}}" alt=""></a>
-                                                </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Letraset Sheets</a>
-                                                    <p>1 x <span> $60.00 </span></p>
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="icon-x"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_table">
-                                            <div class="cart_table_border">
-                                                <div class="cart_total">
-                                                    <span>Sub total:</span>
-                                                    <span class="price">$125.00</span>
-                                                </div>
-                                                <div class="cart_total mt-10">
-                                                    <span>total:</span>
-                                                    <span class="price">$125.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_footer">
-                                            <div class="cart_button">
-                                                <a href="{{route('carts.index')}}"><i
-                                                        class="fa fa-shopping-cart"></i>{{__('website.view_cart')}}</a>
-                                            </div>
-                                            <div class="cart_button">
-                                                <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <!--mini cart end-->
                                 </div>
                             </div>
                         </div>

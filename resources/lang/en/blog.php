@@ -5,5 +5,6 @@ return [
     'category'=>'Categories',
     'tag_products'=>'Tag Products',
     'search'=>'Search',
-    'share_this_post'=>'Share This Post'
+    'share_this_post'=>'Share This Post',
+    'share_this_product'=>'Share This Product'
 ];
