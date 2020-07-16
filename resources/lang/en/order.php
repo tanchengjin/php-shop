@@ -13,4 +13,5 @@ return [
     'alipay'=>'Alipay',
     'apply_refund'=>'Apply Refund',
     'received'=>'RECEIVE',
+    'review'=>'Go Review',
 ];

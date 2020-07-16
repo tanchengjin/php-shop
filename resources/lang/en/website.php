@@ -72,7 +72,9 @@ return [
     'website_information'=>'Information',
     'call_phone'=>'Call Us',
     'products'=>'All Products',
-    'search_products'=>'Search All Products'
-
-
+    'search_products'=>'Search All Products',
+    'reviewed'=>'Reviewed',
+    'go_review'=>'Go Reviewed',
+    'personal_center'=>'Personal Center',
+    'message'=>'Message'
 ];

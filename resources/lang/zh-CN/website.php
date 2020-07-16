@@ -72,6 +72,10 @@ return [
     'website_information'=>'站点信息',
     'call_phone'=>'联系电话',
     'products'=>'所有商品',
-    'search_products'=>'搜索所有商品'
+    'search_products'=>'搜索所有商品',
+    'reviewed'=>'已评价',
+    'go_review'=>'去评价',
+    'personal_center' => '个人中心',
+    'message'=>'消息'
 
 ];

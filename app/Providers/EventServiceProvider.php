@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\Paid;
+use App\Events\Reviewed;
+use App\Listeners\CalculateReviewCount;
 use App\Listeners\CalculateSale;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -16,11 +18,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        #注册后触发
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        #支付后触发
         Paid::class => [
             CalculateSale::class
+        ],
+        #评论后触发
+        Reviewed::class=>[
+            CalculateReviewCount::class
         ],
     ];
 

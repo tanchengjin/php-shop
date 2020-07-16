@@ -63,7 +63,12 @@ Route::middleware(['middleware' => 'setLanguage'])->group(function () {
         Route::post('orders/received/{order}', 'OrderController@received')->name('orders.received');
 
         #comment
-        Route::post('blog/article/comment','BlogController@comment')->name('blog.comment');
+        Route::post('blog/article/comment', 'BlogController@comment')->name('blog.comment');
+
+
+        #review
+        Route::get('order/{id}/review', 'ReviewController@index')->name('order.review.index');
+        Route::post('order/{id}/review', 'ReviewController@store')->name('order.review.store');
 
 
     });
@@ -71,7 +76,7 @@ Route::middleware(['middleware' => 'setLanguage'])->group(function () {
 
     #blog start
     Route::get('blog', 'BlogController@index')->name('blog.index');
-    Route::get('blog/article/{id}','BlogController@show')->name('blog.show');
+    Route::get('blog/article/{id}', 'BlogController@show')->name('blog.show');
 
     #blog end
 });

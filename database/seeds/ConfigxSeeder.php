@@ -81,6 +81,13 @@ class ConfigxSeeder extends Seeder
         $this->configsValue['base.logo'] = asset('assets/img/logo/logo.png');
 
         $description = json_encode($configs);
+        if (!\Illuminate\Support\Facades\DB::table('admin_config')->where('name', '__configx__')->exists()) {
+            \Illuminate\Support\Facades\DB::table('admin_config')->insert([
+                'name' => '__configx__',
+                'value' => 'do not Delete'
+            ]);
+        }
+
         \Illuminate\Support\Facades\DB::table('admin_config')->where('name', '__configx__')->update([
             'description' => $description
         ]);

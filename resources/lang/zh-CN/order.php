@@ -14,4 +14,5 @@ return [
     'order_remark'=>'订单备注',
     'apply_refund'=>'申请退款',
     'received'=>'收货',
+    'review'=>'评论',
 ];

@@ -54,6 +54,10 @@ return [
             'salt'=>env('APP_KEY'),
             'length'=>13
         ],
+        'order_id'=>[
+            'sale'=>env('APP_KEY'),
+            'length'=>32
+        ],
 
     ],
 

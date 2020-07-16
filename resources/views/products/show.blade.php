@@ -198,7 +198,7 @@
                                             <div class="reviews_meta">
                                                 <div class="star_rating">
                                                     <ul>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                                        <li><a href="#"><i class="icon-star glyphicon-star"></i></a></li>
                                                         <li><a href="#"><i class="icon-star"></i></a></li>
                                                         <li><a href="#"><i class="icon-star"></i></a></li>
                                                         <li><a href="#"><i class="icon-star"></i></a></li>
@@ -274,8 +274,8 @@
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{route('products.show',$relate->id)}}"><img
                                                 src="{{$relate->first_image}}" alt="picture"></a>
-                                        <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img
-                                                src="{{asset('assets/img/product/product21.jpg')}}" alt="picute"></a>
+{{--                                        <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img--}}
+{{--                                                src="{{asset('assets/img/product/product21.jpg')}}" alt="picute"></a>--}}
                                         <div class="label_product">
                                             @if($relate->tags)
                                                 @foreach(explode(',',$relate->tags) as $tag)

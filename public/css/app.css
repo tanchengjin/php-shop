@@ -10969,3 +10969,64 @@ a.text-dark:focus {
   color: #efc7ff;
 }
 
+.star-box {
+  border-style: none;
+  margin: 0 auto;
+  padding: 0;
+  float: left;
+}
+
+.star-box:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+  clip: rect(0, 0, 0, 0);
+}
+
+.star-box:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 1.2;
+  color: lightgrey;
+  font-size: 150%;
+}
+
+.star-box:not(:checked) > label:before {
+  content: "\2605   ";
+}
+
+.star-box:not(:checked) > label:hover,
+.star-box:not(:checked) > label:hover ~ label {
+  color: gold;
+}
+
+.star-box > input:checked ~ label {
+  color: gold;
+}
+
+.star-box > label:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.star-box > input:checked + label:hover,
+.star-box > input:checked + label:hover ~ label,
+.star-box > input:checked ~ label:hover,
+.star-box > input:checked ~ label:hover ~ label,
+.star-box > label:hover ~ input:checked ~ label {
+  color: gold;
+}
+
+.star-t {
+  color: red;
+  font-size: 150%;
+}
+
+.star-f {
+  color: #eee;
+  font-size: 150%;
+}
+

@@ -69,11 +69,20 @@ class OrderController extends AdminController
                     return '<span class="label label-warning">待发货</span>';
                 }
 
-                return '<span class="label">已支付</span>';
+                if ($this->ship_status === Order::SHIP_STATUS_DELIVERED){
+                    return '<span class="label label-warning">已发货</span>';
+                }
+
+                if ($this->ship_status === Order::SHIP_STATUS_RECEIVED){
+                    return '<span class="label label-warning">已收货</span>';
+                }
+
+                return '<span class="label label-default">已支付</span>';
             } else {
                 if ($this->closed) {
                     return '<span class="label label-default">已关闭</span>';
                 }
+                return '<span class="label label-default">未支付</span>';
             }
         });
         $grid->column('rating', __('Ratting'));

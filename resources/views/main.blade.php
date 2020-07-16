@@ -43,6 +43,7 @@
     <!--modernizr min js here-->
     <script src="{{asset('assets/js/vendor/modernizr-3.7.1.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+    @yield('css')
 </head>
 
 <body>
@@ -258,129 +259,133 @@
                 </div>
             </div>
         </div>
-        <div class="header_middle">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-2">
-                        <div class="logo">
-                            <a href="{{route('index')}}"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-10">
-                        <div class="header_right_info">
-                            <div class="search_container">
-                                <form action="{{route('products.index')}}">
-                                    <div class="hover_category">
-                                        <select class="select_option" name="select" id="categori2">
-                                            <option selected value="">{{__('website.products')}}</option>
-                                        </select>
-                                    </div>
-                                    <div class="search_box">
-                                        <input placeholder="{{__('website.search_products')}}" type="text" name="q"
-                                               class="search_input">
-                                        <button type="submit"><span class="lnr lnr-magnifier"></span></button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="header_account_area">
-                                <div class="header_account_list register">
-                                    <ul>
-                                        @if(\Illuminate\Support\Facades\Auth::check())
-                                            <li><a href="{{route('center.index')}}">{{__('user.center')}}</a></li>
-                                        @else
-                                            <li><a href="{{route('login')}}">{{__('website.register')}}</a></li>
-                                            <li><span>/</span></li>
-                                            <li><a href="{{route('login')}}">{{__('website.login')}}</a></li>
-                                        @endif
-                                    </ul>
-                                </div>
-                                <div class="header_account_list header_wishlist">
-                                    <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
-                                            class="item_count">3</span> </a>
-                                </div>
-                                <div class="header_account_list  mini_cart_wrapper">
-                                    <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
-                                            class="item_count">2</span></a>
-                                </div>
+        @section('header_box')
+            <div class="header_middle">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-2">
+                            <div class="logo">
+                                <a href="{{route('index')}}"><img src="{{asset('assets/img/logo/logo.png')}}"
+                                                                  alt=""></a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="header_bottom sticky-header">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-3">
-                        <div class="categories_menu">
-                            <div class="categories_title">
-                                <h2 class="categori_toggle">{{__('website.all_category')}}</h2>
-                            </div>
-                            {{--                            分类列表--}}
-                            @if(isset($categoryTree))
-                                <div class="categories_menu_toggle">
-                                    <ul>
-                                        @each('layouts.nav',$categoryTree,'category')
-                                    </ul>
+                        <div class="col-lg-10">
+                            <div class="header_right_info">
+                                <div class="search_container">
+                                    <form action="{{route('products.index')}}">
+                                        <div class="hover_category">
+                                            <select class="select_option" name="select" id="categori2">
+                                                <option selected value="">{{__('website.products')}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="search_box">
+                                            <input placeholder="{{__('website.search_products')}}" type="text" name="q"
+                                                   class="search_input">
+                                            <button type="submit"><span class="lnr lnr-magnifier"></span></button>
+                                        </div>
+                                    </form>
                                 </div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <!--main menu start-->
-                        <div class="main_menu menu_position">
-                            <nav>
-                                <ul>
-                                    <li><a href="{{route('index')}}">{{__('website.home')}}</a>
-                                    </li>
-                                    <li class="mega_items">
-                                        @if(url()->current() === route('products.index'))
-                                            <a class="active"
-                                               href="{{route('products.index')}}">{{__('website.shop')}}</a>
-                                        @else
-                                            <a href="{{route('products.index')}}">{{__('website.shop')}}</a>
-                                        @endif
-                                    </li>
-                                    <li>
-                                        @if(url()->current() === route('blog.index'))
-                                            <a class="active" href="{{route('blog.index')}}">{{__('website.blog')}}</a>
-                                        @else
-                                            <a href="{{route('blog.index')}}">{{__('website.blog')}}</a>
-                                        @endif
-                                    </li>
-                                    <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu pages">
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="services.html">services</a></li>
-                                            <li><a href="faq.html">Frequently Questions</a></li>
-                                            <li><a href="{{route('contactUs.index')}}">contact</a></li>
-                                            <li><a href="login.html">login</a></li>
-                                            <li><a href="404.html">Error 404</a></li>
+                                <div class="header_account_area">
+                                    <div class="header_account_list register">
+                                        <ul>
+                                            @if(\Illuminate\Support\Facades\Auth::check())
+                                                <li><a href="{{route('center.index')}}">{{__('user.center')}}</a></li>
+                                            @else
+                                                <li><a href="{{route('login')}}">{{__('website.register')}}</a></li>
+                                                <li><span>/</span></li>
+                                                <li><a href="{{route('login')}}">{{__('website.login')}}</a></li>
+                                            @endif
                                         </ul>
-                                    </li>
-                                    <li>
-                                        @if(url()->current() === route('contactUs.index'))
-                                            <a class="active"
-                                               href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
-                                        @else
-                                            <a href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
-                                        @endif
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--main menu end-->
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="call-support">
-                            <p>
-                                <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('website.customer_support')}}
-                            </p>
+                                    </div>
+                                    <div class="header_account_list header_wishlist">
+                                        <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
+                                                class="item_count">3</span> </a>
+                                    </div>
+                                    <div class="header_account_list  mini_cart_wrapper">
+                                        <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
+                                                class="item_count">2</span></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="header_bottom sticky-header">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <div class="categories_menu">
+                                <div class="categories_title">
+                                    <h2 class="categori_toggle">{{__('website.all_category')}}</h2>
+                                </div>
+                                {{--                            分类列表--}}
+                                @if(isset($categoryTree))
+                                    <div class="categories_menu_toggle">
+                                        <ul>
+                                            @each('layouts.nav',$categoryTree,'category')
+                                        </ul>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!--main menu start-->
+                            <div class="main_menu menu_position">
+                                <nav>
+                                    <ul>
+                                        <li><a href="{{route('index')}}">{{__('website.home')}}</a>
+                                        </li>
+                                        <li class="mega_items">
+                                            @if(url()->current() === route('products.index'))
+                                                <a class="active"
+                                                   href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                            @else
+                                                <a href="{{route('products.index')}}">{{__('website.shop')}}</a>
+                                            @endif
+                                        </li>
+                                        <li>
+                                            @if(url()->current() === route('blog.index'))
+                                                <a class="active"
+                                                   href="{{route('blog.index')}}">{{__('website.blog')}}</a>
+                                            @else
+                                                <a href="{{route('blog.index')}}">{{__('website.blog')}}</a>
+                                            @endif
+                                        </li>
+                                        <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
+                                            <ul class="sub_menu pages">
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="services.html">services</a></li>
+                                                <li><a href="faq.html">Frequently Questions</a></li>
+                                                <li><a href="{{route('contactUs.index')}}">contact</a></li>
+                                                <li><a href="login.html">login</a></li>
+                                                <li><a href="404.html">Error 404</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            @if(url()->current() === route('contactUs.index'))
+                                                <a class="active"
+                                                   href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
+                                            @else
+                                                <a href="{{route('contactUs.index')}}"> {{__('website.contact_us')}}</a>
+                                            @endif
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!--main menu end-->
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="call-support">
+                                <p>
+                                    <a href="tel:{{config('base.telephone')}}">{{config('base.telephone')}}</a> {{__('website.customer_support')}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @show
     </div>
 </header>
 <!--header area end-->
@@ -486,7 +491,7 @@
                     <div class="footer_payment">
                         <ul>
                             @foreach($payment_image as $pay_img)
-                            <li><a href="#"><img src="{{$pay_img->image}}" alt=""></a></li>
+                                <li><a href="#"><img src="{{$pay_img->image}}" alt=""></a></li>
                             @endforeach
                         </ul>
                     </div>

@@ -43,7 +43,7 @@ class AutoShip implements ShouldQueue
                 Log::error($exception->getMessage());
             }
         } else {
-            Log::error('order status error:' . $this->order->id);
+            Log::info('order status error:' . $this->order->id.''.$this->order->ship_status);
         }
     }
 }

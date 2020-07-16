@@ -48,3 +48,54 @@
         }
     }
 }
+.star-box {
+    border-style: none;
+    margin: 0 auto;
+    padding: 0;
+    float: left;
+    &:not(:checked) {
+        & > input {
+            position: absolute;
+            top: -9999px;
+            clip: rect(0,0,0,0);
+        }
+        & > label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            line-height: 1.2;
+            color: lightgrey;
+            font-size: 150%;
+
+            &:before {
+                content: '★ ';
+            }
+        }
+        & > label:hover, & > label:hover ~ label {
+            color: gold;
+        }
+    }
+    & > input:checked ~ label {
+        color: gold;
+    }
+    & > label:active {
+        position: relative;
+        top: 2px;
+        left: 2px;
+    }
+
+    & > input:checked + label:hover, & > input:checked + label:hover ~ label, & > input:checked ~ label:hover, & > input:checked ~ label:hover ~ label, & > label:hover ~ input:checked ~ label {
+        color: gold;
+    }
+}
+
+.star-t{
+    color: red;
+    font-size: 150%;
+}
+.star-f{
+    color: #eee;
+    font-size: 150%;
+}

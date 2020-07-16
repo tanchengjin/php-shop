@@ -24,4 +24,10 @@ class OrderItem extends Model
     {
         return $this->belongsTo(ProductSku::class, 'product_sku_id', 'id');
     }
+
+
+    public function getHashIdAttribute()
+    {
+        return hashids_order_id($this->attributes['id']);
+    }
 }

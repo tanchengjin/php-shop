@@ -16,7 +16,6 @@
                                 @endif
                             </div>
                         @endif
-
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
                                 @if(!$order->paid_at)
@@ -26,7 +25,6 @@
                                              style="width: {{$order->ttl}}%"></div>
                                     </div>
                                 @endif
-
                                 <table>
                                     <thead>
                                     <tr>
@@ -35,12 +33,14 @@
                                         <th class="product-price">{{__('cart.price')}}</th>
                                         <th class="product_quantity">{{__('cart.quantity')}}</th>
                                         <th class="product_total">{{__('cart.total')}}</th>
+                                        <th class="product_option">{{__('website.options')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($order->items as $item)
                                         <tr>
-                                            <td class="product_thumb"><a href="#"><img
+                                            <td class="product_thumb"><a
+                                                    href="{{route('products.show',$item->product_id)}}"><img
                                                         src="{{$item->product->first_image}}" alt=""></a></td>
                                             <td class="product_name"><a
                                                     href="#">{{$item->product->title}} {{$item->sku->title}}</a>
@@ -49,6 +49,13 @@
                                             <td class="product_quantity">{{$item->quantity}}</td>
                                             <td class="product_total">
                                                 ￥{{number_format($item->price*$item->quantity,2)}}</td>
+                                            @if($item->order->ship_status !== \App\Models\Order::SHIP_STATUS_RECEIVED)
+                                                <td class="product_option"><a href="{{route('order.review.index',hashids_order_id($item->id))}}">{{__('review.await_received')}}</a></td>
+                                            @elseif(is_null($item->review))
+                                                <td class="product_option"><a href="{{route('order.review.index',hashids_order_id($item->id))}}">{{__('website.go_review')}}</a></td>
+                                            @else
+                                                <td class="product_option"><a href="{{route('order.review.index',hashids_order_id($item->id))}}">{{__('review.show_review')}}</a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -137,6 +144,7 @@
                                                 <button class="apply_refund"
                                                         type="button">{{__('order.apply_refund')}}</button>
                                             @endif
+
                                         @elseif($order->closed)
                                             <button class="disabled" type="button">该订单已关闭</button>
                                         @else
