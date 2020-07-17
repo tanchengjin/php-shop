@@ -20,9 +20,9 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('set null');
             $table->string('title');
             #商品的最低价
-            $table->decimal('price',10,2);
+            $table->decimal('price', 10, 2);
             #商品简介
-            $table->string('intro',255);
+            $table->string('intro', 255);
             #商品详情
             $table->text('description');
             $table->unsignedBigInteger('sold_count')->default(0);

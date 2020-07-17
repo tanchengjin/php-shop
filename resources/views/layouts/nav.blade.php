@@ -1,5 +1,5 @@
 @if(isset($category['children']) && count($category['children']) >= 1)
-<li class="menu_item_children"><a href="#">{{$category['title']}}<i
+<li class="menu_item_children"><a href="{{route('products.index',['category_id'=>$category['id']])}}">{{$category['title']}}<i
             class="fa fa-angle-right"></i></a>
     <ul class="categories_mega_menu">
         @each('layouts.nav',$category['children'],'category')
@@ -14,5 +14,5 @@
 
 {{--</li>--}}
 @else
-    <li><a href="#">{{$category['title']}}</a></li>
+    <li><a href="{{route('products.index',['category_id'=>$category['id']])}}">{{$category['title']}}</a></li>
 @endif

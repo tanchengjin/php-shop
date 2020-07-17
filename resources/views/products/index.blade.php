@@ -69,7 +69,11 @@
                                                     src="{{asset('assets/images/error.png')}}" alt=""></a>
                                         @endif
                                         <div class="label_product">
-                                            <span class="label_sale">Sale</span>
+                                            @if(!is_null($product->tags))
+                                                @foreach($product->tags as $index=>$tag)
+                                                    <span class="label_{{$tag}}">{{$tag}}</span>
+                                                @endforeach
+                                            @endif
                                             <span class="label_new">New</span>
                                         </div>
                                         <div class="action_links">
@@ -116,11 +120,11 @@
                         @endforeach
                     </div>
                     @if($products->total() > $products->perPage())
-                    <div class="shop_toolbar t_bottom">
-                        {{$products->appends($param)->links()}}
-                    </div>
-                    @endif
-                    <!--shop toolbar end-->
+                        <div class="shop_toolbar t_bottom">
+                            {{$products->appends($param)->links()}}
+                        </div>
+                @endif
+                <!--shop toolbar end-->
                     <!--shop wrapper end-->
                 </div>
             </div>

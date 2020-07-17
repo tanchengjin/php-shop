@@ -35,6 +35,10 @@ class ProductController extends Controller
             }
         }
 
+        #分类
+        if ($category_id=$request->get('category_id','')){
+            $builder->where('category_id',$category_id);
+        }
         #搜索
         if ($search = $request->input('q', '')) {
             $like = '%' . $search . '%';

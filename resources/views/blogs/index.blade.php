@@ -43,7 +43,7 @@
                                 <div class="post_wrapper">
                                     <div class="post_thumb">
                                         <a href="{{route('blog.show',hashids_id($item->id))}}"><img
-                                                src="/assets/img/blog/blogs1.jpg" alt=""></a>
+                                                src="{{$item->full_image}}" alt=""></a>
                                     </div>
                                     <div class="post_info">
                                         <h4><a href="{{route('blog.show',hashids_id($item->id))}}">{{$item->title}}</a>
@@ -91,14 +91,14 @@
                                         <figure>
                                             <div class="blog_thumb">
                                                 <a href="{{route('blog.show',hashids_id($blog->id))}}"><img
-                                                        src="assets/img/blog/blog1.jpg" alt=""></a>
+                                                        src="{{$blog->full_image}}" alt=""></a>
                                             </div>
                                             <figcaption class="blog_content">
                                                 <h4 class="post_title"><a
                                                         href="{{route('blog.show',hashids_id($blog->id))}}">{{$blog->title}}</a>
                                                 </h4>
                                                 <div class="articles_date">
-                                                    <p>18/01/2019 | <a href="#">{{$blog->author}}</a></p>
+                                                    <p>{{toDateString($blog->created_at,'en_/')}} | <a href="#">{{$blog->author}}</a></p>
                                                 </div>
                                             </figcaption>
                                         </figure>

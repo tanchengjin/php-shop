@@ -3404,7 +3404,20 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   display: block;
   border-radius: 5px;
 }
-
+.label_product span.label_hot{
+    top: 20px;
+    right: 80px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: red;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    width: 40px;
+    text-align: center;
+    display: block;
+    border-radius: 5px;
+}
 .product_content {
   margin-top: 16px;
   text-align: center;

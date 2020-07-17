@@ -46,8 +46,21 @@ function hashids_order_id_decode($str)
     throw new \App\Exceptions\NotFoundException();
 }
 
-
-function toDateString($date)
+/**
+ * @param string $date
+ * @param string $rule en,en_/,
+ * @return false|string
+ */
+function toDateString($date, $rule = 'en')
 {
-    return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->toFormattedDateString();
+    if ($rule === 'en') {
+        #january,february...
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->toFormattedDateString();
+    }
+
+    if ($rule === 'en_/') {
+        #january,february...
+        return date('d/m/Y');
+    }
 }
+

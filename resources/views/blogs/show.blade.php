@@ -67,7 +67,7 @@
                                             <figure>
                                                 <div class="related_thumb">
                                                     <a href="{{route('blog.show',hashids_id($relate->id))}}"><img
-                                                            src="/assets/img/blog/blog1.jpg" alt=""></a>
+                                                            src="{{$relate->full_image}}" alt=""></a>
                                                 </div>
                                                 <figcaption class="related_content">
                                                     <h4><a href="#">{{$relate->title}}</a></h4>
@@ -187,7 +187,7 @@
                                 <div class="post_wrapper">
                                     <div class="post_thumb">
                                         <a href="{{route('blog.show',hashids_id($item->id))}}"><img
-                                                src="/assets/img/blog/comment2.png.jpg" alt="{{$item->title}}"></a>
+                                                src="{{$item->full_image}}" alt="{{$item->title}}"></a>
                                     </div>
                                     <div class="post_info">
                                         <h4><a href="{{route('blog.show',hashids_id($item->id))}}">{{$item->title}}</a>

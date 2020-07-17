@@ -78,7 +78,7 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
         $form->text('title', __('Title'));
-
+        $form->multipleSelect('tags','标签')->options(Product::$tabsMap);
         $form->select('category_id', __('Category id'))->default(null);
         $form->multipleFile('images')->pathColumn('url')->removable();
         $form->textarea('intro', __('Intro'));

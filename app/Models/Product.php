@@ -14,13 +14,16 @@ class Product extends Model
     protected $appends = [
         'isWishlist'
     ];
+    protected $casts=[
+        'tags'=>'array'
+    ];
 
 
     public const TAB_SALE = 'sale';
     public const TAB_NEW = 'new';
     public const TAB_HOT = 'hot';
     public static $tabsMap = [
-        self::TAB_SALE => '促销',
+        self::TAB_SALE => '促销商品',
         self::TAB_NEW => '新商品',
         self::TAB_HOT => '热门商品'
 
