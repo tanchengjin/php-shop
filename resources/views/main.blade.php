@@ -74,13 +74,6 @@
                                     <li><a href="#">Russian</a></li>
                                 </ul>
                             </li>
-                            <li class="currency"><a href="#"> Currency <i class="icon-right ion-ios-arrow-down"></i></a>
-                                <ul class="dropdown_currency">
-                                    <li><a href="#">€ Euro</a></li>
-                                    <li><a href="#">£ Pound Sterling</a></li>
-                                    <li><a href="#">$ US Dollar</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                     <div class="header_social text-right">
@@ -119,12 +112,12 @@
                             </ul>
                         </div>
                         <div class="header_account_list header_wishlist">
-                            <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
-                                    class="item_count">3</span> </a>
+                            <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())<span
+                                    class="item_count">{{\Auth::user()->wishlist()->count()}}</span> @endif</a>
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
-                            <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
-                                    class="item_count">2</span></a>
+                            <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())<span
+                                    class="item_count">>{{\Auth::user()->carts()->count()}}</span>@endif</a>
                         </div>
                     </div>
                     <div class="call-support">
@@ -235,13 +228,6 @@
                                         <li><a href="#">Russian</a></li>
                                     </ul>
                                 </li>
-                                <li class="currency"><a href="#"> Currency <i class="icon-right ion-ios-arrow-down"></i></a>
-                                    <ul class="dropdown_currency">
-                                        <li><a href="#">€ Euro</a></li>
-                                        <li><a href="#">£ Pound Sterling</a></li>
-                                        <li><a href="#">$ US Dollar</a></li>
-                                    </ul>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -298,12 +284,14 @@
                                         </ul>
                                     </div>
                                     <div class="header_account_list header_wishlist">
-                                        <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> <span
-                                                class="item_count">3</span> </a>
+                                        <a href="{{route('wishlist.index')}}"><span
+                                                class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())<span
+                                                class="item_count">{{\Auth::user()->wishlist()->count()}}</span>@endif </a>
                                     </div>
                                     <div class="header_account_list  mini_cart_wrapper">
-                                        <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span><span
-                                                class="item_count">2</span></a>
+                                        <a href="{{route('carts.index')}}"><span
+                                                class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())<span
+                                                class="item_count">{{\Auth::user()->carts()->count()}}</span>@endif</a>
                                     </div>
                                 </div>
                             </div>
@@ -351,16 +339,6 @@
                                             @else
                                                 <a href="{{route('blog.index')}}">{{__('website.blog')}}</a>
                                             @endif
-                                        </li>
-                                        <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="services.html">services</a></li>
-                                                <li><a href="faq.html">Frequently Questions</a></li>
-                                                <li><a href="{{route('contactUs.index')}}">contact</a></li>
-                                                <li><a href="login.html">login</a></li>
-                                                <li><a href="404.html">Error 404</a></li>
-                                            </ul>
                                         </li>
                                         <li>
                                             @if(url()->current() === route('contactUs.index'))
@@ -419,7 +397,7 @@
                 <div class="col-lg-4 col-md-12 col-sm-7">
                     <div class="widgets_container contact_us">
                         <div class="footer_logo">
-                            <a href="index.html"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
+                            <a href="{{route('index')}}"><img src="{{asset('assets/img/logo/logo.png')}}" alt=""></a>
                         </div>
                         <p class="footer_desc">We are a team of designers and developers that create high quality
                             eCommerce, WordPress, Shopify .</p>
@@ -448,11 +426,9 @@
                         <h3>{{__('website.website_links')}}</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#"> Gift Certificates</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="#">Specials</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#"> Order History</a></li>
+                                @foreach($links as $link)
+                                    <li><a href="{{$link->url}}">{{$link->name}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

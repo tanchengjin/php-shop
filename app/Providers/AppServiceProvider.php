@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Links;
 use App\Models\PaymentSupportImage;
+use App\Models\Wishlist;
 use Encore\Admin\Config\Config;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -46,11 +50,21 @@ class AppServiceProvider extends ServiceProvider
         }
         $payment_image = [];
         try {
-            $payment_image = PaymentSupportImage::query()->get();
+            $payment_image = PaymentSupportImage::query()->orderBy('weight')->get();
         } catch (\Exception $exception) {
 
         }
+        #支持支付类型图片
         View::share('payment_image', $payment_image);
+
+        $links = [];
+        try {
+            $links = Links::query()->orderBy('sort', 'desc')->get();
+        } catch (\Exception $exception) {
+
+        }
+        #友情连接
+        View::share('links', $links);
 
     }
 }

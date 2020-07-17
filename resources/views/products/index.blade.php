@@ -10,17 +10,22 @@
                     <!--shop wrapper start-->
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
-                        <div class="shop_toolbar_btn">
-                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-toggle="tooltip"
-                                    title="3"></button>
+                        <div class="page_amount">
+                            @if(count($products) < 1)
+                                <p>{{__('website.show_result',['first'=>0,'last'=>0,'total'=>0])}}</p>
 
-                            <button data-role="grid_4" type="button" class="active btn-grid-4" data-toggle="tooltip"
-                                    title="4"></button>
-
-                            <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip"
-                                    title="List"></button>
+                            @elseif($products->currentPage() === 1)
+                                <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage() >= $products->total()?$products->total():$products->perPage(),'total'=>$products->total()])}}</p>
+                            @else
+                                <p>{{__('website.show_result',[
+    'first'=>($products->currentPage()-1)+$products->perPage(),
+    'last'=>($products->perPage()*$products->currentPage()) >= $products->total() ?$products->total():($products->perPage()*$products->currentPage()),
+    'total'=>$products->total()
+    ])}}</p>
+                            @endif
                         </div>
-                        <div class=" niceselect_option">
+
+                        <div class="niceselect_option">
                             <form class="select_option" action="#" id="select_order">
                                 <input type="hidden" name="order">
                                 <select name="orderby" id="short">
@@ -46,20 +51,6 @@
                                         value="sold_desc">{{__('website.sort_by_desc',['key'=>__('website.sold_count')])}}</option>
                                 </select>
                             </form>
-                        </div>
-                        <div class="page_amount">
-                            @if(count($products) < 1)
-                                <p>{{__('website.show_result',['first'=>0,'last'=>0,'total'=>0])}}</p>
-
-                            @elseif($products->currentPage() === 1)
-                                <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage() >= $products->total()?$products->total():$products->perPage(),'total'=>$products->total()])}}</p>
-                            @else
-                                <p>{{__('website.show_result',[
-    'first'=>($products->currentPage()-1)+$products->perPage(),
-    'last'=>($products->perPage()*$products->currentPage()) >= $products->total() ?$products->total():($products->perPage()*$products->currentPage()),
-    'total'=>$products->total()
-    ])}}</p>
-                            @endif
                         </div>
                     </div>
                     <!--shop toolbar end-->

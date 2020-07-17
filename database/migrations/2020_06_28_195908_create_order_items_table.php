@@ -26,7 +26,7 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedInteger('quantity');
 
             $table->string('review')->nullable();
-            $table->dateTime('paid_at')->nullable();
+            $table->dateTime('reviewed_at')->nullable();
             $table->unsignedInteger('rating')->default(0);
         });
     }

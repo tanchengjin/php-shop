@@ -62,6 +62,12 @@ class Product extends Model
 
     public function properties()
     {
-        return $this->hasMany(Property::class,'product_id','id');
+        return $this->hasMany(Property::class, 'product_id', 'id');
+    }
+
+    #关联所有评论
+    public function comments()
+    {
+        return $this->hasMany(OrderItem::class, 'product_id', 'id');
     }
 }

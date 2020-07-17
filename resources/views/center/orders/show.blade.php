@@ -1,4 +1,5 @@
 @extends('main')
+@section('breadcrumb_title',__('website.my_order'))
 @section('content')
     <!--shopping cart area start -->
     <div class="shopping_cart_area mt-70">
@@ -49,8 +50,10 @@
                                             <td class="product_quantity">{{$item->quantity}}</td>
                                             <td class="product_total">
                                                 ￥{{number_format($item->price*$item->quantity,2)}}</td>
-                                            @if($item->order->ship_status !== \App\Models\Order::SHIP_STATUS_RECEIVED)
-                                                <td class="product_option"><a href="{{route('order.review.index',hashids_order_id($item->id))}}">{{__('review.await_received')}}</a></td>
+                                            @if($item->order->ship_status === \App\Models\Order::SHIP_STATUS_PENDING)
+                                                <td class="product_option"><a href="javascript:void(0);">待发货</a></td>
+                                            @elseif($item->order->ship_status !== \App\Models\Order::SHIP_STATUS_RECEIVED)
+                                                <td class="product_option"><a href="javascript:void(0);">{{__('review.await_received')}}</a></td>
                                             @elseif(is_null($item->review))
                                                 <td class="product_option"><a href="{{route('order.review.index',hashids_order_id($item->id))}}">{{__('website.go_review')}}</a></td>
                                             @else

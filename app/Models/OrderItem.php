@@ -8,7 +8,7 @@ class OrderItem extends Model
 {
     public $timestamps = false;
     protected $fillable=[
-        'price','quantity','review','paid_at','rating'
+        'price','quantity','review','paid_at','rating','reviewed_at'
     ];
     public function order()
     {

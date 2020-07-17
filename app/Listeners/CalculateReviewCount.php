@@ -17,7 +17,6 @@ class CalculateReviewCount implements ShouldQueue
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -30,7 +29,6 @@ class CalculateReviewCount implements ShouldQueue
     {
         try {
             $orderItem = $event->getOrderItem();
-
             DB::transaction(function () use ($orderItem) {
                 $result = OrderItem::query()
                     ->where('product_id', $orderItem->product_id)
@@ -42,9 +40,9 @@ class CalculateReviewCount implements ShouldQueue
                         DB::raw('avg(rating) as rating')
                     ]);
 
-                $orderItem->order()->update([
+                $orderItem->product()->update([
                     'review_count' => $result->review_count,
-                    'rating' => $result->rating
+                    'rating'=>$result->rating,
                 ]);
             });
 

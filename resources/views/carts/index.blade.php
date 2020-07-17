@@ -77,11 +77,11 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="coupon_code left">
-                                <h3>Coupon</h3>
+                                <h3>{{__('coupon.coupon')}}</h3>
                                 <div class="coupon_inner">
-                                    <p>Enter your coupon code if you have one.</p>
-                                    <input placeholder="Coupon code" type="text">
-                                    <button type="submit">Apply coupon</button>
+                                    <p>{{__('coupon.coupon_description')}}</p>
+                                    <input placeholder="{{__('coupon.coupon_code')}}" type="text">
+                                    <button type="submit">{{__('coupon.apply_coupon')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,10 @@
                                     </div>
                                     <div class="checkout_btn">
                                         {{--                                        <a href="#">Proceed to Checkout</a>--}}
-                                        <a id="create_order" type="button" href="javascript:void(0);">提交</a>
+                                        @if(count($carts)>=1)
+                                            <a id="create_order" type="button"
+                                               href="javascript:void(0);">{{__('review.submit')}}</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -188,14 +191,14 @@
                     }
                 }, function (err) {
                     if (err.response.status === 422) {
-                        let res='<div>';
+                        let res = '<div>';
                         $.each(err.response.data.errors, function (index, item) {
                             $.each(item, function (key, message) {
-                                res+='<div>'+message+'</div>';
+                                res += '<div>' + message + '</div>';
                             });
                         });
-                        res+='</div>';
-                        swal.fire('error',res,'error')
+                        res += '</div>';
+                        swal.fire('error', res, 'error')
                     } else {
                         swal.fire('error', '{{__('sweetalert.error_internal_server')}}', 'error')
 

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\Reviewed;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\ReviewRequest;
+use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -23,7 +26,13 @@ class ReviewController extends Controller
         if (!$item->order->paid_at) {
             throw new NotFoundException('未支付订单');
         }
-        $this->authorize($item->order);
+        if ($item->order->ship_status !== Order::SHIP_STATUS_RECEIVED) {
+            throw new NotFoundException('订单未收货');
+        }
+        if ($item->order->refund_status !== Order::REFUND_STATUS_PENDING) {
+            throw new NotFoundException('退款订单不可评价');
+        }
+        $this->authorize('own', $item->order);
 
 
         return view('review.index', [
@@ -39,29 +48,41 @@ class ReviewController extends Controller
 
             $orderItem = OrderItem::findOrFail($id);
 
+            $this->authorize('own', $orderItem->order);
+
             if (!$orderItem->order->paid_at) {
                 throw new NotFoundException('未支付订单');
             }
-            $this->authorize($orderItem->order);
+            if ($orderItem->order->ship_status !== Order::SHIP_STATUS_RECEIVED) {
+                throw new NotFoundException('订单未收货');
+            }
+            if ($orderItem->order->refund_status !== Order::REFUND_STATUS_PENDING) {
+                throw new NotFoundException('退款订单不可评价');
+            }
+            if (!is_null($orderItem->review)) {
+                throw new NotFoundException('该订单已评论');
+            }
 
             $review = $request->input('review');
             $rating = $request->input('rating');
 
-            DB::transaction(function () use ($orderItem, $review, $rating) {
-                $orderItem->update([
-                    'review' => $review,
-                    'rating' => $rating
-                ]);
+            $orderItem->update([
+                'review' => $review,
+                'rating' => $rating,
+                'reviewed_at' => Carbon::now()
+            ]);
 
-                $orderItem->order->update([
-                    'reviewed' => true
-                ]);
-            });
             event(new Reviewed($orderItem));
+
+            $orderItem->order->update([
+                'reviewed' => 1
+            ]);
+
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             throw new NotFoundException('评论失败,请重试!');
         }
+
         return redirect()->back();
     }
 }

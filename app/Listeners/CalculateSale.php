@@ -4,10 +4,7 @@ namespace App\Listeners;
 
 use App\Events\Paid;
 use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\ProductSku;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class CalculateSale implements ShouldQueue
 {

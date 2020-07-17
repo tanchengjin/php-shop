@@ -88,7 +88,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
+    #get Order Status
     public function getOrderStatusAttribute()
     {
 
@@ -101,7 +101,9 @@ class Order extends Model
             if ($this->refund_status !== Order::REFUND_STATUS_PENDING) {
                 return self::$refundStatusMap[$this->refund_status];
             }
-
+            if ($this->reviewed) {
+                return '已评价';
+            }
             if ($this->ship_status === Order::SHIP_STATUS_PENDING) {
                 return '待发货';
             } else {

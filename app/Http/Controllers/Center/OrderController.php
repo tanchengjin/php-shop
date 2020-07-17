@@ -23,6 +23,7 @@ class OrderController extends Controller
         if (!$order = Order::find($id)) {
             throw new NotFoundException();
         }
+        $this->authorize('own',$order);
         return view('center.orders.show', [
             'order' => $order
         ]);

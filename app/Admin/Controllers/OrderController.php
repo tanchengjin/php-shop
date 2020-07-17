@@ -39,6 +39,7 @@ class OrderController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Order());
+        $grid->model()->orderBy('id','desc');
         $grid->disableCreateButton();
         $grid->actions(function ($tools) {
             $tools->disableDelete();
@@ -74,7 +75,7 @@ class OrderController extends AdminController
                 }
 
                 if ($this->ship_status === Order::SHIP_STATUS_RECEIVED){
-                    return '<span class="label label-warning">已收货</span>';
+                    return '<span class="label label-success">已收货</span>';
                 }
 
                 return '<span class="label label-default">已支付</span>';

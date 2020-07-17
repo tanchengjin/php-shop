@@ -50,11 +50,12 @@
                             <h1><a href="#" class="product_title">{{$product->title}}</a></h1>
                             <div class=" product_ratting">
                                 <ul>
-                                    <li><a href="#"><i class="icon-star"></i></a></li>
-                                    <li><a href="#"><i class="icon-star"></i></a></li>
-                                    <li><a href="#"><i class="icon-star"></i></a></li>
-                                    <li><a href="#"><i class="icon-star"></i></a></li>
-                                    <li><a href="#"><i class="icon-star"></i></a></li>
+                                    @for($i=0;$i<$product->rating;$i++)
+                                        <li><a href="#"><i class="icon-star icon-star2"></i></a></li>
+                                    @endfor
+                                    @for($i=0;$i<(5-$product->rating);$i++)
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                    @endfor
                                     <li class="review"><a href="#"> ({{__('website.ratting')}}) </a></li>
                                 </ul>
 
@@ -148,7 +149,8 @@
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
-                                       aria-selected="false">{{__('website.reviews')}} ({{$product->review_count}})</a>
+                                       aria-selected="false">{{__('website.reviews')}} ({{count($product->comments)}}
+                                        )</a>
                                 </li>
                             </ul>
                         </div>
@@ -164,87 +166,45 @@
                                         <table>
                                             <tbody>
                                             @foreach($product->properties as $property)
-                                            <tr>
-                                                <td class="first_child">{{$property->key}}</td>
-                                                <td>{{$property->value}}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="first_child">{{$property->key}}</td>
+                                                    <td>{{$property->value}}</td>
+                                                </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
                                     </form>
                                 </div>
                                 <div class="product_info_content">
-                                    <p>Fashion has been creating well-designed collections since 2010. The brand offers
-                                        feminine designs delivering stylish separates and statement dresses which have
-                                        since
-                                        evolved into a full ready-to-wear collection in which every item is a vital part
-                                        of
-                                        a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance
-                                        and
-                                        unmistakable signature style. All the beautiful pieces are made in Italy and
-                                        manufactured with the greatest attention. Now Fashion extends to a range of
-                                        accessories including shoes, hats, belts and more!</p>
+                                    <p>{{$product->intro}}</p>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade" id="reviews" role="tabpanel">
                                 <div class="reviews_wrapper">
-                                    <h2>1 review for Donec eu furniture</h2>
-                                    <div class="reviews_comment_box">
-                                        <div class="comment_thmb">
-                                            <img src="{{asset('assets/img/blog/comment2.jpg')}}" alt="">
-                                        </div>
-                                        <div class="comment_text">
-                                            <div class="reviews_meta">
-                                                <div class="star_rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="icon-star glyphicon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                                <p><strong>admin </strong>- September 12, 2018</p>
-                                                <span>roadthemes</span>
+                                    @foreach($product->comments as $comment)
+                                        <div class="reviews_comment_box">
+                                            <div class="comment_thmb">
+                                                <img src="{{asset('assets/images/avatar.jpg')}}" alt="">
                                             </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="comment_title">
-                                        <h2>Add a review </h2>
-                                        <p>Your email address will not be published. Required fields are marked </p>
-                                    </div>
-                                    <div class="product_ratting mb-10">
-                                        <h3>Your rating</h3>
-                                        <ul>
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                            <li><a href="#"><i class="icon-star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="product_review_form">
-                                        <form action="#">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="review_comment">Your review </label>
-                                                    <textarea name="comment" id="review_comment"></textarea>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="author">Name</label>
-                                                    <input id="author" type="text">
-
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="email">Email </label>
-                                                    <input id="email" type="text">
+                                            <div class="comment_text">
+                                                <div class="reviews_meta">
+                                                    <div class="star_rating">
+                                                        <ul>
+                                                            @for($i=0;$i<$product->rating;$i++)
+                                                                <li><a href="#"><i class="icon-star icon-star2" style="color: gold"></i></a></li>
+                                                            @endfor
+                                                        </ul>
+                                                    </div>
+                                                    <p>
+                                                        <strong>{{$comment->order->user->name}} </strong>- {{$comment->reviewed_at}}
+                                                    </p>
+                                                    <span>{{$comment->review}}</span>
                                                 </div>
                                             </div>
-                                            <button type="submit">Submit</button>
-                                        </form>
-                                    </div>
+
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -274,8 +234,8 @@
                                     <div class="product_thumb">
                                         <a class="primary_img" href="{{route('products.show',$relate->id)}}"><img
                                                 src="{{$relate->first_image}}" alt="picture"></a>
-{{--                                        <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img--}}
-{{--                                                src="{{asset('assets/img/product/product21.jpg')}}" alt="picute"></a>--}}
+                                        {{--                                        <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img--}}
+                                        {{--                                                src="{{asset('assets/img/product/product21.jpg')}}" alt="picute"></a>--}}
                                         <div class="label_product">
                                             @if($relate->tags)
                                                 @foreach(explode(',',$relate->tags) as $tag)

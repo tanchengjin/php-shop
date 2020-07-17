@@ -28,6 +28,8 @@ class OrderController extends Controller
         if (!$order = Order::find($id)) {
             throw new NotFoundException('不存在的订单');
         }
+        $this->authorize('own', $order);
+
 
         if ($order->closed) {
             throw new NotFoundException('该订单已关闭');
@@ -45,6 +47,8 @@ class OrderController extends Controller
 
     public function received(Order $order)
     {
+        $this->authorize('own', $order);
+
         if (!$order->paid_at) {
             throw new NotFoundException('该订单未支付');
         }
