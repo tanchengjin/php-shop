@@ -467,7 +467,7 @@
                     <div class="footer_payment">
                         <ul>
                             @foreach($payment_image as $pay_img)
-                                <li><a href="#"><img src="{{$pay_img->image}}" alt=""></a></li>
+                                <li><a href="#"><img src="{{$pay_img->full_image}}" alt=""></a></li>
                             @endforeach
                         </ul>
                     </div>

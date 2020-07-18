@@ -11,3 +11,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/
+docker/php/log
+docker/nginx/log
+docker/mysql/data
+docker/redis/data
+docker/redis/log

@@ -18,7 +18,7 @@
                                 <p>{{__('website.show_result',['first'=>1,'last'=>$products->perPage() >= $products->total()?$products->total():$products->perPage(),'total'=>$products->total()])}}</p>
                             @else
                                 <p>{{__('website.show_result',[
-    'first'=>($products->currentPage()-1)+$products->perPage(),
+    'first'=>($products->currentPage()-1)*$products->perPage(),
     'last'=>($products->perPage()*$products->currentPage()) >= $products->total() ?$products->total():($products->perPage()*$products->currentPage()),
     'total'=>$products->total()
     ])}}</p>

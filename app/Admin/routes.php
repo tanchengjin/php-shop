@@ -29,4 +29,12 @@ Route::group([
 
     $router->resource('paymentImage','PaymentImageController');
 
+    $router->get('orders-refund', 'OrderRefundController@index');
+    $router->get('orders-refund/{id}', 'OrderRefundController@show');
+
+    $router->get('orders-deliver', 'OrderDeliverController@index');
+    $router->get('orders-deliver/{id}', 'OrderDeliverController@show');
+
+    $router->get('users','UserController@index');
+
 });

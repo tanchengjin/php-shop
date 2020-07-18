@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['middleware' => 'setLanguage'])->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('products.index');
-    })->name('index');
+
+    Route::get('/', 'ProductController@index')->name('index');
 
     Route::get('/lang/{lang}', 'LanguageController@setLang')->name('lang');
 

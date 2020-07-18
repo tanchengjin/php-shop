@@ -36,8 +36,14 @@ class ProductController extends Controller
         }
 
         #分类
-        if ($category_id=$request->get('category_id','')){
-            $builder->where('category_id',$category_id);
+        if ($request->get('category_id', '') && $category = Category::find($request->get('category_id'))) {
+            if ($category->is_directory) {
+                $builder->whereHas('category', function ($query) use ($category) {
+                    $query->where('path','like',$category->path.$category->id.'-%');
+                });
+            }else{
+                $builder->where('category_id',$category->id);
+            }
         }
         #搜索
         if ($search = $request->input('q', '')) {

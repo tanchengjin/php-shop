@@ -1,0 +1,66 @@
+version: "2"
+services:
+  php:
+    container_name: shop-php
+    build: ./php
+    working_dir: /home
+    ports:
+      - 9000:9000
+    volumes:
+      - ../:/home
+      #fpm config
+      - ./php/conf.d/php-fpm.conf:/usr/local/etc/php/php-fpm.conf
+      #php.ini
+      - ./php/conf.d/php.ini:/usr/local/etc/php/php.ini
+      - ./php/log:/var/log/php
+    privileged: true
+    restart: always
+  nginx:
+    container_name: shop-nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    working_dir: /usr/share/nginx/html
+    volumes:
+      #html文件
+      - ../:/usr/share/nginx/html/shop
+      #主配置
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      #配置文件
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      #日志文件
+      - ./nginx/log:/var/log/nginx
+      #文件共享
+      - ../storage/app/public:/usr/share/nginx/html/shop/public/storage
+    privileged: true
+    restart: always
+  redis:
+    container_name: shop-redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      #数据备份
+      - ./redis/data:/data
+      #redis配置文件
+      - ./redis/conf.d:/etc/redis
+    command: redis-server /etc/redis/redis.conf
+    restart: always
+    privileged: true
+  mysql:
+    container_name: shop-mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 76P2VYYa8mHz
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: shop
+    #使用旧密码验证
+    command: --default-authentication-plugin=mysql_native_password
+    privileged: true
+    restart: always
+    volumes:
+      #数据备份
+      - ./mysql/data:/var/lib/mysql

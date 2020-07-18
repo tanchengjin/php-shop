@@ -11,16 +11,35 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                 'icon' => 'fa-bar-chart',
                 'parent_id' => 0,
                 'uri' => 'products',
+                'order' => 2,
             ],
             [
                 'title' => '订单管理',
                 'icon' => 'fa-bar-chart',
                 'parent_id' => 0,
-                'uri' => 'orders'
+                'order' => 3,
+                'children' => [
+                    [
+                        'title' => '全部订单',
+                        'icon' => 'fa-reorder',
+                        'uri' => 'orders'
+                    ],
+                    [
+                        'title' => '代发货订单',
+                        'icon' => 'fa-reorder',
+                        'uri' => 'orders-deliver'
+                    ],
+                    [
+                        'title' => '待退款订单',
+                        'icon' => 'fa-reorder',
+                        'uri' => 'orders-refund'
+                    ],
+                ],
             ],
             [
                 'title' => '系统设置',
-                'icon' => 'fa-bar-chart',
+                'icon' => 'fa-cogs',
+                'order' => 6,
                 'children' => [
                     [
                         'title' => '基础设置',
@@ -39,8 +58,14 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
             ],
             [
                 'title' => '留言管理',
-                'icon' => 'fa-toggle-on',
-                'uri' => 'contactUs'
+                'icon' => 'fa-commenting-o',
+                'uri' => 'contactUs',
+                'order' => 5
+            ], [
+                'title' => '用户管理',
+                'icon' => 'fa-user-md',
+                'uri' => 'users',
+                'order' => 4
             ]
         ];
 
@@ -56,7 +81,8 @@ class AdminMenuSeeder extends \Illuminate\Database\Seeder
                     'title' => $menu['title'],
                     'icon' => $menu['icon'],
                     'uri' => $menu['uri'] ?? '',
-                    'parent_id' => $parent_id
+                    'parent_id' => $parent_id,
+                    'order'=>$menu['order']??0
                 ]);
                 if (isset($menu['children']) && is_array($menu['children'])) {
                     $this->generateMenu($menu['children'], $id);

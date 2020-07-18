@@ -40,7 +40,7 @@ class Blog extends Model
             }
 
             #用户头像
-            $data['avatar'] = Auth::user()->full_avatar;
+            $data['avatar'] = Auth::user()->full_avatar??asset('assets/images/avatar.jpg');
 
             if ($comment->children()->exists()) {
                 $data['children'] = $this->articleComments($comment->id, $comments);
