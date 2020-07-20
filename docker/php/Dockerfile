@@ -10,6 +10,8 @@ RUN apt-get install  --allow-downgrades -y \
         libpng-dev \
         zlib1g=1:1.2.8.dfsg-5 \
         libz-dev \
+        unzip \
+        git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql bcmath
 #按需安装xdebug redis swoole等扩展
