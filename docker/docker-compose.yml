@@ -1,11 +1,11 @@
 version: "2"
 services:
-  php:
+  shop-php:
     container_name: shop-php
     build: ./php
     working_dir: /home
     ports:
-      - 9000:9000
+      - 9100:9000
     volumes:
       - ../:/home
       #fpm config
@@ -15,12 +15,12 @@ services:
       - ./php/log:/var/log/php
     privileged: true
     restart: always
-  nginx:
+  shop-nginx:
     container_name: shop-nginx
     image: nginx:latest
     ports:
-      - 80:80
-      - 443:443
+      - 8080:80
+      - 4433:443
     working_dir: /usr/share/nginx/html
     volumes:
       #html文件
@@ -35,11 +35,11 @@ services:
       - ../storage/app/public:/usr/share/nginx/html/shop/public/storage
     privileged: true
     restart: always
-  redis:
+  shop-redis:
     container_name: shop-redis
     image: redis:latest
     ports:
-      - 6379:6379
+      - 7200:6379
     volumes:
       #数据备份
       - ./redis/data:/data
@@ -48,11 +48,11 @@ services:
     command: redis-server /etc/redis/redis.conf
     restart: always
     privileged: true
-  mysql:
+  shop-mysql:
     container_name: shop-mysql
     image: mysql:latest
     ports:
-      - 3306:3306
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: 76P2VYYa8mHz
       MYSQL_ROOT_USER: root
