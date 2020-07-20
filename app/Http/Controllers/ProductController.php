@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
+    #默认redis过期时间为半个小时
+    private $redis_expire = 1800;
+
     public function index(Request $request)
     {
         $builder = Product::query()->where('on_sale', 1)->with(['skus', 'images']);
@@ -39,10 +43,10 @@ class ProductController extends Controller
         if ($request->get('category_id', '') && $category = Category::find($request->get('category_id'))) {
             if ($category->is_directory) {
                 $builder->whereHas('category', function ($query) use ($category) {
-                    $query->where('path','like',$category->path.$category->id.'-%');
+                    $query->where('path', 'like', $category->path . $category->id . '-%');
                 });
-            }else{
-                $builder->where('category_id',$category->id);
+            } else {
+                $builder->where('category_id', $category->id);
             }
         }
         #搜索
@@ -66,24 +70,49 @@ class ProductController extends Controller
 
     public function show($id)
     {
-
-        if (!$product = Product::query()->where('on_sale', 1)->find($id)) {
-            abort(404);
+        $redisKey = 'product:show:' . $id;
+        if (!$product = $this->getRedisByKey($redisKey)) {
+            if (!$product = Product::query()->where('on_sale', 1)->with(['images', 'skus'])->find($id)) {
+                abort(404);
+            }
+            $this->setRedisByKey($redisKey, $product);
         }
 
         #相关商品
-        $product_relate = Product::query()->where('on_sale', 1)->where(function ($query) use ($product) {
-            $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
-        })->orderBy('created_at', 'desc')->limit(9)->get();
-
+        $relateRedisKey = 'product:relate';
+        if (!$product_relate = $this->getRedisByKey($relateRedisKey)) {
+            $product_relate = Product::query()->where('on_sale', 1)->where(function ($query) use ($product) {
+                $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
+            })->orderBy('created_at', 'desc')->limit(9)->get()->load('images');
+            $this->setRedisByKey($relateRedisKey, $product_relate);
+        }
         #促销商品
-        $product_sale = Product::query()->where('on_sale', 1)->where('tags', 'like', '%sale%')->limit(9)->get();
-
-        $product->with(['skus', 'images']);
+        $saleRedisKey = 'product:sale';
+        if (!$product_sale = $this->getRedisByKey($saleRedisKey)) {
+            $product_sale = Product::query()->where('on_sale', 1)
+                ->where('tags', 'like', '%sale%')
+                ->with('images')->limit(9)
+                ->get();
+            $this->setRedisByKey($saleRedisKey, $product_sale);
+        }
         return view('products.show', [
             'product' => $product,
             'product_relate' => $product_relate,
             'product_sale' => $product_sale,
         ]);
+    }
+
+    private function getRedisByKey($key)
+    {
+        return Redis::exists($key) ? unserialize(Redis::get($key)) : false;
+    }
+
+    private function setRedisByKey($key, $value, $ttl = null)
+    {
+        if (is_null($ttl)) {
+            $ttl = $this->redis_expire;
+        }
+        Redis::set($key, serialize($value));
+        Redis::expire($key, $ttl);
     }
 }

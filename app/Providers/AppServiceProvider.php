@@ -4,14 +4,17 @@ namespace App\Providers;
 
 use App\Models\Links;
 use App\Models\PaymentSupportImage;
-use App\Models\Wishlist;
+use Encore\Admin\AdminServiceProvider;
 use Encore\Admin\Config\Config;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Encore\Admin\Facades\Admin;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Yansongda\Pay\Gateways\Alipay;
+use Illuminate\Support\Str;
 use Yansongda\Pay\Pay;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $this->app->singleton('alipay', function () {
             $config = config('pay.alipay');
             if ($this->app->environment() !== 'production') {
@@ -66,5 +70,11 @@ class AppServiceProvider extends ServiceProvider
         #友情连接
         View::share('links', $links);
 
+        if ($this->app->environment('local')) {
+            DB::listen(function ($query) {
+                $sql = Str::replaceArray('?', $query->bindings, $query->sql);
+                Log::debug($sql);
+            });
+        }
     }
 }

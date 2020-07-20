@@ -23,7 +23,11 @@ class TestSeeder extends Seeder
             BlogSeeder::class,
             BlogArticleCommentSeeder::class,
             #支付图片
-            PaymentImageSeeder::class
+            PaymentImageSeeder::class,
+            #轮播图
+            BannerSeeder::class,
+            #合作伙伴
+            PartnerSeeder::class,
         ]);
     }
 }

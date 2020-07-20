@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::middleware(['middleware' => 'setLanguage'])->group(function () {
 
-    Route::get('/', 'ProductController@index')->name('index');
-
+    Route::get('/', 'IndexController@index')->name('index');
     Route::get('/lang/{lang}', 'LanguageController@setLang')->name('lang');
 
     Route::get('products', 'ProductController@index')->name('products.index');

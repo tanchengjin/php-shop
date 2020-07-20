@@ -25,9 +25,9 @@ Route::group([
 
     $router->get('api/categories', 'CategoryController@categoryApi');
 
-    $router->get('contactUs','ContactUsController@index');
+    $router->get('contactUs', 'ContactUsController@index');
 
-    $router->resource('paymentImage','PaymentImageController');
+    $router->resource('paymentImage', 'PaymentImageController');
 
     $router->get('orders-refund', 'OrderRefundController@index');
     $router->get('orders-refund/{id}', 'OrderRefundController@show');
@@ -35,6 +35,8 @@ Route::group([
     $router->get('orders-deliver', 'OrderDeliverController@index');
     $router->get('orders-deliver/{id}', 'OrderDeliverController@show');
 
-    $router->get('users','UserController@index');
+    $router->get('users', 'UserController@index');
+
+    $router->resource('banners', 'BannerController');
 
 });
