@@ -115,10 +115,10 @@
                                                     </div>
                                                     <figcaption class="product_content">
                                                         <h4 class="product_name"><a
-                                                                href="{{route('products.show',$item['top']['price'])}}">{{$item['top']['title']}}</a>
+                                                                href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                                         </h4>
                                                         <div class="price_box">
-                                                            <span class="current_price">{{$item['top']['price']}}</span>
+                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -182,10 +182,10 @@
                                                     </div>
                                                     <figcaption class="product_content">
                                                         <h4 class="product_name"><a
-                                                                href="{{route('products.show',$item['top']['price'])}}">{{$item['top']['title']}}</a>
+                                                                href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                                         </h4>
                                                         <div class="price_box">
-                                                            <span class="current_price">{{$item['top']['price']}}</span>
+                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -215,7 +215,7 @@
                                                         </h4>
                                                         <div class="price_box">
                                                             <span
-                                                                class="current_price">{{$item['bottom']['price']}}</span>
+                                                                class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -249,10 +249,10 @@
                                                     </div>
                                                     <figcaption class="product_content">
                                                         <h4 class="product_name"><a
-                                                                href="{{route('products.show',$item['top']['price'])}}">{{$item['top']['title']}}</a>
+                                                                href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                                         </h4>
                                                         <div class="price_box">
-                                                            <span class="current_price">{{$item['top']['price']}}</span>
+                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -282,7 +282,7 @@
                                                         </h4>
                                                         <div class="price_box">
                                                             <span
-                                                                class="current_price">{{$item['bottom']['price']}}</span>
+                                                                class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -983,7 +983,7 @@
                                                     href="{{route('products.show',$item['id'])}}">{{$item['title']}}</a>
                                             </h4>
                                             <div class="price_box">
-                                                <span class="current_price">{{$item['price']}}</span>
+                                                <span class="current_price">￥{{number_format($item['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
@@ -1073,7 +1073,7 @@
                                             </h4>
                                             <p><a href="#"></a></p>
                                             <div class="price_box">
-                                                <span class="current_price">{{$item['top']['price']}}</span>
+                                                <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
@@ -1096,7 +1096,7 @@
                                             </h4>
                                             {{--                                            <p><a href="#"></a></p>--}}
                                             <div class="price_box">
-                                                <span class="current_price">{{$item['middle']['price']}}</span>
+                                                <span class="current_price">￥{{number_format($item['middle']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
@@ -1119,7 +1119,7 @@
                                             </h4>
                                             {{--                                            <p><a href="#"></a></p>--}}
                                             <div class="price_box">
-                                                <span class="current_price">{{$item['bottom']['price']}}</span>
+                                                <span class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
