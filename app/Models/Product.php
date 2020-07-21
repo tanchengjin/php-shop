@@ -12,10 +12,10 @@ class Product extends Model
     ];
 
     protected $appends = [
-        'isWishlist'
+        'isWishlist','firstImage','secondImage'
     ];
-    protected $casts=[
-        'tags'=>'array'
+    protected $casts = [
+        'tags' => 'array'
     ];
 
 
@@ -47,11 +47,26 @@ class Product extends Model
 
     public function getFirstImageAttribute()
     {
-        if ($image = $this->images()->first()) {
-            return $image;
-        } else {
-            return asset('assets/images/error.png');
+        try {
+            if ($image = $this->images()->first()) {
+                return $image['url'];
+            }
+        } catch (\Exception $exception) {
+
         }
+        return asset('assets/images/error.png');
+    }
+
+    public function getSecondImageAttribute()
+    {
+        try {
+            if ($image = $this->images()->get()[1]) {
+                return $image['url'];
+            }
+        } catch (\Exception $exception) {
+
+        }
+        return asset('assets/images/error.png');
     }
 
     //判断当前商品是否被当前用户收藏

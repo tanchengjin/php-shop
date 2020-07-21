@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $builder = Product::query()->where('on_sale', 1)->with(['skus', 'images']);
+        $builder = Product::query()->where('on_sale', 1)->with(['skus', 'images'])->orderBy('created_at', 'desc');
 
         #排序
         if ($order = $request->input('order', '')) {
@@ -42,8 +42,10 @@ class ProductController extends Controller
         #分类
         if ($request->get('category_id', '') && $category = Category::find($request->get('category_id'))) {
             if ($category->is_directory) {
-                $builder->whereHas('category', function ($query) use ($category) {
-                    $query->where('path', 'like', $category->path . $category->id . '-%');
+                $builder->where(function ($builder) use ($category) {
+                    $builder->whereHas('category', function ($query) use ($category) {
+                        $query->where('path', 'like', $category->path . $category->id . '-%');
+                    })->orWhere('category_id', $category->id);
                 });
             } else {
                 $builder->where('category_id', $category->id);
@@ -58,9 +60,9 @@ class ProductController extends Controller
         }
 
         $products = $builder->paginate(20);
+
         return view('products.index', [
             'products' => $products,
-            'categoryTree' => (new Category())->getCategoryTree(),
             'param' => [
                 'order' => $order,
                 'search' => $search
@@ -77,6 +79,7 @@ class ProductController extends Controller
             }
             $this->setRedisByKey($redisKey, $product);
         }
+        $product->increment('click');
 
         #相关商品
         $relateRedisKey = 'product:relate';

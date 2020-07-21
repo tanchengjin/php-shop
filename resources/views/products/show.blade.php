@@ -12,8 +12,8 @@
                             @if(count($product->images) > 0)
                                 <a href="#">
                                     <img id="zoom1"
-                                         src="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
-                                         data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($product->first_image->url)}}"
+                                         src="{{$product->first_image}}"
+                                         data-zoom-image="{{$product->first_image}}"
                                          alt="big-1" style="width: 100%;height: 100%;">
                                 </a>
                             @else
@@ -31,9 +31,9 @@
                                     @foreach($product->images as $image)
                                         <li>
                                             <a href="#" class="elevatezoom-gallery active" data-update=""
-                                               data-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
-                                               data-zoom-image="{{\Illuminate\Support\Facades\Storage::url($image->url)}}">
-                                                <img src="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
+                                               data-image="{{($image->full_url)}}"
+                                               data-zoom-image="{{$image->full_url}}">
+                                                <img src="{{$image->full_url}}"
                                                      alt="zo-th-1"/>
                                             </a>
                                         </li>
@@ -192,7 +192,8 @@
                                                     <div class="star_rating">
                                                         <ul>
                                                             @for($i=0;$i<$product->rating;$i++)
-                                                                <li><a href="#"><i class="icon-star icon-star2" style="color: gold"></i></a></li>
+                                                                <li><a href="#"><i class="icon-star icon-star2"
+                                                                                   style="color: gold"></i></a></li>
                                                             @endfor
                                                         </ul>
                                                     </div>
@@ -232,13 +233,18 @@
                             <article class="single_product">
                                 <figure>
                                     <div class="product_thumb">
-                                        <a class="primary_img" href="{{route('products.show',$relate->id)}}"><img
-                                                src="{{$relate->first_image}}" alt="picture"></a>
-                                        {{--                                        <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img--}}
-                                        {{--                                                src="{{asset('assets/img/product/product21.jpg')}}" alt="picute"></a>--}}
+                                        @if(count($relate->images) >= 2)
+                                            <a class="primary_img" href="{{route('products.show',$relate->id)}}"><img
+                                                    src="{{$relate->first_image}}" alt="{{$relate->title}}"></a>
+                                            <a class="secondary_img" href="{{route('products.show',$relate->id)}}"><img
+                                                    src="{{$relate->second_image}}" alt="{{$relate->title}}"></a>
+                                        @else
+                                            <a class="primary_img" href="{{route('products.show',$relate->id)}}"><img
+                                                    src="{{$relate->first_image}}" alt="{{$relate->title}}"></a>
+                                        @endif
                                         <div class="label_product">
-                                            @if($relate->tags)
-                                                @foreach(explode(',',$relate->tags) as $tag)
+                                        @if($relate->tags)
+                                                @foreach($relate->tags as $tag)
                                                     <span class="label_{{$tag}}">{{$tag}}</span>
                                                 @endforeach
                                             @endif
@@ -261,7 +267,7 @@
         </div>
     </section>
     <!--product area end-->
-
+    @if(count($product_sale) >= 1)
     <!--product area start-->
     <section class="product_area upsell_products">
         <div class="container">
@@ -279,8 +285,13 @@
                             <article class="single_product">
                                 <figure>
                                     <div class="product_thumb">
+                                        @if(count($sale->images) >= 2)
                                         <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
                                                 src="{{$sale->first_image}}" alt="picture"></a>
+                                        @else
+                                            <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
+                                                    src="{{$sale->second_image}}" alt="picture"></a>
+                                        @endif
                                         <div class="label_product">
                                             <span class="label_sale">Sale</span>
                                         </div>
@@ -301,6 +312,7 @@
         </div>
     </section>
     <!--product area end-->
+    @endif
 @endsection
 
 @section('javascript')

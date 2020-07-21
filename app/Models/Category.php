@@ -17,7 +17,7 @@ class Category extends Model
                 $category->level = 0;
                 $category->path = '-';
             } else {
-                $category->level = $category->parent->level = 1;
+                $category->level = $category->parent->level += 1;
                 $category->path = $category->parent->path . $category->parent_id . '-';
             }
         });
@@ -37,11 +37,11 @@ class Category extends Model
         return $categories->where('parent_id', $parent_id)->map(function (Category $category) use ($categories) {
             $data = ['id' => $category->id, 'title' => $category->title];
 
-            if (!$category->is_directory){
+            if (!$category->is_directory) {
                 return $data;
             }
 
-            $data['children']=$this->getCategoryTree($category->id,$categories);
+            $data['children'] = $this->getCategoryTree($category->id, $categories);
 
             return $data;
         });

@@ -64,3 +64,14 @@ function toDateString($date, $rule = 'en')
     }
 }
 
+#设置图片的完整路径
+function set_full_image(string $image)
+{
+    if (substr($image, 0, 4) === 'http') {
+        return $image;
+    }
+
+    return trim(env('APP_URL')) . '/storage/' . $image;
+
+}
+

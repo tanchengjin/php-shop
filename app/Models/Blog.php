@@ -76,12 +76,6 @@ class Blog extends Model
 
     public function getFullImageAttribute()
     {
-        $image = $this->attributes['image'];
-
-        if (substr($image, 0, 4) === 'http') {
-            return $image;
-        } else {
-            return trim(env('APP_URL'),'/').'/storage/' . trim($image, '/');
-        }
+        return set_full_image($this->attributes['image']);
     }
 }

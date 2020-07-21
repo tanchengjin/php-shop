@@ -29,6 +29,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('review_count')->default(0);
             $table->float('rating')->default(5);
             $table->boolean('on_sale')->default(1);
+            $table->unsignedBigInteger('order')->default(1);
+            $table->unsignedBigInteger('click')->default(0);
             $table->timestamps();
         });
     }

@@ -17,4 +17,12 @@ class Banner extends Model
         self::URL_PRODUCT => '本站商品跳转',
         self::URL_WEB => '互联网跳转'
     ];
+    protected $appends=[
+        'full_image'
+    ];
+
+
+    public function getFullImageAttribute(){
+        return set_full_image($this->attributes['image']);
+    }
 }

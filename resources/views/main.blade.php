@@ -112,11 +112,13 @@
                             </ul>
                         </div>
                         <div class="header_account_list header_wishlist">
-                            <a href="{{route('wishlist.index')}}"><span class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())<span
+                            <a href="{{route('wishlist.index')}}"><span
+                                    class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())<span
                                     class="item_count">{{\Auth::user()->wishlist()->count()}}</span> @endif</a>
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
-                            <a href="{{route('carts.index')}}"><span class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())<span
+                            <a href="{{route('carts.index')}}"><span
+                                    class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())<span
                                     class="item_count">>{{\Auth::user()->carts()->count()}}</span>@endif</a>
                         </div>
                     </div>
@@ -285,13 +287,17 @@
                                     </div>
                                     <div class="header_account_list header_wishlist">
                                         <a href="{{route('wishlist.index')}}"><span
-                                                class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())<span
-                                                class="item_count">{{\Auth::user()->wishlist()->count()}}</span>@endif </a>
+                                                class="lnr lnr-heart"></span> @if(\Illuminate\Support\Facades\Auth::check())
+                                                <span
+                                                    class="item_count">{{\Auth::user()->wishlist()->count()}}</span>@endif
+                                        </a>
                                     </div>
                                     <div class="header_account_list  mini_cart_wrapper">
                                         <a href="{{route('carts.index')}}"><span
-                                                class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())<span
-                                                class="item_count">{{\Auth::user()->carts()->count()}}</span>@endif</a>
+                                                class="lnr lnr-cart"></span>@if(\Illuminate\Support\Facades\Auth::check())
+                                                <span
+                                                    class="item_count">{{\Auth::user()->carts()->count()}}</span>@endif
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -307,25 +313,67 @@
                                 <div class="categories_title">
                                     <h2 class="categori_toggle">{{__('website.all_category')}}</h2>
                                 </div>
-                                {{--                            分类列表--}}
-                                @if(isset($categoryTree))
+                                @if(isset($categoryTree) && !empty($categoryTree))
                                     <div class="categories_menu_toggle">
                                         <ul>
-                                            @each('layouts.nav',$categoryTree,'category')
+                                            @foreach($categoryTree as $category)
+                                                @if(isset($category['children']) && !empty($category['children']))
+                                                    <li class="menu_item_children"><a href="{{route('products.index',['category_id'=>$category['id']])}}">{{$category['title']}}<i
+                                                                class="fa fa-angle-right"></i></a>
+                                                        <ul class="categories_mega_menu">
+                                                            @foreach($category['children'] as $children)
+                                                                @if(isset($children['children']) && !empty($children['children']))
+                                                                    <li class="menu_item_children"><a
+                                                                            href="{{route('products.index',['category_id'=>$children['id']])}}">{{$children['title']}}</a>
+                                                                        <ul class="categorie_sub_menu">
+                                                                            @foreach($children['children'] as $child)
+                                                                                <li><a href="{{route('products.index',['category_id'=>$child['id']])}}">{{$child['title']}}</a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </li>
+                                                                @else
+                                                                    <li class="menu_item_children"><a
+                                                                            href="#"></a>
+                                                                        <ul class="categorie_sub_menu">
+                                                                            <li><a href="{{route('products.index',['category_id'=>$children['id']])}}">{{$children['title']}}</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        </ul>
+                                                    </li>
+                                                @else
+                                                    <li><a href="{{route('products.index',['category_id'=>$category['id']])}}">{{$category['title']}}</a></li>
+                                                @endif
+                                            @endforeach
+                                            {{--                                        <li id="cat_toggle" class="has-sub"><a href="#"> More Items</a>--}}
+                                            {{--                                            <ul class="categorie_sub">--}}
+                                            {{--                                                <li><a href="#">Hide Categories</a></li>--}}
+                                            {{--                                            </ul>--}}
+
+                                            {{--                                        </li>--}}
                                         </ul>
                                     </div>
                                 @endif
                             </div>
+
                         </div>
                         <div class="col-lg-6">
                             <!--main menu start-->
                             <div class="main_menu menu_position">
                                 <nav>
                                     <ul>
-                                        <li><a href="{{route('index')}}">{{__('website.home')}}</a>
+                                        <li>
+                                            @if(url()->current() === route('index'))
+                                                <a href="{{route('index')}}" class="active">{{__('website.home')}}</a>
+                                            @else
+                                                <a href="{{route('index')}}">{{__('website.home')}}</a>
+                                            @endif
                                         </li>
                                         <li class="mega_items">
-                                            @if(url()->current() === route('products.index'))
+                                            @if(request()->is('product*'))
                                                 <a class="active"
                                                    href="{{route('products.index')}}">{{__('website.shop')}}</a>
                                             @else
@@ -333,7 +381,7 @@
                                             @endif
                                         </li>
                                         <li>
-                                            @if(url()->current() === route('blog.index'))
+                                            @if(request()->is('blog*'))
                                                 <a class="active"
                                                    href="{{route('blog.index')}}">{{__('website.blog')}}</a>
                                             @else

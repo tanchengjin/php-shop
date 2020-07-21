@@ -1728,7 +1728,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .categories_menu_toggle > ul > li ul.categories_mega_menu {
   position: absolute;
   left: 120%;
-  width: 500px;
+  width: 1000px;
   background: #ffffff;
   padding: 25px 20px 23px;
   overflow: hidden;
@@ -1743,7 +1743,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .categories_menu_toggle > ul > li ul.categories_mega_menu {
-    width: 480px;
+    min-width: 480px;
   }
 }
 @media only screen and (max-width: 767px) {

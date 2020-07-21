@@ -59,11 +59,14 @@
                             <div class="col-lg-3 col-md-4 col-sm-6 col-6 ">
                                 <div class="single_product">
                                     <div class="product_thumb">
-                                        @if(count($product->images) > 0)
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/productbig1.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/productbig2.jpg" alt=""></a>
+                                        @if(count($product->images) === 1)
+                                            <a class="primary_img" href="{{route('products.show',$product->id)}}"><img
+                                                    src="{{$product->first_image}}" alt=""></a>
+                                        @elseif(count($product->images) >= 2)
+                                            <a class="primary_img" href="{{route('products.show',$product->id)}}"><img
+                                                    src="{{$product->first_image}}" alt=""></a>
+                                            <a class="secondary_img" href="{{route('products.show',$product->id)}}"><img
+                                                    src="{{$product->second_image}}" alt=""></a>
                                         @else
                                             <a class="primary_img" href="{{route('products.show',$product->id)}}"><img
                                                     src="{{asset('assets/images/error.png')}}" alt=""></a>

@@ -2,13 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Compose\CategoryCompose;
 use App\Models\Links;
 use App\Models\PaymentSupportImage;
-use Encore\Admin\AdminServiceProvider;
 use Encore\Admin\Config\Config;
-use Encore\Admin\Facades\Admin;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -48,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+
         $table = config('admin.extensions.table', 'admin_config');
         if (Schema::hasTable($table)) {
             Config::load();
@@ -58,6 +56,7 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $exception) {
 
         }
+
         #支持支付类型图片
         View::share('payment_image', $payment_image);
 
@@ -67,6 +66,7 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $exception) {
 
         }
+
         #友情连接
         View::share('links', $links);
 
@@ -76,5 +76,8 @@ class AppServiceProvider extends ServiceProvider
                 Log::debug($sql);
             });
         }
+
+        #共享分类视图
+        View::composer(['products.index', 'products.show', 'index.index'], CategoryCompose::class);
     }
 }

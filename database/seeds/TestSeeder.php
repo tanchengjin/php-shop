@@ -28,6 +28,8 @@ class TestSeeder extends Seeder
             BannerSeeder::class,
             #合作伙伴
             PartnerSeeder::class,
+            #友情链接
+            LinksSeeder::class
         ]);
     }
 }
