@@ -15,12 +15,19 @@ Dependence
 - mysql
 
 
-Install 安装
+# Install 安装
 
-Docker
+#### Docker
+
+复制.env配置文件
 ````
 cp .env.docker .env
 ````
+
+安装依赖包
+```
+docker exec -it shop-php composer install
+```
 
 创建数据表
 ```
@@ -34,5 +41,8 @@ docker exec -it shop-php php artisan db:seed
 ```
 docker exec -it shop-php php artisan db:seed --class=TestSeeder
 ```
+
+#### normal
+普通安装直接复制.env.example为.env,并配置其中的mysql、redis配置
 
 

@@ -23,6 +23,7 @@ class CreateBannersTable extends Migration
             $table->string('image');
             $table->string('url')->nullable();
             $table->string('url_type')->nullable();
+            $table->string('banner_type')->default(\App\Models\Banner::BANNER_TYPE_INDEX);
         });
     }
 

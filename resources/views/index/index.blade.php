@@ -58,8 +58,8 @@
                 <div class="col-12">
                     <div class="product_header">
                         <div class="section_title">
-                            <p>Recently added our store</p>
-                            <h2>Trending Products</h2>
+                            <p>Trending Products</p>
+                            <h2>{{__('index.product')}}</h2>
                         </div>
                         <div class="product_tab_btn">
                             <ul class="nav" role="tablist">
@@ -114,11 +114,18 @@
                                                         </div>
                                                     </div>
                                                     <figcaption class="product_content">
-                                                        <h4 class="product_name"><a
-                                                                href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
+                                                        <h4 class="product_name"
+                                                            style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
+                                                            <a
+                                                                href="{{route('products.show',$item['top']['id'])}}"
+                                                                title="{{$item['top']['title']}}">{{$item['top']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
-                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
+                                                            <span
+                                                                class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -143,9 +150,15 @@
                                                         </div>
                                                     </div>
                                                     <figcaption class="product_content">
-                                                        <h4 class="product_name"><a
-                                                                href="{{route('products.show',$item['bottom']['id'])}}">{{$item['bottom']['title']}}</a>
+                                                        <h4 class="product_name"
+                                                            style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
+                                                            <a
+                                                                href="{{route('products.show',$item['bottom']['id'])}}"
+                                                                title="{{$item['bottom']['title']}}">{{$item['bottom']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
                                                             <span
                                                                 class="current_price">{{$item['bottom']['price']}}</span>
@@ -184,8 +197,12 @@
                                                         <h4 class="product_name"><a
                                                                 href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
-                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
+                                                            <span
+                                                                class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -213,6 +230,9 @@
                                                         <h4 class="product_name"><a
                                                                 href="{{route('products.show',$item['bottom']['id'])}}">{{$item['bottom']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
                                                             <span
                                                                 class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
@@ -251,8 +271,12 @@
                                                         <h4 class="product_name"><a
                                                                 href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
-                                                            <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
+                                                            <span
+                                                                class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                                         </div>
                                                     </figcaption>
                                                 </figure>
@@ -280,6 +304,9 @@
                                                         <h4 class="product_name"><a
                                                                 href="{{route('products.show',$item['bottom']['id'])}}">{{$item['bottom']['title']}}</a>
                                                         </h4>
+                                                        @if(isset($item['top']['subtitle']))
+                                                            <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                        @endif
                                                         <div class="price_box">
                                                             <span
                                                                 class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
@@ -303,20 +330,21 @@
     <div class="banner_area">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner1.jpg" alt=""></a>
+                @foreach($banner_lr as $lr)
+                    <div class="col-lg-6 col-md-6">
+                        <div class="single_banner">
+                            <div class="banner_thumb">
+                                @if($lr->url_type === \App\Models\Banner::URL_WEB)
+                                    <a href="{{$lr->url}}"><img src="{{$lr->full_image}}" alt=""></a>
+                                @elseif($lr->url_type === \App\Models\Banner::URL_PRODUCT)
+                                    <a href="{{route('products.show',$lr->url)}}"><img src="{{$lr->full_image}}" alt=""></a>
+                                @else
+                                    <a href="javascript:void(0)"><img src="{{$lr->full_image}}" alt=""></a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner2.jpg" alt=""></a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -578,20 +606,28 @@
     </div>
     <!--product area end-->
 
-    <!--banner fullwidth area satrt-->
-    <div class="banner_fullwidth">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="banner_full_content">
-                        <p>Black Fridays !</p>
-                        <h2>Sale 50% OFf <span>all vegetable products</span></h2>
-                        <a href="shop.html">discover now</a>
+    @if(isset($banner_fi))
+        <!--banner fullwidth area satrt-->
+        <div class="banner_fullwidth">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="banner_full_content">
+                            <p>{{$banner_fi->title}}</p>
+                            <h2>{{$banner_fi->subtitle}}<span>{{$banner_fi->content}}</span></h2>
+                            @if($banner_fi->url_type === \App\Models\Banner::URL_WEB)
+                                <a href="{{$banner_fi->full_url}}">{{__('index.show_more')}}</a>
+                            @elseif($banner_fi->url_type === \App\Models\Banner::URL_PRODUCT)
+                                <a href="{{route('products.show',$banner_fi->id)}}">{{__('index.show_more')}}</a>
+                            @else
+                                <a href="javascript:void(0)"></a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <!--banner fullwidth area end-->
 
     <!--product banner area satrt-->
@@ -607,334 +643,180 @@
             </div>
             <div class="product_banner_container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-5">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner4.jpg" alt=""></a>
+                    @if(isset($banner_bi))
+                        <div class="col-lg-4 col-md-5">
+                            <div class="banner_thumb">
+                                @if($banner_fi->url_type === \App\Models\Banner::URL_WEB)
+                                    <a href="{{$banner_fi->full_url}}"><img src="{{$banner_bi->full_image}}" alt=""></a>
+
+                                    <a href="{{$banner_fi->full_url}}">{{__('index.show_more')}}</a>
+                                @elseif($banner_fi->url_type === \App\Models\Banner::URL_PRODUCT)
+                                    <a href="{{route('products.show',$banner_fi->id)}}"><img
+                                            src="{{$banner_bi->full_image}}" alt=""></a>
+
+                                    <a href="{{route('products.show',$banner_fi->id)}}">{{__('index.show_more')}}</a>
+                                @else
+                                    <a href="javascript:void(0)"><img src="{{$banner_bi->full_image}}" alt=""></a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="col-lg-8 col-md-7">
                         <div class="small_product_area product_column2 owl-carousel">
-                            <div class="product_items">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product1.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product2.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Aliquam
-                                                    Consequat</a></h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
+                            @foreach($bestProduct as $item)
+                                <div class="product_items">
+                                    <article class="single_product">
+                                        <figure>
+                                            <div class="product_thumb">
+                                                @if(count($item['top']['images']) >= 2)
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['top']['id'])}}"><img
+                                                            src="{{$item['top']['firstImage']}}" alt=""></a>
+                                                    <a class="secondary_img"
+                                                       href="{{route('products.show',$item['top']['id'])}}"><img
+                                                            src="{{$item['top']['secondImage']}}" alt=""></a>
+                                                @else
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['top']['id'])}}"><img
+                                                            src="{{$item['top']['firstImage']}}" alt=""></a>
+                                                @endif
                                             </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$26.00</span>
-                                                <span class="old_price">$362.00</span>
+                                            <figcaption class="product_content">
+                                                <h4 class="product_name"><a
+                                                        href="{{route('products.show',$item['top']['id'])}}">{{__($item['top']['title'])}}</a>
+                                                </h4>
+                                                @if(isset($item['top']['subtitle']))
+                                                    <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                                @endif
+                                                <div class="action_links">
+                                                    <ul>
+                                                        <li class="add_to_cart"><a href="cart.html"
+                                                                                   title="Add to cart"><span
+                                                                    class="lnr lnr-cart"></span></a></li>
+                                                        <li class="quick_button"><a href="#" data-toggle="modal"
+                                                                                    data-target="#modal_box"
+                                                                                    title="quick view"> <span
+                                                                    class="lnr lnr-magnifier"></span></a></li>
+                                                        <li class="wishlist"><a href="wishlist.html"
+                                                                                title="Add to Wishlist"><span
+                                                                    class="lnr lnr-heart"></span></a></li>
+                                                        <li class="compare"><a href="#" title="Add to Compare"><span
+                                                                    class="lnr lnr-sync"></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="price_box">
+                                                    @if($item['top']['price'] === $item['top']['max_price'])
+                                                        <span
+                                                            class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
+                                                    @else
+                                                        <span class="current_price">￥{{number_format($item['top']['price'],2)}} ~ ￥{{number_format($item['top']['max_price'],2)}}</span>
+                                                    @endif
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </article>
+                                    <article class="single_product">
+                                        <figure>
+                                            <div class="product_thumb">
+                                                @if(count($item['middle']['images']) >= 2)
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                            src="{{$item['middle']['firstImage']}}" alt=""></a>
+                                                    <a class="secondary_img"
+                                                       href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                            src="{{$item['middle']['secondImage']}}" alt=""></a>
+                                                @else
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                            src="{{$item['middle']['firstImage']}}" alt=""></a>
+                                                @endif
                                             </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product3.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product4.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Donec Non Est</a>
-                                            </h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
+                                            <figcaption class="product_content">
+                                                <h4 class="product_name"><a
+                                                        href="{{route('products.show',$item['middle']['id'])}}">{{__($item['middle']['title'])}}</a>
+                                                </h4>
+                                                @if(isset($item['middle']['subtitle']))
+                                                    <p><a href="#">{{$item['middle']['subtitle']}}</a></p>
+                                                @endif
+                                                <div class="action_links">
+                                                    <ul>
+                                                        <li class="add_to_cart"><a href="cart.html"
+                                                                                   title="Add to cart"><span
+                                                                    class="lnr lnr-cart"></span></a></li>
+                                                        <li class="quick_button"><a href="#" data-toggle="modal"
+                                                                                    data-target="#modal_box"
+                                                                                    title="quick view"> <span
+                                                                    class="lnr lnr-magnifier"></span></a></li>
+                                                        <li class="wishlist"><a href="wishlist.html"
+                                                                                title="Add to Wishlist"><span
+                                                                    class="lnr lnr-heart"></span></a></li>
+                                                        <li class="compare"><a href="#" title="Add to Compare"><span
+                                                                    class="lnr lnr-sync"></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="price_box">
+                                                    @if($item['middle']['price'] === $item['middle']['max_price'])
+                                                        <span
+                                                            class="current_price">￥{{number_format($item['middle']['price'],2)}}</span>
+                                                    @else
+                                                        <span class="current_price">￥{{number_format($item['middle']['price'],2)}} ~ ￥{{number_format($item['middle']['max_price'],2)}}</span>
+                                                    @endif
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </article>
+                                    <article class="single_product">
+                                        <figure>
+                                            <div class="product_thumb">
+                                                @if(count($item['bottom']['images']) >= 2)
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                            src="{{$item['bottom']['firstImage']}}" alt=""></a>
+                                                    <a class="secondary_img"
+                                                       href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                            src="{{$item['bottom']['secondImage']}}" alt=""></a>
+                                                @else
+                                                    <a class="primary_img"
+                                                       href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                            src="{{$item['bottom']['firstImage']}}" alt=""></a>
+                                                @endif
                                             </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$46.00</span>
-                                                <span class="old_price">$382.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product5.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product6.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Mauris Vel
-                                                    Tellus</a></h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$56.00</span>
-                                                <span class="old_price">$362.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            <div class="product_items">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product7.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product8.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Quisque In Arcu</a>
-                                            </h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$20.00</span>
-                                                <span class="old_price">$352.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product9.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product10.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Cas Meque Metus</a>
-                                            </h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$72.00</span>
-                                                <span class="old_price">$352.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product11.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product12.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Proin Lectus
-                                                    Ipsum</a></h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$36.00</span>
-                                                <span class="old_price">$282.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            <div class="product_items">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product13.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product1.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Mauris Vel
-                                                    Tellus</a></h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$45.00</span>
-                                                <span class="old_price">$162.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product10.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product3.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Donec Non Est</a>
-                                            </h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$46.00</span>
-                                                <span class="old_price">$382.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product8.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img
-                                                    src="assets/img/product/product5.jpg" alt=""></a>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="product-details.html">Donec Non Est</a>
-                                            </h4>
-                                            <p><a href="#">Fruits</a></p>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html"
-                                                                               title="Add to cart"><span
-                                                                class="lnr lnr-cart"></span></a></li>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal"
-                                                                                data-target="#modal_box"
-                                                                                title="quick view"> <span
-                                                                class="lnr lnr-magnifier"></span></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"
-                                                                            title="Add to Wishlist"><span
-                                                                class="lnr lnr-heart"></span></a></li>
-                                                    <li class="compare"><a href="#" title="Add to Compare"><span
-                                                                class="lnr lnr-sync"></span></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price_box">
-                                                <span class="current_price">$46.00</span>
-                                                <span class="old_price">$382.00</span>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
+                                            <figcaption class="product_content">
+                                                <h4 class="product_name"><a
+                                                        href="{{route('products.show',$item['bottom']['id'])}}">{{__($item['bottom']['title'])}}</a>
+                                                </h4>
+                                                @if(isset($item['bottom']['subtitle']))
+                                                    <p><a href="#">{{$item['bottom']['subtitle']}}</a></p>
+                                                @endif
+                                                <div class="action_links">
+                                                    <ul>
+                                                        <li class="add_to_cart"><a href="cart.html"
+                                                                                   title="Add to cart"><span
+                                                                    class="lnr lnr-cart"></span></a></li>
+                                                        <li class="quick_button"><a href="#" data-toggle="modal"
+                                                                                    data-target="#modal_box"
+                                                                                    title="quick view"> <span
+                                                                    class="lnr lnr-magnifier"></span></a></li>
+                                                        <li class="wishlist"><a href="wishlist.html"
+                                                                                title="Add to Wishlist"><span
+                                                                    class="lnr lnr-heart"></span></a></li>
+                                                        <li class="compare"><a href="#" title="Add to Compare"><span
+                                                                    class="lnr lnr-sync"></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="price_box">
+                                                    @if($item['bottom']['price'] === $item['bottom']['max_price'])
+                                                        <span
+                                                            class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
+                                                    @else
+                                                        <span class="current_price">￥{{number_format($item['bottom']['price'],2)}} ~ ￥{{number_format($item['bottom']['max_price'],2)}}</span>
+                                                    @endif
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </article>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -982,6 +864,9 @@
                                             <h4 class="product_name"><a
                                                     href="{{route('products.show',$item['id'])}}">{{$item['title']}}</a>
                                             </h4>
+                                            @if(isset($item['top']['subtitle']))
+                                                <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                            @endif
                                             <div class="price_box">
                                                 <span class="current_price">￥{{number_format($item['price'],2)}}</span>
                                             </div>
@@ -1059,21 +944,28 @@
                                     <figure>
                                         <div class="product_thumb">
                                             @if(count($item['top']['images']) >= 2)
-                                                <a class="primary_img" href="{{route('products.show',$item['top']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['top']['id'])}}"><img
                                                         src="{{$item['top']['firstImage']}}" alt=""></a>
-                                                <a class="secondary_img" href="{{route('products.show',$item['top']['id'])}}"><img
+                                                <a class="secondary_img"
+                                                   href="{{route('products.show',$item['top']['id'])}}"><img
                                                         src="{{$item['top']['secondImage']}}" alt=""></a>
                                             @else
-                                                <a class="primary_img" href="{{route('products.show',$item['top']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['top']['id'])}}"><img
                                                         src="{{$item['top']['firstImage']}}" alt=""></a>
                                             @endif
                                         </div>
                                         <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
+                                            <h4 class="product_name"><a
+                                                    href="{{route('products.show',$item['top']['id'])}}">{{$item['top']['title']}}</a>
                                             </h4>
-                                            <p><a href="#"></a></p>
+                                            @if(isset($item['top']['subtitle']))
+                                                <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                            @endif
                                             <div class="price_box">
-                                                <span class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
+                                                <span
+                                                    class="current_price">￥{{number_format($item['top']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
@@ -1082,21 +974,28 @@
                                     <figure>
                                         <div class="product_thumb">
                                             @if(count($item['middle']['images']) >= 2)
-                                                <a class="primary_img" href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['middle']['id'])}}"><img
                                                         src="{{$item['middle']['firstImage']}}" alt=""></a>
-                                                <a class="secondary_img" href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                <a class="secondary_img"
+                                                   href="{{route('products.show',$item['middle']['id'])}}"><img
                                                         src="{{$item['middle']['secondImage']}}" alt=""></a>
                                             @else
-                                                <a class="primary_img" href="{{route('products.show',$item['middle']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['middle']['id'])}}"><img
                                                         src="{{$item['middle']['firstImage']}}" alt=""></a>
                                             @endif
                                         </div>
                                         <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="{{route('products.show',$item['middle']['id'])}}">{{$item['middle']['title']}}</a>
+                                            <h4 class="product_name"><a
+                                                    href="{{route('products.show',$item['middle']['id'])}}">{{$item['middle']['title']}}</a>
                                             </h4>
-                                            {{--                                            <p><a href="#"></a></p>--}}
+                                            @if(isset($item['top']['subtitle']))
+                                                <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                            @endif
                                             <div class="price_box">
-                                                <span class="current_price">￥{{number_format($item['middle']['price'],2)}}</span>
+                                                <span
+                                                    class="current_price">￥{{number_format($item['middle']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>
@@ -1105,21 +1004,28 @@
                                     <figure>
                                         <div class="product_thumb">
                                             @if(count($item['bottom']['images']) >= 2)
-                                                <a class="primary_img" href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['bottom']['id'])}}"><img
                                                         src="{{$item['bottom']['firstImage']}}" alt=""></a>
-                                                <a class="secondary_img" href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                <a class="secondary_img"
+                                                   href="{{route('products.show',$item['bottom']['id'])}}"><img
                                                         src="{{$item['bottom']['secondImage']}}" alt=""></a>
                                             @else
-                                                <a class="primary_img" href="{{route('products.show',$item['bottom']['id'])}}"><img
+                                                <a class="primary_img"
+                                                   href="{{route('products.show',$item['bottom']['id'])}}"><img
                                                         src="{{$item['bottom']['firstImage']}}" alt=""></a>
                                             @endif
                                         </div>
                                         <figcaption class="product_content">
-                                            <h4 class="product_name"><a href="{{route('products.show',$item['bottom']['id'])}}">{{$item['bottom']['title']}}</a>
+                                            <h4 class="product_name"><a
+                                                    href="{{route('products.show',$item['bottom']['id'])}}">{{$item['bottom']['title']}}</a>
                                             </h4>
-                                            {{--                                            <p><a href="#"></a></p>--}}
+                                            @if(isset($item['top']['subtitle']))
+                                                <p><a href="#">{{$item['top']['subtitle']}}</a></p>
+                                            @endif
                                             <div class="price_box">
-                                                <span class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
+                                                <span
+                                                    class="current_price">￥{{number_format($item['bottom']['price'],2)}}</span>
                                             </div>
                                         </figcaption>
                                     </figure>

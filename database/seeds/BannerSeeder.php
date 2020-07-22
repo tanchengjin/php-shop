@@ -30,7 +30,26 @@ class BannerSeeder extends Seeder
                 'subtitle' => 'Natural Farm Products',
                 'content' => 'Natural organic tomatoes make your health stronger. Put your information here',
                 'image' => asset('assets/images/slider/slider3.jpg'),
-            ]
+            ],
+            [
+                'image' => asset('assets/images/banners/left_banner1.jpg'),
+                'banner_type' => \App\Models\Banner::BANNER_TYPE_INDEX_LR
+            ],
+            [
+                'image' => asset('assets/images/banners/right_banner2.jpg'),
+                'banner_type' => \App\Models\Banner::BANNER_TYPE_INDEX_LR
+            ],
+            [
+                'title' => 'BLACK FRIDAYS !',
+                'subtitle' => 'SALE 50% OFF',
+                'content' => 'ALL VEGETABLE PRODUCTS',
+                'image' => asset('assets/images/banners/full_banner.jpg'),
+                'banner_type' => \App\Models\Banner::BANNER_TYPE_INDEX_FI
+            ],
+            [
+                'image' => asset('assets/images/banners/b_banner.jpg'),
+                'banner_type' => \App\Models\Banner::BANNER_TYPE_INDEX_BI
+            ],
         ];
 
         $this->handle($banners);

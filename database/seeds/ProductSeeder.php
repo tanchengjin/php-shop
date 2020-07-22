@@ -28,6 +28,7 @@ class ProductSeeder extends Seeder
 
                 $product->update([
                     'price' => collect($sku)->min('price'),
+                    'max_price' => collect($sku)->max('price'),
                     'tags' => $this->getTags($tags),
                     'category_id' => $this->getCategoryRandom(),
                 ]);

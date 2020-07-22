@@ -15,8 +15,14 @@ class IndexController extends Controller
     {
 
         #获取banner图
-        $banners = Banner::query()->orderBy('order', 'desc')->where('enable', 1)->get();
-
+        $bannerData = $this->getBannerModel()->get();
+        $banners = $bannerData->where('banner_type', Banner::BANNER_TYPE_INDEX);
+        #首页左右两侧广告位
+        $banner_lr = $this->getBannerModel()->where('banner_type', Banner::BANNER_TYPE_INDEX_LR)->limit(2)->get();
+        #首页中部完整广告位
+        $banner_fi = $bannerData->where('banner_type', Banner::BANNER_TYPE_INDEX_FI)->first();
+        #首页优质商品处左侧广告位
+        $banner_bi = $bannerData->where('banner_type', Banner::BANNER_TYPE_INDEX_BI)->first();
 
         $supports = Support::query()->orderBy('order', 'desc')->where('enable', 1)->get();
 
@@ -32,8 +38,8 @@ class IndexController extends Controller
         #推荐商品
         $recommendProduct = $this->getProductModel()->orderBy('id', 'desc')->limit(12)->get()->load('images');
 
-        #最好的商品
-        $bestProduct = $this->getProductModel()->orderBy('id', 'desc')->limit(12)->get()->load('images');
+        #优质商品
+        $bestProduct = $this->getProductModel()->orderBy('rating', 'desc')->limit(12)->get()->load('images');
 
         return view('index.index', [
             'banners' => $banners,
@@ -44,8 +50,11 @@ class IndexController extends Controller
             'hotProduct' => $this->getProductDataByTag('hot'),
             'saleProduct' => $this->getProductDataByTag('sale'),
             'mostViewProduct' => $mostViewProduct,
-            'recommendProduct' => $this->format_row_3($recommendProduct->toArray()),
-            'bestProduct' => $bestProduct,
+            'recommendProduct' => $this->format_col_row3($recommendProduct->toArray()),
+            'bestProduct' => $this->format_col_row3($bestProduct->toArray()),
+            'banner_lr'=>$banner_lr,
+            'banner_fi'=>$banner_fi,
+            'banner_bi'=>$banner_bi,
         ]);
     }
 
@@ -76,7 +85,7 @@ class IndexController extends Controller
     }
 
     /**
-     * 转换格式
+     * 转换格式,以列为格式，一列中有3行数据
      * ---
      * |x|
      * ---
@@ -84,7 +93,7 @@ class IndexController extends Controller
      * ---
      * |x|
      */
-    private function format_row_3(array $data)
+    private function format_col_row3(array $data)
     {
         $arr = [];
         static $k = 0;
@@ -105,5 +114,10 @@ class IndexController extends Controller
             }
         }
         return $arr;
+    }
+
+    private function getBannerModel()
+    {
+        return Banner::query()->where('enable', 1)->orderBy('order', 'desc');
     }
 }

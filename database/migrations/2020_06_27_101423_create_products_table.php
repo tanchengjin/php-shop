@@ -19,8 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('tags')->nullable();
             $table->foreign('category_id')->on('categories')->references('id')->onDelete('set null');
             $table->string('title');
+            $table->string('subtitle')->nullable();
             #商品的最低价
             $table->decimal('price', 10, 2);
+
+            $table->decimal('max_price',10,2);
             #商品简介
             $table->string('intro', 255);
             #商品详情

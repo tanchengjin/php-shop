@@ -8,4 +8,5 @@ return [
     'most_view_product'=>'Most View Products',
     'new_product'=>'New',
     'hot_product'=>'Hot',
+    'product'=>'Product'
 ];
