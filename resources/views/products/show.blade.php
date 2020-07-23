@@ -185,7 +185,7 @@
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews"
-                                       aria-selected="false">{{__('website.reviews')}} ({{count($product->comments)}}
+                                       aria-selected="false">{{__('website.reviews')}} ({{count($comments)}}
                                         )</a>
                                 </li>
                             </ul>
@@ -218,7 +218,7 @@
 
                             <div class="tab-pane fade" id="reviews" role="tabpanel">
                                 <div class="reviews_wrapper">
-                                    @foreach($product->comments as $comment)
+                                    @foreach($comments as $comment)
                                         <div class="reviews_comment_box">
                                             <div class="comment_thmb">
                                                 <img src="{{asset('assets/images/avatar.jpg')}}" alt="">
@@ -227,16 +227,16 @@
                                                 <div class="reviews_meta">
                                                     <div class="star_rating">
                                                         <ul>
-                                                            @for($i=0;$i<$product->rating;$i++)
+                                                            @for($i=0;$i<$comment['rating'];$i++)
                                                                 <li><a href="#"><i class="icon-star icon-star2"
                                                                                    style="color: gold"></i></a></li>
                                                             @endfor
                                                         </ul>
                                                     </div>
                                                     <p>
-                                                        <strong>{{$comment->order->user->name}} </strong>- {{$comment->reviewed_at}}
+                                                        <strong>{{$comment['username']}} </strong>- {{$comment['reviewed_at']}}
                                                     </p>
-                                                    <span>{{$comment->review}}</span>
+                                                    <span>{{$comment['review']}}</span>
                                                 </div>
                                             </div>
 

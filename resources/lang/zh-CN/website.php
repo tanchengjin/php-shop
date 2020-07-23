@@ -77,6 +77,7 @@ return [
     'go_review'=>'去评价',
     'personal_center' => '个人中心',
     'message'=>'消息',
-    'dashboard_description'=>'从您的帐户仪表板。您可以很容易地检查和查看您最近的订单，管理您的运输和帐单地址，并编辑您的密码和帐户细节。'
+    'dashboard_description'=>'从您的帐户仪表板。您可以很容易地检查和查看您最近的订单，管理您的运输和帐单地址，并编辑您的密码和帐户细节。',
+    'closed'=>'已关闭'
 
 ];

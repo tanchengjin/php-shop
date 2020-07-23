@@ -72,36 +72,21 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $redisKey = 'product:show:' . $id;
-        if (!$product = $this->getRedisByKey($redisKey)) {
-            if (!$product = Product::query()->where('on_sale', 1)->with(['images', 'skus'])->find($id)) {
-                abort(404);
-            }
-            $this->setRedisByKey($redisKey, $product);
-        }
-        $product->increment('click');
+        $redis = false;
+        $product = $this->getProductById($id, $redis);
 
         #相关商品
-        $relateRedisKey = 'product:relate';
-        if (!$product_relate = $this->getRedisByKey($relateRedisKey)) {
-            $product_relate = Product::query()->where('on_sale', 1)->where(function ($query) use ($product) {
-                $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
-            })->orderBy('created_at', 'desc')->limit(9)->get()->load('images');
-            $this->setRedisByKey($relateRedisKey, $product_relate);
-        }
+        $product_relate = $this->getRelateProduct($product, 9, $redis);
         #促销商品
-        $saleRedisKey = 'product:sale';
-        if (!$product_sale = $this->getRedisByKey($saleRedisKey)) {
-            $product_sale = Product::query()->where('on_sale', 1)
-                ->where('tags', 'like', '%sale%')
-                ->with('images')->limit(9)
-                ->get();
-            $this->setRedisByKey($saleRedisKey, $product_sale);
-        }
+        $product_sale = $this->getSaleProduct(9, $redis);
+        #获取商品的评论
+        $comments = $this->getCommentByProduct($product);
+
         return view('products.show', [
             'product' => $product,
             'product_relate' => $product_relate,
             'product_sale' => $product_sale,
+            'comments'=>$comments
         ]);
     }
 
@@ -117,5 +102,103 @@ class ProductController extends Controller
         }
         Redis::set($key, serialize($value));
         Redis::expire($key, $ttl);
+    }
+
+    #获取商品
+    private function getProductById($id, $redis = false)
+    {
+        if (!$redis) {
+            #数据库处理
+            $product = $this->getProductModel(['images', 'skus'])->find($id);
+        } else {
+            #redis处理
+            $redisKey = 'product:show:' . $id;
+            if (!$product = $this->getRedisByKey($redisKey)) {
+                if (!$product = $this->getProductModel(['images', 'skus'])->find($id)) {
+                    abort(404);
+                }
+                $this->setRedisByKey($redisKey, $product);
+            }
+            $product->increment('click');
+        }
+
+        return $product;
+    }
+
+    private function getRelateProduct(Product $product, $limit = 9, $redis = false)
+    {
+
+        if ($redis) {
+            #Redis处理
+            $relateRedisKey = 'product:relate';
+            if (!$product_relate = $this->getRedisByKey($relateRedisKey)) {
+                $product_relate = $this->getProductModel()->where(function ($query) use ($product) {
+                    $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
+                })->orderBy('created_at', 'desc')->limit($limit)->get();
+                $this->setRedisByKey($relateRedisKey, $product_relate);
+            }
+        } else {
+            //数据库处理
+            $product_relate = Product::query()->where('on_sale', 1)->where(function ($query) use ($product) {
+                $query->where('category_id', $product->category_id)->orWhere('title', 'like', '%' . $product->title . '%');
+            })->orderBy('created_at', 'desc')->limit($limit)->get();
+        }
+
+        return $product_relate;
+    }
+
+    private function getSaleProduct($limit = 9, $redis = false)
+    {
+        if ($redis) {
+            $saleRedisKey = 'product:sale';
+            if (!$product_sale = $this->getRedisByKey($saleRedisKey)) {
+                $product_sale = $this->getProductModel()
+                    ->where('tags', 'like', '%sale%')
+                    ->limit(9)
+                    ->get();
+                $this->setRedisByKey($saleRedisKey, $product_sale);
+            }
+        } else {
+            $product_sale = $this->getProductModel()
+                ->where('tags', 'like', '%sale%')
+                ->with('images')->limit(9)
+                ->get();
+        }
+
+        return $product_sale;
+    }
+
+    /**
+     * @param $with array|string
+     */
+    private function getProductModel($with = 'images')
+    {
+        if (!is_array($with) && !is_null($with)) {
+            $with = [$with];
+        }
+        return Product::query()->where('on_sale', 1)->with($with);
+    }
+
+    /**
+     * 获取某篇文章的所有评论
+     * @param Product $product
+     * @return array
+     */
+    private function getCommentByProduct(Product $product): array
+    {
+        $comments = [];
+        $product->comments()->get()->map(function ($comment) use (&$comments) {
+            if (!is_null($comment['review']) && !is_null($comment['reviewed_at'])) {
+                array_push($comments, [
+                    'price' => $comment['price'],
+                    'quantity' => $comment['quantity'],
+                    'rating' => $comment['rating'],
+                    'review' => $comment['review'],
+                    'reviewed_at' => $comment['reviewed_at'],
+                    'username'=>$comment->order->user->name
+                ]);
+            }
+        });
+        return $comments;
     }
 }

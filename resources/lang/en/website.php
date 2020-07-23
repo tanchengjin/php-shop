@@ -77,5 +77,6 @@ return [
     'go_review'=>'Go Reviewed',
     'personal_center'=>'Personal Center',
     'message'=>'Message',
-    'dashboard_description'=>'From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and Edit your password and account details.'
+    'dashboard_description'=>'From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and Edit your password and account details.',
+    'closed'=>'Closed'
 ];
