@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\SeckillRequest;
 use App\Librarys\API;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\ProductSku;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -60,5 +62,20 @@ class OrderController extends Controller
             'ship_status' => Order::SHIP_STATUS_RECEIVED
         ]);
         return $this->success();
+    }
+
+    public function seckillStore(SeckillRequest $request, OrderService $orderService)
+    {
+        $user = $request->user();
+        $quantity = $request->input('quantity');
+        $sku = ProductSku::find($request->input('sku_id'));
+        $address = Address::find($request->input('address_id'));
+        if ($order = $orderService->seckill($user, $address, $sku, $quantity)) {
+            return $this->success([
+                'order_id' => $order->id
+            ]);
+        } else {
+            return $this->error();
+        }
     }
 }

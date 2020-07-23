@@ -12,6 +12,9 @@ class Address extends Model
         'province', 'city', 'district', 'zip', 'address', 'contact_name', 'contact_phone',
     ];
 
+    protected $appends=[
+        'full_address'
+    ];
     public function getFullAddressAttribute()
     {;
         return $this->province . $this->city . $this->district . $this->address;

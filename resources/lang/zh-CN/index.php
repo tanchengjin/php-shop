@@ -10,5 +10,10 @@ return [
     'new_product'=>'新品发布',
     'hot_product'=>'热门商品',
     'seckill'=>'秒杀商品',
-    'product'=>'商品'
+    'product'=>'商品',
+    'day'=>'天',
+    'hour'=>'时',
+    'minute'=>'分',
+    'second'=>'秒',
+    'seckill_now'=>'立即抢购'
 ];

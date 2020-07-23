@@ -157,7 +157,7 @@
                                                          id="tab{{$index++}}" role="tabpanel">
                                                         <div class="modal_tab_img">
                                                             <a href="#"><img
-                                                                    src="{{\Illuminate\Support\Facades\Storage::url($image->url)}}"
+                                                                    src="{{$image->full_url}}"
                                                                     alt="{{$product->title}}"
                                                                     style="width: 100%;height: 100%"></a>
                                                         </div>
@@ -211,9 +211,15 @@
                                                 <div class="">
                                                     @foreach($product->skus as $sku)
                                                         <input type="radio" value="{{$sku->id}}"
-                                                               name="sku">{{$sku->title}}</input>
+                                                               name="sku"
+                                                               data-price="{{number_format($sku->price,2)}}" data-stock="{{$sku->stock}}">{{$sku->title}}</input>
                                                     @endforeach
                                                 </div>
+                                            </div>
+
+                                            <div class="variants_size quickview_stock_box" style="display: none">
+                                                <h2>库存</h2>
+                                                <span class="quickview_stock"></span>
                                             </div>
                                             <div class="modal_add_to_cart">
                                                 <form action="#">
@@ -296,6 +302,18 @@
                 });
             });
 
+
+            $('input[type=radio][name=sku]').on('click', function () {
+                let price = $(this).data('price');
+
+                let stock = $(this).data('stock');
+
+                $('.new_price').text('￥'.price);
+                $('.quickview_stock_box').css({
+                    'display': 'block'
+                });
+                $('.quickview_stock').text(stock);
+            })
 
             $('body').on('click', '.add_to_wishlist', function () {
                 $box = $(this);

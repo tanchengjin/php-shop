@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Support;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -41,6 +42,9 @@ class IndexController extends Controller
         #优质商品
         $bestProduct = $this->getProductModel()->orderBy('rating', 'desc')->limit(12)->get()->load('images');
 
+        #秒杀商品
+        $seckillProduct=$this->getProductModel(Product::TYPE_SECKILL)->orderBy('order','desc')->orderBy('created_at','desc')->limit(12)->get()->load('seckill');
+
         return view('index.index', [
             'banners' => $banners,
             'supports' => $supports,
@@ -55,6 +59,7 @@ class IndexController extends Controller
             'banner_lr'=>$banner_lr,
             'banner_fi'=>$banner_fi,
             'banner_bi'=>$banner_bi,
+            'seckillProduct'=>$seckillProduct
         ]);
     }
 
@@ -79,9 +84,12 @@ class IndexController extends Controller
         return $res;
     }
 
-    private function getProductModel()
+    private function getProductModel($type=null)
     {
-        return Product::query()->where('on_sale', 1);
+        if (is_null($type)){
+            $type=Product::TYPE_NORMAL;
+        }
+        return Product::query()->where('on_sale', 1)->where('type',$type);
     }
 
     /**

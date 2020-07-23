@@ -21,13 +21,16 @@ class CloseOrder implements ShouldQueue
     /**
      * Create a new job instance.
      * @param Order $order
-     *
+     * @param int $ttl
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, $ttl = null)
     {
         $this->order = $order;
-        $this->delay(config('shop.order_ttl'));
+        if (is_null($ttl)) {
+            $ttl = config('shop.order_ttl');
+        }
+        $this->delay($ttl);
     }
 
     /**
@@ -45,7 +48,7 @@ class CloseOrder implements ShouldQueue
                     $sku->addStock($item['quantity']);
                 }
                 $this->order->update([
-                    'closed'=>1
+                    'closed' => 1
                 ]);
             });
         } catch (\Exception $exception) {

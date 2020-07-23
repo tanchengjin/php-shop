@@ -60,6 +60,11 @@
                                 </ul>
 
                             </div>
+                            @if(count($product->skus) === 1)
+                                <p id="product_sku"
+                                   data-id="{{$product->skus[0]['id']}}">{{$product->skus[0]['title']}}</p>
+                                库存: {{$product->skus[0]['stock']}}
+                            @endif
                             <div class="price_box">
                                 <span class="current_price">￥{{number_format($product->price,2)}}</span>
                                 <span class="old_price" style="display: none"></span>
@@ -68,29 +73,60 @@
                             <div class="product_desc">
                                 <p>{{$product->intro}}</p>
                             </div>
-                            <div class="product_variant color">
-                                <h3>{{__('website.options')}}</h3>
-                                <label>sku</label>
-                                <ul>
-                                    @foreach($product->skus as $sku)
-                                        <li class=""><input type="radio" name="skus" value="{{$sku->id}}"
-                                                            data-title="{{$sku->title}}" data-stock="{{$sku->stock}}"
-                                                            data-price="{{number_format($sku->price,2)}}"
-                                                            data-old_price="{{number_format($sku->original_price,2)}}">{{$sku->title}}
-                                        </li>
-                                    @endforeach
-                                </ul>
+                            @if(count($product->skus) >= 2)
+                                <div class="product_variant color">
+                                    <h3>{{__('website.options')}}</h3>
+                                    <label>sku</label>
+                                    <ul>
+                                        @foreach($product->skus as $sku)
+                                            <li class=""><input type="radio" name="skus" value="{{$sku->id}}"
+                                                                data-title="{{$sku->title}}"
+                                                                data-stock="{{$sku->stock}}"
+                                                                data-price="{{number_format($sku->price,2)}}"
+                                                                data-old_price="{{number_format($sku->original_price,2)}}">{{$sku->title}}
+                                            </li>
+                                        @endforeach
+                                    </ul>
 
-                                <label for="">{{__('website.stock')}}</label>
-                                <span id="stock">请选择商品规格</span>
-                            </div>
-                            <div class="product_variant quantity">
-                                <label>{{__('website.quantity')}}</label>
-                                <input min="1" max="100" value="1" type="number" name="quantity">
-                                <button class="button btn_add_to_cart"
-                                        type="button">{{__('website.add_to_cart')}}</button>
+                                    <label for="">{{__('website.stock')}}</label>
+                                    <span id="stock">请选择商品规格</span>
+                                </div>
+                            @endif
 
-                            </div>
+                            {{--                            cart and quantity--}}
+                            @if(count($product->skus) !== 0)
+                                {{--                                判断商品类型--}}
+                                @if($product->type === \App\Models\Product::TYPE_NORMAL)
+                                    <div class="product_variant quantity">
+                                        <label>{{__('website.quantity')}}</label>
+                                        <input min="1" max="100" value="1" type="number" name="quantity">
+                                        <button class="button btn_add_to_cart"
+                                                type="button">{{__('website.add_to_cart')}}</button>
+                                    </div>
+                                @elseif($product->type === \App\Models\Product::TYPE_SECKILL)
+                                    <div class="product_variant quantity">
+                                        <label>{{__('website.quantity')}}</label>
+                                        <input min="1" max="100" value="1" type="number" name="quantity">
+                                        @if(\Illuminate\Support\Facades\Auth::check())
+                                            @if(!$product->seckill->isStart)
+                                                <button class="button unstart-seckill"
+                                                        type="button" disabled>秒杀未开始
+                                                </button>
+                                            @elseif($product->seckill->isOver)
+                                                <button class="button"
+                                                        type="button" disabled>秒杀已结束
+                                                </button>
+                                            @else
+                                                <button class="button btn_seckill"
+                                                        type="button">{{__('index.seckill_now')}}</button>
+                                            @endif
+                                        @else
+                                            <button class="button"
+                                                    type="button" id="login">{{__('website.login')}}</button>
+                                        @endif
+                                    </div>
+                                @endif
+                            @endif
                             <div class=" product_d_action">
                                 <ul>
                                     @if($product->isWishlist)
@@ -243,7 +279,7 @@
                                                     src="{{$relate->first_image}}" alt="{{$relate->title}}"></a>
                                         @endif
                                         <div class="label_product">
-                                        @if($relate->tags)
+                                            @if($relate->tags)
                                                 @foreach($relate->tags as $tag)
                                                     <span class="label_{{$tag}}">{{$tag}}</span>
                                                 @endforeach
@@ -268,56 +304,125 @@
     </section>
     <!--product area end-->
     @if(count($product_sale) >= 1)
-    <!--product area start-->
-    <section class="product_area upsell_products">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title">
-                        <h2>{{__('website.upsell_product')}} </h2>
+        <!--product area start-->
+        <section class="product_area upsell_products">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_title">
+                            <h2>{{__('website.upsell_product')}} </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="product_carousel product_column5 owl-carousel">
+                            @foreach($product_sale as $sale)
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                            @if(count($sale->images) >= 2)
+                                                <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
+                                                        src="{{$sale->first_image}}" alt="picture"></a>
+                                            @else
+                                                <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
+                                                        src="{{$sale->second_image}}" alt="picture"></a>
+                                            @endif
+                                            <div class="label_product">
+                                                <span class="label_sale">Sale</span>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <h4 class="product_name"><a
+                                                    href="{{route('products.show',$sale->id)}}">{{$sale->title}}</a>
+                                            </h4>
+                                            <div class="price_box">
+                                                <span class="current_price">￥{{number_format($product->price,2)}}</span>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="product_carousel product_column5 owl-carousel">
-                        @foreach($product_sale as $sale)
-                            <article class="single_product">
-                                <figure>
-                                    <div class="product_thumb">
-                                        @if(count($sale->images) >= 2)
-                                        <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
-                                                src="{{$sale->first_image}}" alt="picture"></a>
-                                        @else
-                                            <a class="primary_img" href="{{route('products.show',$sale->id)}}"><img
-                                                    src="{{$sale->second_image}}" alt="picture"></a>
-                                        @endif
-                                        <div class="label_product">
-                                            <span class="label_sale">Sale</span>
-                                        </div>
-                                    </div>
-                                    <figcaption class="product_content">
-                                        <h4 class="product_name"><a
-                                                href="{{route('products.show',$sale->id)}}">{{$sale->title}}</a></h4>
-                                        <div class="price_box">
-                                            <span class="current_price">￥{{number_format($product->price,2)}}</span>
-                                        </div>
-                                    </figcaption>
-                                </figure>
-                            </article>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--product area end-->
+        </section>
+        <!--product area end-->
     @endif
 @endsection
 
 @section('javascript')
+    <script src="https://cdn.bootcss.com/moment.js/2.22.1/moment.min.js"></script>
     <script>
         $(document).ready(function () {
+            @if($product->type === \App\Models\Product::TYPE_SECKILL)
+                @if(!$product->seckill->isStart)
+                var startTime=moment.unix({{$product->seckill->start_at->getTimeStamp()}});
+                var h1=setInterval(function(){
+                    var now=moment();
+                    if(now.isAfter(startTime)){
+                        clearInterval();
+                        return;
+                    }
+                    var hour=startTime.diff(now,'hours');
+                    var minute=startTime.diff(now,'minute')%60;
+                    var seconds=startTime.diff(now,'seconds')%60;
+                    $('.unstart-seckill').text('抢购倒计时:'+hour+':'+minute+':'+seconds)
+                },500);
+                @endif
+            $('.btn_seckill').click(function () {
+                var addresses =@json(\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->addresses:[]);
+                var addressSelect = $("<select class='form-control'></select>");
+                addresses.forEach(function (add) {
+                    addressSelect.append("<option value=" + add.id + ">" + add.full_address + add.contact_name + add.contact_phone + "</option>");
+                })
+                swal.fire({
+                    title: '请选择收货地址',
+                    html: addressSelect[0],
+                    preConfirm: function (pre) {
+                        if (!pre) {
+                            return;
+                        }
+
+                            @if(count($product->skus) === 1)
+                        var sku_id = $('#product_sku').data('id');
+                            @else
+                        var sku_id = $('input[type=radio]:checked').val();
+                            @endif
+
+                        var res = {
+                                address_id: addressSelect.val(),
+                                sku_id: sku_id,
+                                quantity: $('input[name=quantity]').val()
+                            };
+
+                        axios.post('{{route('orders.seckill.store')}}', res).then(function (res) {
+                            if(res.data.errno === 0){
+                                location.href = '/orders/' + res.data.data.order_id + '/confirm'
+                            }else{
+                                swal.fire('error',res.data.message,'error')
+                            }
+                        }, function (err) {
+                            if(err.response.status === 422){
+                                let error_h='<div>';
+                                _.each(err.response.data.errors,function(errors){
+                                    _.each(errors,function(error){
+                                        error_h+=error;
+                                    });
+                                });
+                                error_h+="</div>";
+                                swal.fire({
+                                    title:'error',
+                                    html:error_h,
+                                    icon:'error'
+                                });
+                            }
+                        });
+                    },
+                });
+            })
+            @endif
             $('.btn_add_to_cart').click(function () {
                 let sku_id = $('input[type=radio]:checked').val();
                 if (!sku_id) {
@@ -431,8 +536,6 @@
                 }).then(function (res) {
                     swal.fire('success', '{{__('sweetalert.operation_success')}}', 'success')
                     location.reload();
-
-
                 }, function (err) {
                     if (err.response.status === 401) {
                         swal.fire({
@@ -450,6 +553,10 @@
                     }
                 });
             });
+
+            $('#login').click(function () {
+                location.href = "{{route('login')}}";
+            })
         })
     </script>
 @endsection

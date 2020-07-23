@@ -4,9 +4,11 @@
 namespace App\Services;
 
 
+use App\Exceptions\NotFoundException;
 use App\Jobs\CloseOrder;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\ProductSku;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class OrderService
 {
+    #普通订单创建
     public function store(User $user, Address $address, array $items, string $remark)
     {
         try {
@@ -57,5 +60,48 @@ class OrderService
             Log::error($exception->getMessage());
         }
         return false;
+    }
+
+    #秒杀订单创建
+    public function seckill(User $user, Address $address, ProductSku $sku, $quantity)
+    {
+        try {
+            $order = DB::transaction(function () use ($user, $address, $sku, $quantity) {
+
+                $order = new Order([
+                    'address' => [
+                        'address' => $address->full_address,
+                        'zip' => $address->zip,
+                        'contact_name' => $address->contact_name,
+                        'contact_phone' => $address->contact_phone,
+                    ],
+                    'type' => Product::TYPE_SECKILL,
+                    'total_price' => $sku->price * $quantity
+                ]);
+                $order->user()->associate($user);
+
+                $order->save();
+                $item = $order->items()->make([
+                    'quantity' => $quantity,
+                    'price' => $sku->price
+                ]);
+
+                $item->product()->associate($sku->product_id);
+                $item->sku()->associate($sku);
+                $item->save();
+
+                if ($sku->subtractStock($quantity) <= 0) {
+                    throw new NotFoundException('商品库存不足');
+                }
+                return $order;
+            });
+
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return false;
+        }
+        #队列延迟关闭订单
+        dispatch(new CloseOrder($order, config('shop.order_seckill_ttl')));
+        return $order;
     }
 }

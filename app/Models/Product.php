@@ -12,7 +12,7 @@ class Product extends Model
     ];
 
     protected $appends = [
-        'isWishlist','firstImage','secondImage'
+        'isWishlist', 'firstImage', 'secondImage'
     ];
     protected $casts = [
         'tags' => 'array'
@@ -27,6 +27,13 @@ class Product extends Model
         self::TAB_NEW => '新商品',
         self::TAB_HOT => '热门商品'
 
+    ];
+
+    public const TYPE_NORMAL = 'normal';
+    public const TYPE_SECKILL = 'seckill';
+    public static $typeMap = [
+        self::TYPE_NORMAL => '普通商品',
+        self::TYPE_SECKILL => '秒杀商品',
     ];
 
     public function images()
@@ -44,12 +51,16 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    public function seckill()
+    {
+        return $this->hasOne(ProductSeckill::class, 'product_id', 'id');
+    }
 
     public function getFirstImageAttribute()
     {
         try {
             if ($image = $this->images()->first()) {
-                return $image['url'];
+                return set_full_image($image['url']);
             }
         } catch (\Exception $exception) {
 
@@ -61,7 +72,7 @@ class Product extends Model
     {
         try {
             if ($image = $this->images()->get()[1]) {
-                return $image['url'];
+                return set_full_image($image['url']);
             }
         } catch (\Exception $exception) {
 

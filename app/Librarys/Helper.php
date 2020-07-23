@@ -41,7 +41,6 @@ function hashids_order_id_decode($str)
             return $decode[0];
         }
     } catch (\Exception $exception) {
-
     }
     throw new \App\Exceptions\NotFoundException();
 }

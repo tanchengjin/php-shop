@@ -13,7 +13,8 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 
-    $router->resource('products', 'ProductController');
+    $router->resource('products', 'products\ProductController');
+    $router->resource('productsSeckill', 'products\SeckillProductController');
 
     $router->get('orders', 'OrderController@index');
     $router->get('orders/{id}', 'OrderController@show');

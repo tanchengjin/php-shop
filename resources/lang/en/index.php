@@ -8,5 +8,10 @@ return [
     'most_view_product'=>'Most View Products',
     'new_product'=>'New',
     'hot_product'=>'Hot',
-    'product'=>'Product'
+    'product'=>'Product',
+    'day'=>'DAY',
+    'hour'=>'HOUR',
+    'minute'=>'MIN',
+    'second'=>'SEC',
+    'seckill_buy'=>'Seckill Now'
 ];

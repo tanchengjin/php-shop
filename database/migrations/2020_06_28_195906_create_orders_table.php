@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->json('address');
             $table->string('remark')->default('');
-            $table->decimal('total_price',11,2);
+            $table->decimal('total_price', 11, 2);
 
             $table->string('payment_method')->nullable();
             $table->string('payment_no')->nullable();
@@ -36,6 +36,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('reviewed')->default(0);
 
             $table->json('extra')->nullable();
+            $table->string('type')->default(\App\Models\Product::TYPE_NORMAL);
             $table->timestamps();
         });
     }

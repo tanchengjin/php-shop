@@ -23,9 +23,9 @@ class CreateProductsTable extends Migration
             #商品的最低价
             $table->decimal('price', 10, 2);
 
-            $table->decimal('max_price',10,2);
+            $table->decimal('max_price', 10, 2);
             #商品简介
-            $table->string('intro', 255);
+            $table->string('intro', 255)->nullable();
             #商品详情
             $table->text('description');
             $table->unsignedBigInteger('sold_count')->default(0);
@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->boolean('on_sale')->default(1);
             $table->unsignedBigInteger('order')->default(1);
             $table->unsignedBigInteger('click')->default(0);
+            $table->string('type')->default(\App\Models\Product::TYPE_NORMAL);
             $table->timestamps();
         });
     }

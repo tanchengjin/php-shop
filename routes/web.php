@@ -31,6 +31,7 @@ Route::middleware(['middleware' => 'setLanguage'])->group(function () {
         Route::get('carts/index', 'CartController@index')->name('carts.index');
         #下单逻辑
         Route::post('orders', 'OrderController@store')->name('orders.store');
+        Route::post('ordersSeckill', 'OrderController@seckillStore')->name('orders.seckill.store');
         Route::get('orders/{id}/confirm', 'OrderController@confirm')->name('orders.confirm');
 
         Route::get('center/index', 'Center\IndexController@index')->name('center.index');
